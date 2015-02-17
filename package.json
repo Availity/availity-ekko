@@ -1,0 +1,71 @@
+{
+  "name": "availity-ekko",
+  "version": "0.0.3",
+  "private": true,
+  "description": "Mock server simulating Availity API rest services",
+  "main": "./server/index.js",
+  "scripts": {
+    "test": "gulp test",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@github.com:Availity/availity-ekko.git"
+  },
+  "keywords": [
+    "mock",
+    "api",
+    "proxy",
+    "rest",
+    "availity"
+  ],
+  "author": "Robert McGuinness <robert.mcguinness.iii@gmail.com> (http://robmcguinness.com/)",
+  "authors": [
+    {
+      "name": "Robert McGuinness",
+      "email": "rob.mcguinness@availity.com"
+    }
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "minimist": "^1.1.0",
+    "cors": "^2.4.2",
+    "chalk": "^0.5.1",
+    "http-proxy": "^1.8.1",
+    "method-override": "^2.2.0",
+    "morgan": "^1.3.2",
+    "serve-favicon": "^2.1.5",
+    "bluebird": "^0.11.6",
+    "lodash": "^3.1.0",
+    "logan": "0.0.2",
+    "compression": "^1.1.0",
+    "express": "^4.10.6",
+    "errorhandler": "^1.2.0",
+    "body-parser": "^1.9.0",
+    "connect-busboy": "0.0.2"
+  },
+  "devDependencies": {
+    "chai": "^1.10.0",
+    "gulp": "^3.8.8",
+    "gulp-bump": "^0.1.11",
+    "gulp-changed": "^1.0.0",
+    "gulp-filter": "^2.0.0",
+    "gulp-git": "^0.5.5",
+    "gulp-istanbul": "^0.5.0",
+    "gulp-jscs": "^1.1.2",
+    "gulp-jshint": "^1.8.5",
+    "gulp-mocha": "^1.1.1",
+    "gulp-prompt": "^0.1.1",
+    "gulp-tag-version": "^1.2.1",
+    "gulp-verb": "^0.3.0",
+    "jshint-stylish": "^1.0.0",
+    "request": "^2.45.0",
+    "require-dir": "^0.1.0",
+    "run-sequence": "^1.0.2",
+    "semver": "^4.2.0",
+    "sinon": "^1.10.3"
+  },
+  "engines": {
+    "node": "0.10.x"
+  }
+}

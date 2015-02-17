@@ -1,0 +1,116 @@
+{
+
+  "v1/route1": {
+    "file": "example1.json"
+  },
+
+  "v1/route2": {
+    "latency": 250,
+    "file": "example2.json",
+    "status": 201
+  },
+
+  "v1/route3": {
+    "file": "example3.json",
+    "post": "example1.json"
+  },
+
+  "v1/route4": {
+    "get": "example1.json",
+    "put": "example2.json",
+    "post": "example3.json",
+    "delete": "example4.json"
+  },
+
+  "v1/route5": {
+    "file": "example1.json",
+    "get": [
+      {
+        "file": "example2.json",
+        "status": 202,
+        "params": {
+          "a": "1",
+          "b": "2",
+          "c": "3"
+        }
+      },
+      {
+        "file": "example3.json",
+        "params": {
+          "a": [1, 2, 3, 4]
+        }
+      }
+    ]
+  },
+
+  "v1/route6": {
+    "file": "example1.json",
+    "post": [
+      {
+        "file": "example2.json",
+        "params": {
+          "a": 1
+        }
+      },
+      {
+        "file": "example3.json",
+        "params": {
+          "a.b.c": 1
+        }
+      },
+      {
+        "file": "example4.json",
+        "params": {
+          "a.b[2]": 2
+        }
+      }
+    ]
+  },
+
+  "v1/route7": {
+    "file": "example1.json",
+    "post": [
+      {
+        "file": "example2.json"
+      },
+      {
+        "file": "example3.json",
+        "params": {
+          "a": 1,
+          "b": "sample.pdf"
+        }
+      },
+      {
+        "file": "example4.json",
+        "params": {
+          "a": 2,
+          "b": "another.name.jpg"
+        }
+      }
+    ]
+  },
+
+  "v1/route8": {
+    "file": "example1.json",
+    "get": [
+      {
+        "file": "example1.json",
+        "response": [
+          {
+            "status": 202,
+            "file": "example1.json"
+          },
+          {
+            "status": 201,
+            "file": "example2.json"
+          }
+        ]
+      }
+    ]
+  },
+
+
+  "v1/route9": {
+    "url": "http://www.google.com"
+  }
+}
