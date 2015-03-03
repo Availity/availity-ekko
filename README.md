@@ -50,6 +50,7 @@ The mock server support deeply nested introspection of JSON POST/PUT requests as
   "post": "example1.json" // response for POST requests
 }
 ```
+
 ###### Example 4
 
 >
@@ -61,6 +62,7 @@ The mock server support deeply nested introspection of JSON POST/PUT requests as
   "delete": "example4.json" // response for all DELETE requests
 }
 ```
+
 ###### Example 5
 
 >
@@ -86,6 +88,7 @@ The mock server support deeply nested introspection of JSON POST/PUT requests as
   ]
 }
 ```
+
 ###### Example 6
 
 >
@@ -125,6 +128,7 @@ The mock server support deeply nested introspection of JSON POST/PUT requests as
   <p><button type="submit">Submit</button>
 </form>
 ```
+
 >
 ```javascript
 "v1/route7": {
