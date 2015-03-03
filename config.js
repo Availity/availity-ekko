@@ -46,8 +46,8 @@ var config = {
         port: 8888
       }
     },
-    data: path.join(__dirname, '/data'),
-    routes: path.join(__dirname, '/routes.json')
+    data: path.join(__dirname, '/server/tests/data'),
+    routes: path.join(__dirname, '/server/tests/dummy.routes.config.json')
   }
 
 };
