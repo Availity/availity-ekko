@@ -8,6 +8,9 @@
 ## Intro
 {%= docs("intro") %}
 
+## Route Configuration
+{%= docs("configuration") %}
+
 ## Authors
 {%= docs("authors") %}
 
