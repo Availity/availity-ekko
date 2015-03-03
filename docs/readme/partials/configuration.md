@@ -22,14 +22,17 @@ The mock server support deeply nested introspection of JSON POST/PUT requests as
 
 ##### Example 3
 
+>
 ```javascript
 "v1/route3": {
   "file": "example3.json", // response for GET|PUT|DELETE requests
   "post": "example1.json" // response for POST requests
 }
 ```
+
 ##### Example 4
 
+>
 ```javascript
 "v1/route4": {
   "get": "example1.json", // response for all GET requests 
@@ -38,8 +41,10 @@ The mock server support deeply nested introspection of JSON POST/PUT requests as
   "delete": "example4.json" // response for all DELETE requests
 }
 ```
+
 ##### Example 5
 
+>
 ```javascript
 "v1/route5": {
   "file": "example1.json", // response for all POST|PUT|DELETE requests
@@ -62,6 +67,7 @@ The mock server support deeply nested introspection of JSON POST/PUT requests as
   ]
 }
 ```
+
 ##### Example 6
 
 >
@@ -101,6 +107,7 @@ The mock server support deeply nested introspection of JSON POST/PUT requests as
   <p><button type="submit">Submit</button>
 </form>
 ```
+
 >
 ```javascript
 "v1/route7": {
@@ -154,7 +161,7 @@ The mock server support deeply nested introspection of JSON POST/PUT requests as
 ```
 
 ##### Example 9 Url Redirect
-
+>
 ```javascript
 "v1/route9": {
   "url": "http://www.google.com"
