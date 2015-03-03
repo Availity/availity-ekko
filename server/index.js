@@ -76,4 +76,4 @@ proto.stop = function() {
 
 proto.config = function() {
   return config;
-}
+};
