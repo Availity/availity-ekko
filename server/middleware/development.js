@@ -12,7 +12,7 @@ var logger = require('../logger');
 var negotiate = require('./negotiation');
 var routes = require('../routes');
 
-module.exports = function production() {
+module.exports = function development() {
 
   config.app.use(expressLogger('dev'));
   config.app.use(errorhandler());
