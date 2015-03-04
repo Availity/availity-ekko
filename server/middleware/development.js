@@ -33,7 +33,7 @@ module.exports = function development() {
   config.app.use(bodyParser.json()); // parse application/json
   config.app.use(bodyParser.urlencoded({
     extended: true,
-    limit: '20mb'
+    limit: config.options.limit
   })); // // parse application/x-www-form-urlencoded
   config.app.use(busboy({ immediate: true }));
 

@@ -8,7 +8,7 @@ var config = {
     token: false,
     user: null,
     cache: 86400000,
-    limit: '20mb',
+    limit: '50mb',
     urls: {
       prefix: ['/api', '/public/api'],
       home: '/public/apps/demo'
@@ -26,6 +26,7 @@ var config = {
   production: {
     latency: 300,
     user: null,
+    cache: 86400000,
     limit: '50mb',
     servers: {
       web: {
@@ -34,12 +35,13 @@ var config = {
       }
     },
     data: path.join(__dirname, '/data'),
-    routes: path.join(__dirname, '/routes.json')
+    routes: path.join(__dirname, '/routes.json'),
+    directory: path.join(__dirname, '/build')
   },
 
   testing: {
     latency: 0,
-    user: null    ,
+    limit: '50mb',
     servers: {
       web: {
         host: "0.0.0.0",

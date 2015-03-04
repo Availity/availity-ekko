@@ -1,10 +1,13 @@
-var config = require('../config');
+var express = require('express');
 var logger = require('morgan');
 var compression = require('compression');
 var methodOverride = require('method-override');
 var cors = require('cors');
 var bodyParser = require('body-parser');
 var busboy = require('connect-busboy');
+var routes = require('../routes');
+
+var config = require('../config');
 
 module.exports = function production() {
 
@@ -16,11 +19,16 @@ module.exports = function production() {
   config.app.use(bodyParser.json()); // parse application/json
   config.app.use(bodyParser.urlencoded({  // parse application/x-www-form-urlencoded
     extended: true,
-    limit: '20mb'
+    limit: config.options.limit
   }));
   config.app.use(busboy({ immediate: true }));
 
   config.app.use('/', config.router);
+  config.app.use('/api', config.router);
+  routes.init();
+
+  var options = { maxAge: config.options.cache, }; // one day
+  config.app.use(express.static(config.options.directory, options));
 
 };
 
