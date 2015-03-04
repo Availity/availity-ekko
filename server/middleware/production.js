@@ -27,7 +27,7 @@ module.exports = function production() {
   config.app.use('/api', config.router);
   routes.init();
 
-  var options = { maxAge: config.options.cache, }; // one day
+  var options = { maxAge: config.options.cache}; // one day
   config.app.use(express.static(config.options.directory, options));
 
 };
