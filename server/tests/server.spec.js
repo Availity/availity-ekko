@@ -81,7 +81,7 @@ describe('Ekko', function () {
       });
     });
 
-    it('route 2 should respond with dummy-response2.json for GETs', function (done) {
+    it('route 2 should respond with dummy-response2.json for GET', function (done) {
 
       request(getUrl('/internal/v2/route2'), function (error, response, body) {
         expect(error).to.be.null;
@@ -110,7 +110,7 @@ describe('Ekko', function () {
       });
     });
 
-    it('route 4 should respond with dummy-response-2.json for [post] with parameters', function (done) {
+    it('route 4 should respond with dummy-response-2.json for POST with parameters', function (done) {
 
       var options = {
         url: getUrl('/v1/route4'),
@@ -130,7 +130,7 @@ describe('Ekko', function () {
       });
     });
 
-    it('route 4 should response with dummy-response1.json [default file] for [post] with no parameters', function(done) {
+    it('route 4 should response with dummy-response1.json [default file] for POST with no parameters', function(done) {
 
       var options = {
         url: getUrl('/v1/route4')
@@ -169,11 +169,11 @@ describe('Ekko', function () {
       });
     });
 
-    it('route 3 should resond with dummy-response3.json for GET with partial parameters', function(done) {
+    it('route 3 should respond with dummy-response2.json for GET with partial parameters', function(done) {
       request(getUrl('/v1/route3?param1=1'), function (error, response, body) {
         expect(error).to.be.null;
         expect(response.statusCode).to.equal(200);
-        var isEqual = _.isEqual(JSON.parse(body), {'a': 1});
+        var isEqual = _.isEqual(JSON.parse(body), {'b': 2});
         expect(isEqual).to.be.ok;
         done();
       });
@@ -331,6 +331,10 @@ describe('Ekko', function () {
       var form = r.form();
       form.append('attachment', fs.createReadStream(path.join(__dirname, 'data/dummy-response-4.json')));
     });
+
+  });
+
+  describe('asynchronous:', function() {
 
   });
 
