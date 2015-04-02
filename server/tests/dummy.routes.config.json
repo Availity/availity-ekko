@@ -9,7 +9,7 @@
     "latency": 250,
     "get": [
       {
-        "file": "trading-partners.json",
+        "file": "dummy-response-1.json",
         "params": {
           "param1": "value1",
           "param2": "value2"
