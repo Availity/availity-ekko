@@ -42,7 +42,7 @@ The mock server support deeply nested introspection of JSON POST/PUT requests as
 }
 ```
 
-##### Example 5
+##### Example 5 Query Params
 
 >
 ```javascript
@@ -68,8 +68,7 @@ The mock server support deeply nested introspection of JSON POST/PUT requests as
 }
 ```
 
-##### Example 6
-
+##### Example 6 POST with Params
 >
 ```javascript
 "v1/route6": {

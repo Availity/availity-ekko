@@ -4,6 +4,7 @@ var chai = require('chai');
 var _ = require('lodash');
 var fs = require('fs');
 var path = require('path');
+var BPromise = require('bluebird');
 
 var expect = chai.expect;
 
@@ -81,7 +82,7 @@ describe('Ekko', function () {
       });
     });
 
-    it('route 2 should respond with dummy-response2.json for GETs', function (done) {
+    it('route 2 should respond with dummy-response2.json for GET', function (done) {
 
       request(getUrl('/internal/v2/route2'), function (error, response, body) {
         expect(error).to.be.null;
@@ -110,7 +111,7 @@ describe('Ekko', function () {
       });
     });
 
-    it('route 4 should respond with dummy-response-2.json for [post] with parameters', function (done) {
+    it('route 4 should respond with dummy-response-2.json for POST with parameters', function (done) {
 
       var options = {
         url: getUrl('/v1/route4'),
@@ -130,7 +131,7 @@ describe('Ekko', function () {
       });
     });
 
-    it('route 4 should response with dummy-response1.json [default file] for [post] with no parameters', function(done) {
+    it('route 4 should response with dummy-response1.json [default file] for POST with no parameters', function(done) {
 
       var options = {
         url: getUrl('/v1/route4')
@@ -169,11 +170,11 @@ describe('Ekko', function () {
       });
     });
 
-    it('route 3 should resond with dummy-response3.json for GET with partial parameters', function(done) {
+    it('route 3 should respond with dummy-response2.json for GET with partial parameters', function(done) {
       request(getUrl('/v1/route3?param1=1'), function (error, response, body) {
         expect(error).to.be.null;
         expect(response.statusCode).to.equal(200);
-        var isEqual = _.isEqual(JSON.parse(body), {'a': 1});
+        var isEqual = _.isEqual(JSON.parse(body), {'b': 2});
         expect(isEqual).to.be.ok;
         done();
       });
@@ -332,6 +333,31 @@ describe('Ekko', function () {
       form.append('attachment', fs.createReadStream(path.join(__dirname, 'data/dummy-response-4.json')));
     });
 
+  });
+
+  describe('asynchronous:', function() {
+
+    it('should respond with 202 then 201', function (done) {
+
+      var bRequest = BPromise.promisify(require("request"));
+
+      bRequest(getUrl('/v1/route6')).spread(function(response, body) {
+
+        expect(response.statusCode).to.equal(202);
+        var isEqual = _.isEqual(JSON.parse(body), {'c': 3});
+        expect(isEqual).to.be.ok;
+
+      }).then(function() {
+
+        bRequest(getUrl('/v1/route6')).spread(function(response, body) {
+          expect(response.statusCode).to.equal(201);
+          var isEqual = _.isEqual(JSON.parse(body), {'d': 4});
+          expect(isEqual).to.be.ok;
+          done();
+        });
+      });
+
+    });
   });
 
   describe('behavior:', function() {

@@ -114,7 +114,7 @@ Route.prototype.addMethod = function(method, endpoint) {
       //     "file": "example2.json"
       //   }
       // ]
-      if(!_request.params && !_request.headers) {
+      if(!_request.params && !_request.headers && !_.isArray(_request.response)) {
 
         // If necessary, override the default response from the routes global response.
         if(self.methods[method][0]) {
@@ -136,7 +136,9 @@ Route.prototype.addMethod = function(method, endpoint) {
       request = new Request();
       request.params = _request.params;
       request.headers = _request.headers;
-      if(_request.file || _request.url || _request.status) {
+      // if a request configuration has both a file and response attribute defined, ignore the file
+      // attribute and continue...this is most likely an async configuration
+      if((_request.file || _request.url || _request.status) && !_.isArray(_request.response)) {
         response = new Response();
         response.file = _request.file;
         response.url = _request.url;

@@ -9,7 +9,7 @@
     "latency": 250,
     "get": [
       {
-        "file": "trading-partners.json",
+        "file": "dummy-response-1.json",
         "params": {
           "param1": "value1",
           "param2": "value2"
@@ -110,6 +110,25 @@
         "params": {
           "attachment": "dummy-response-4.json"
         }
+      }
+    ]
+  },
+
+  "v1/route6": {
+    "file": "dummy-response-1.json",
+    "get": [
+      {
+        "file": "dummy-response-2.json",
+        "response": [
+          {
+            "status": 202,
+            "file": "dummy-response-3.json"
+          },
+          {
+            "status": 201,
+            "file": "dummy-response-4.json"
+          }
+        ]
       }
     ]
   },
