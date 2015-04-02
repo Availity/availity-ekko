@@ -14,7 +14,8 @@ var config = require('../../config');
 var Ekko = require('../index');
 
 var getUrl = function (endpoint) {
-  return  'http://localhost:' + config.testing.servers.web.port + endpoint;
+  var url =  ['http://', config.testing.servers.web.host, ':', config.testing.servers.web.port, endpoint].join('');
+  return url;
 };
 
 var getConfiguredVerbs = function(ekko, expectedVerbs, path) {
