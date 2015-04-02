@@ -116,7 +116,12 @@ var match = {
         return;
       }
 
-      if(score.hits > topScore.hits || (score.hits === topScore.hits && score.misses < topScore.misses)) {
+      // Top Score:
+      //
+      //  1. Top hits
+      //  2. Unless top hits are equal the one with least amount of misses
+      //  3. Unless both hits and misses are equal last configuration should win
+      if(score.hits > topScore.hits || (score.hits === topScore.hits && score.misses < topScore.misses || (score.hits === topScore.hits && score.misses === topScore.misses))) {
         topScore.hits = score.hits;
         topScore.misses = score.misses;
         res.locals.request = _request;
