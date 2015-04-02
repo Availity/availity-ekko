@@ -4,6 +4,7 @@ var chai = require('chai');
 var _ = require('lodash');
 var fs = require('fs');
 var path = require('path');
+var BPromise = require('bluebird');
 
 var expect = chai.expect;
 
@@ -336,6 +337,29 @@ describe('Ekko', function () {
 
   describe('asynchronous:', function() {
 
+    it('should respond with 202 then 201', function (done) {
+
+      var get = request.get;
+
+      var promise = BPromise.promisify(get);
+
+      promise(getUrl('/v1/route6')).spread(function(response, body) {
+
+        expect(response.statusCode).to.equal(202);
+        var isEqual = _.isEqual(JSON.parse(body), {'c': 3});
+        expect(isEqual).to.be.ok;
+
+      }).then(function() {
+
+        promise(getUrl('/v1/route6')).spread(function(response, body) {
+          expect(response.statusCode).to.equal(201);
+          var isEqual = _.isEqual(JSON.parse(body), {'d': 4});
+          expect(isEqual).to.be.ok;
+          done();
+        });
+      });
+
+    });
   });
 
   describe('behavior:', function() {
