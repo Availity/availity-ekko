@@ -339,11 +339,9 @@ describe('Ekko', function () {
 
     it('should respond with 202 then 201', function (done) {
 
-      var get = request.get;
+      var bRequest = BPromise.promisify(require("request"));
 
-      var promise = BPromise.promisify(get);
-
-      promise(getUrl('/v1/route6')).spread(function(response, body) {
+      bRequest(getUrl('/v1/route6')).spread(function(response, body) {
 
         expect(response.statusCode).to.equal(202);
         var isEqual = _.isEqual(JSON.parse(body), {'c': 3});
@@ -351,7 +349,7 @@ describe('Ekko', function () {
 
       }).then(function() {
 
-        promise(getUrl('/v1/route6')).spread(function(response, body) {
+        bRequest(getUrl('/v1/route6')).spread(function(response, body) {
           expect(response.statusCode).to.equal(201);
           var isEqual = _.isEqual(JSON.parse(body), {'d': 4});
           expect(isEqual).to.be.ok;
