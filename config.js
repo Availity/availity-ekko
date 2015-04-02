@@ -7,7 +7,7 @@ var config = {
     session: false,
     token: false,
     user: null,
-    cache: 86400000,
+    cache: 0,
     limit: '50mb',
     urls: {
       prefix: ['/api', '/public/api'],
