@@ -339,7 +339,7 @@ describe('Ekko', function () {
 
     it('should respond with 202 then 201', function (done) {
 
-      var bRequest = BPromise.promisify(require("request"));
+      var bRequest = BPromise.promisify(require('request'));
 
       bRequest(getUrl('/v1/route6')).spread(function(response, body) {
 
