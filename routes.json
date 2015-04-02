@@ -94,15 +94,15 @@
     "file": "example1.json",
     "get": [
       {
-        "file": "example1.json",
+        "file": "example2.json",
         "response": [
           {
             "status": 202,
-            "file": "example1.json"
+            "file": "example3.json"
           },
           {
             "status": 201,
-            "file": "example2.json"
+            "file": "example4.json"
           }
         ]
       }
