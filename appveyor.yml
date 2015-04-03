@@ -8,7 +8,6 @@ branches:
 environment:
   matrix:
   # node.js
-    - nodejs_version: "0.10"
     - nodejs_version: "0.12"
 
 # Fix line endings on Windows
