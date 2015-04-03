@@ -374,7 +374,7 @@ describe('Ekko', function () {
         expect(isEqual).to.be.ok;
 
         // test for headers
-        expect(response.headers.ping).toBe('pong');
+        expect(response.headers.ping).to.equal('pong');
 
         done();
       });
