@@ -98,7 +98,10 @@
         "response": [
           {
             "status": 202,
-            "file": "example3.json"
+            "file": "example3.json",
+            "headers": {
+              "Location": "/v1/route8"
+            }
           },
           {
             "status": 201,

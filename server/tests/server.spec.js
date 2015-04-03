@@ -361,6 +361,27 @@ describe('Ekko', function () {
     });
   });
 
+  describe('headers:', function() {
+
+    it('should respond with custom headers', function (done) {
+
+      var bRequest = BPromise.promisify(require('request'));
+
+      bRequest(getUrl('/v1/route7')).spread(function(response, body) {
+
+        expect(response.statusCode).to.equal(200);
+        var isEqual = _.isEqual(JSON.parse(body), {'b': 2});
+        expect(isEqual).to.be.ok;
+
+        // test for headers
+        expect(response.headers.ping).toBe('pong');
+
+        done();
+      });
+
+    });
+  });
+
   describe('behavior:', function() {
 
     it('should respond with 404 for undefined route', function (done) {

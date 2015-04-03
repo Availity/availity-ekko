@@ -14,6 +14,10 @@ var result =  {
       var filePath = path.join(config.options.data, response.file);
       var status = response.status || 200;
 
+      if(response.headers) {
+        res.set(response.headers);
+      }
+
       res.status(status).sendFile(filePath, function(err) {
         if(err) {
           logger.fileNotFound(filePath);

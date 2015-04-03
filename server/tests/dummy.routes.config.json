@@ -133,6 +133,22 @@
     ]
   },
 
+  "v1/route7": {
+    "file": "dummy-response-1.json",
+    "get": [
+      {
+        "response": [
+          {
+            "file": "dummy-response-2.json",
+            "headers": {
+              "ping": "pong"
+            }
+          }
+        ]
+      }
+    ]
+  },
+
   "no/params": {
     "file": "dummy-response-4.json"
   },
