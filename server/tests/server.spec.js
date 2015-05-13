@@ -37,7 +37,7 @@ var getConfiguredVerbs = function(ekko, expectedVerbs, path) {
 
 };
 
-describe('Ekko', function () {
+describe('Ekko |', function () {
 
   var ekko;
 
@@ -58,7 +58,7 @@ describe('Ekko', function () {
     expect(ekko).to.be.defined;
   });
 
-  describe('routes:', function() {
+  describe('routes |', function() {
 
     it('route 1 should be defined with GET, PUT, POST and DELETE', function () {
 
@@ -149,7 +149,7 @@ describe('Ekko', function () {
 
   });
 
-  describe('scoring query params:', function() {
+  describe('scoring query params |', function() {
 
     it('route 3 should respond with dummy-response2.json for GET with specified parameters', function(done) {
       request(getUrl('/v1/route3?param1=1&param2=2'), function (error, response, body) {
@@ -203,7 +203,7 @@ describe('Ekko', function () {
 
   });
 
-  describe('scoring array params:', function() {
+  describe('scoring array params |', function() {
 
     it('should respond with dummy-response-2.json for GET with 3 matching params (1 non-array, 2 array)', function(done) {
 
@@ -255,7 +255,7 @@ describe('Ekko', function () {
 
   });
 
-  describe('multi-part forms', function() {
+  describe('multi-part forms |', function() {
 
     var options = {
       url: getUrl('/v1/route5')
@@ -336,7 +336,7 @@ describe('Ekko', function () {
 
   });
 
-  describe('asynchronous:', function() {
+  describe('asynchronous |', function() {
 
     it('should respond with 202 then 201', function (done) {
 
@@ -361,7 +361,7 @@ describe('Ekko', function () {
     });
   });
 
-  describe('headers:', function() {
+  describe('headers |', function() {
 
     it('should respond with custom headers', function (done) {
 
@@ -382,7 +382,7 @@ describe('Ekko', function () {
     });
   });
 
-  describe('behavior:', function() {
+  describe('behavior |', function() {
 
     it('should respond with 404 for undefined route', function (done) {
       request(getUrl('/dummy/route'), function (error, response) {
@@ -398,6 +398,49 @@ describe('Ekko', function () {
       });
     });
 
+  });
+
+  describe('proxy |', function() {
+
+    var proxy;
+
+    before(function (done) {
+
+      config.testing.servers.api.proxy = true;
+
+      var express = require('express');
+      proxy = express();
+      var router = express.Router();
+      router.all('v1/route1', function(req, res) {
+        res.json({ z: '36' });
+      });
+
+      proxy.use('/api', router);
+
+      proxy.listen(config.testing.servers.api.port, function() {
+        done();
+      });
+
+    });
+
+    after(function(done) {
+      config.testing.servers.api.proxy = false;
+      proxy.close(function() {
+        done();
+      });
+    });
+
+    it('should get a response from /api/v1/route1', function(done) {
+
+      request(getUrl('/api/v1/route1'), function (error, response, body) {
+        expect(error).to.be.null;
+        expect(response.statusCode).to.equal(200);
+        var isEqual = _.isEqual(JSON.parse(body), {'z': 36});
+        expect(isEqual).to.ok;
+        done();
+      });
+
+    });
   });
 
 });
