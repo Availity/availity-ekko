@@ -7,6 +7,8 @@ var bodyParser = require('body-parser');
 var busboy = require('connect-busboy');
 
 var config = require('../config');
+var proxy = require('./proxy');
+var logger = require('../logger');
 var negotiate = require('./negotiation');
 var routes = require('../routes');
 
