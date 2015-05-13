@@ -46,6 +46,19 @@ var config = {
       web: {
         host: "127.0.0.1", // 0.0.0.0 or localhost causes windows tests to fail?
         port: 8888
+      },
+      api: {
+        host: "127.0.0.1",
+        port: 7777,
+        proxies: [
+          {
+            context: "/api",
+            rewrite: {
+              from: "^/api",
+              to: ""
+            }
+          }
+        ]
       }
     },
     data: path.join(__dirname, '/server/tests/data'),
