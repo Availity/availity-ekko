@@ -1,4 +1,4 @@
-/*globals describe, before, after, it*/
+/*globals describe, xdescribe, before, after, it*/
 var request = require('request');
 var chai = require('chai');
 var _ = require('lodash');
@@ -400,7 +400,7 @@ describe('Ekko |', function () {
 
   });
 
-  describe('proxy |', function() {
+  xdescribe('proxy |', function() {
 
     var proxy;
 
