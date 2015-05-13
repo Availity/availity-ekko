@@ -57,8 +57,9 @@ proto.set = function(options) {
   config = _.merge(config, options);
 
   // Pluck out environment specific config and save to `this.options`
-  var environment = process.env.NODE_ENV;
-  this.environment = environment || 'development';
+  //var environment = process.env.NODE_ENV;
+  //this.environment = environment || 'development';
+  this.environment = process.env.NODE_ENV || "development";
   this.options = config[this.environment];
 
   // Merge in any command line overrides
@@ -71,7 +72,7 @@ proto.set = function(options) {
 
 proto.isProxyEnabled = function() {
 
-  return _.some(this.servers, function(server) {
+  return _.some(this.options.servers, function(server) {
     return server.proxy;
   });
 
