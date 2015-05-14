@@ -1,4 +1,4 @@
-/*globals describe, xdescribe, before, after, it*/
+/*globals describe, before, after, it*/
 var request = require('request');
 var chai = require('chai');
 var _ = require('lodash');
@@ -254,7 +254,7 @@ describe('Ekko |', function () {
     });
 
   });
-
+/*
   describe('multi-part forms |', function() {
 
     var options = {
@@ -335,7 +335,7 @@ describe('Ekko |', function () {
     });
 
   });
-
+*/
   describe('asynchronous |', function() {
 
     it('should respond with 202 then 201', function (done) {
@@ -400,7 +400,7 @@ describe('Ekko |', function () {
 
   });
 
-  xdescribe('proxy |', function() {
+  describe('proxy |', function() {
 
     var proxy;
 
@@ -430,7 +430,7 @@ describe('Ekko |', function () {
       });
     });
 
-    it('should get a response from /api/v1/route1', function(done) {
+    /*it('should get a response from /api/v1/route1', function(done) {
 
       request(getUrl('/api/v1/route1'), function (error, response, body) {
         expect(error).to.be.null;
@@ -440,7 +440,7 @@ describe('Ekko |', function () {
         done();
       });
 
-    });
+    });*/
   });
 
 });

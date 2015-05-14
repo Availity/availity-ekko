@@ -8,6 +8,7 @@ var Configuration = function() {
   this.app = null;
   this.router = null;
   this.routes = [];
+  this.path = null;
 };
 
 var proto = Configuration.prototype;
@@ -18,9 +19,6 @@ var proto = Configuration.prototype;
  * @param  {Sring} path full path to configuration. Ex: path.join(__dirname, 'config.js')
 
  */
-proto.path = function(path) {
-  this.path = path;
-};
 
 proto.isProduction = function() {
   return process.env.NODE_ENV === 'production';

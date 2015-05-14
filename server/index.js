@@ -14,7 +14,7 @@ var proto = Ekko.prototype;
 
 proto.start = function(options) {
 
-  config.path(this._configPath);
+  config.path = this._configPath;
   config.set(options);
 
   config.app = express();
@@ -61,7 +61,9 @@ proto.stop = function() {
 
   return new BPromise(function (resolve) {
 
-    if(!config.server && !config.server.close) {
+    var shouldClose = config.server && config.server.close;
+
+    if(!shouldClose){
       resolve(true);
       return;
     }

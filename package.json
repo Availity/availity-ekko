@@ -58,7 +58,8 @@
     "request": "^2.54.0",
     "require-dir": "^0.3.0",
     "run-sequence": "^1.0.2",
-    "semver": "^4.3.3"
+    "semver": "^4.3.3",
+    "superagent": "^1.2.0"
   },
   "engines": {
     "node": ">=0.10.0"
