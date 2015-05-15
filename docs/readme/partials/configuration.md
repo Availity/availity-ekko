@@ -159,6 +159,36 @@ The mock server support deeply nested introspection of JSON POST/PUT requests as
 }
 ```
 
+###### Example 10 Repeated Async
+>
+```javascript
+"v1/route10": {
+    "get": [
+      {
+        "file": "example1.json",
+        "response": [
+          {
+            "file": "example1.json",
+            "repeat": 3
+          },
+          {
+            "status": 201,
+            "file": "example2.json"
+          },
+          {
+            "file": "example3.json",
+            "repeat": 4
+          },
+          {
+            "file": "example4.json",
+            "repeat": 2
+          }
+        ]
+      }
+    ]
+  }
+```
+
 ##### Example 9 Url Redirect
 >
 ```javascript

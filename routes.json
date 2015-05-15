@@ -115,5 +115,34 @@
 
   "v1/route9": {
     "url": "http://www.google.com"
+  },
+
+  "v1/route10": {
+    "file": "example1.json",
+    "get": [
+      {
+        "file": "example1.json",
+        "response": [
+          {
+            "status": 202,
+            "latency": 250,
+            "file": "example1.json",
+            "repeat": 3
+          },
+          {
+            "status": 201,
+            "file": "example2.json"
+          },
+          {
+            "file": "example3.json",
+            "repeat": 4
+          },
+          {
+            "file": "example4.json",
+            "repeat": 2
+          }
+        ]
+      }
+    ]
   }
 }
