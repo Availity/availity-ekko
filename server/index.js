@@ -25,14 +25,19 @@ proto.start = function(options) {
   var environment = process.env.NODE_ENV;
   middleware[environment || 'development']();
 
-  config.app.set('port', config.options.servers.web.port);
+  var port = config.options.servers.web.port || 0;
+  config.app.set('port', port);
   config.server = http.createServer(config.app);
 
+//  config.server.address().port ?
   return new BPromise(function (resolve, reject) {
 
     config.server.listen(config.options.servers.web.port, function () {
 
-      var port = config.app.get('port');
+      config.addressInUse = config.server.address();
+
+      var port = config.addressInUse.port;
+      //var port = config.app.get('port');
 
       logger.start(port, config.environment);
       logger.success('open your browser to http://localhost:' + port);

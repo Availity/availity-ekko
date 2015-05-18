@@ -4,7 +4,7 @@
   "description": "Mock server simulating Availity API rest services",
   "main": "./server/index.js",
   "scripts": {
-    "test": "gulp test",
+    "test": "./node_modules/.bin/mocha --reporter spec server/**/*spec.js",
     "start": "node index.js"
   },
   "repository": {
@@ -55,6 +55,7 @@
     "gulp-tag-version": "^1.2.1",
     "gulp-verb": "^0.3.0",
     "jshint-stylish": "^1.0.1",
+    "mocha": "^2.2.5",
     "request": "^2.54.0",
     "require-dir": "^0.3.0",
     "run-sequence": "^1.0.2",

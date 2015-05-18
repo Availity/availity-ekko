@@ -9,6 +9,7 @@ var Configuration = function() {
   this.router = null;
   this.routes = [];
   this.path = null;
+  this.addressInUse = null;
 };
 
 var proto = Configuration.prototype;

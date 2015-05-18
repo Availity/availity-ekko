@@ -45,7 +45,7 @@ var config = {
     servers: {
       web: {
         host: "127.0.0.1", // 0.0.0.0 or localhost causes windows tests to fail?
-        port: 8888
+        //port: 8888
       },
       api: {
         host: "127.0.0.1",
