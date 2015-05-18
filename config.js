@@ -57,6 +57,27 @@ var config = {
               from: "^/api",
               to: ""
             }
+          },
+          {
+            context: "/ui",
+            rewrite: {
+              from: "^/ui",
+              to: "/v1"
+            }
+          }
+        ]
+      },
+      test: {
+        host: "127.0.0.1",
+        port: 9999,
+        proxy: true,
+        proxies: [
+          {
+            context: "/test",
+            rewrite: {
+              from: "^/test",
+              to: ""
+            }
           }
         ]
       }

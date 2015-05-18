@@ -12,36 +12,52 @@ describe('Ekko |', function () {
   helper.serverSpecHelper();
 
   describe('proxy |', function(){
-    var proxy;
+    var proxy1;
+    var proxy2;
 
     before(function (done) {
 
       config.testing.servers.api.proxy = true;
 
       var express = require('express');
-      proxy = express();
-      //var router = express.Router();
+      proxy1 = express();
 
-      proxy.get('/v1/route1', function (req, res) {
+      proxy1.get('/v1/route1', function (req, res) {
         res.json({z: 36});
       });
 
-      /*router.all('/v1/route1', function (req, res) {
-        res.json({z: 36});
-      });*/
+      proxy2 = express();
 
-      //proxy.use('/api', router);
+      proxy2.get('/v2/route2', function(req, res) {
+        res.json({y: 35});
+      })
 
-      proxy.listen(config.testing.servers.api.port, function () {
-        done();
+      proxy1.listen(config.testing.servers.api.port, function () {
+        proxy2.listen(config.testing.servers.test.port, function() {
+          done();
+        });
       });
 
     });
 
     after(function (done) {
       config.testing.servers.api.proxy = false;
-      if(proxy && proxy.close){
-        proxy.close(function(){ done(); });
+      config.testing.servers.test.proxy = false;
+      //done();
+
+      if(proxy1 && proxy1.close){
+
+        proxy1.close(function(){
+
+          if(proxy2 && proxy2.close){
+            proxy2.close(function() {
+              done();
+            });
+          }else {
+            done();
+          }
+
+        });
       }else{
         done();
       }
@@ -50,7 +66,6 @@ describe('Ekko |', function () {
     it('should get a response from /api/v1/route1', function(done) {
 
       request.get(helper.getUrl('/api/v1/route1'))
-      //request.get([':', config.testing.servers.api.port, '/api/v1/route1'].join(''))
         .end(function (err, res) {
           expect(err).to.be.null;
           expect(res.status).to.equal(200);
@@ -59,5 +74,27 @@ describe('Ekko |', function () {
         });
     });
 
+    it('should get a redirect from /ui/route1 to /v1/route1', function(done) {
+      request.get(helper.getUrl('/ui/route1'))
+        .end(function (err, res) {
+          expect(err).to.be.null;
+          expect(res.status).to.equal(200);
+          expect(_.isEqual(res.body,{'z': 36})).to.be.ok;
+          done();
+        });
+    });
+
+    it('should get a response from /test/v2/route2', function(done) {
+
+     request.get(helper.getUrl('/test/v2/route2'))
+        .end(function (err, res) {
+          expect(err).to.be.null;
+          expect(res.status).to.equal(200);
+          expect(_.isEqual(res.body,{'y': 35})).to.be.ok;
+          done();
+        });
+    });
+
   });
+
 });
