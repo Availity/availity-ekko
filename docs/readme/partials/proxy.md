@@ -4,31 +4,31 @@ Ekko runs on the 'web' server, while any others can be set up as proxies with th
 
 ##### Example 1
 >
-'''javascript
+```javascript
 servers: {
     web: {
         host: "0.0.0.0",
         port: 9999
     }
 }
-'''
+```
 
 ##### Example 2 Dynamic Port (Ekko only)
 By either setting port to 0, or removing the field, Ekko will let the OS assign a random port
 
 >
-'''javascript
+```javascript
 servers: {
     web: {
         host: "0.0.0.0",
     }
 }
-'''
+```
 
 ##### Example 3 Proxy
 
 >
-'''javascript
+```javascript
 servers: {
     web: {
         host: "127.0.0.1",
@@ -50,12 +50,12 @@ servers: {
         ]
     }
 }
-'''
+```
 
 ##### Example 4 Multiple Proxies on one server
 
 >
-'''javascript
+```javascript
 servers: {
     web: {
         host: "127.0.0.1",
@@ -85,10 +85,11 @@ servers: {
         ]
     }
 }
-'''
+```
+
 ##### Example 5 Multiple Servers with Proxies
 >
-'''javascript
+```javascript
 servers: {
     web: {
         host: "127.0.0.1",
@@ -125,13 +126,14 @@ servers: {
         ]
     }
 }
-'''
+```
+
 ##### Example 4
 
 Servers with proxy set to false, or undefined, will be ignored by Ekko
 
 >
-'''javascript
+```javascript
 servers: {
     web: {
         host: "127.0.0.1",
@@ -167,4 +169,4 @@ servers: {
         ]
     }
 }
-'''
+```
