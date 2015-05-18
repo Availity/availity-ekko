@@ -60,7 +60,8 @@
     "require-dir": "^0.3.0",
     "run-sequence": "^1.0.2",
     "semver": "^4.3.3",
-    "superagent": "^1.2.0"
+    "superagent": "^1.2.0",
+    "superagent-bluebird-promise": "^2.0.2"
   },
   "engines": {
     "node": ">=0.10.0"

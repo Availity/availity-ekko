@@ -48,7 +48,7 @@ proto.start = function(options) {
 
     config.server.on('error', function (e) {
 
-      var port = config.app.get('port');
+      var port = config.addressInUse.port;
 
       if(e.errno === 'EADDRINUSE') {
         logger.error('Cannot start Ekko server on PORT ' + port + '. Check if port is already in use.');

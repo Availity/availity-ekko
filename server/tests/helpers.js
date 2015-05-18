@@ -23,7 +23,6 @@ var test = {
   },
   getUrl:  function (endpoint) {
     var url = [':', config.addressInUse.port, endpoint].join('');
-    //var url = [':', config.testing.servers.web.port, endpoint].join('');
     return url;
   },
   getFile: function (name){
