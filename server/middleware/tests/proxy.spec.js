@@ -74,7 +74,7 @@ describe('Ekko |', function () {
         });
     });
 
-    it('should get a redirect from /ui/route1 to /v1/route1', function(done) {
+    it('should rewrite /ui/route1 and proxy to /v1/route1', function(done) {
       request.get(helper.getUrl('/ui/route1'))
         .end(function (err, res) {
           expect(err).to.be.null;

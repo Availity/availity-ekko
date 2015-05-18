@@ -73,6 +73,13 @@ var config = {
         proxy: true,
         proxies: [
           {
+            context: "/api",
+            rewrite: {
+              from: "^/api",
+              to: ""
+            }
+          },
+          {
             context: "/test",
             rewrite: {
               from: "^/test",

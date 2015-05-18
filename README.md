@@ -198,9 +198,11 @@ The mock server support deeply nested introspection of JSON POST/PUT requests as
 
 
 ## Proxy Configuration
-In `config.json` the ekko server configurations are defined.
- 
-Ekko runs on the 'web' server, while any others can be set up as proxies with the proxy flag.
+You define Ekko server configurations in `config.json`.
+Each configuration requires a `host`.
+Other configuration options are outlined below.
+You must have a configuration called `web`.
+An example configuration looks like this:
 
 ###### Example 1
 >
@@ -213,14 +215,17 @@ servers: {
 }
 ```
 
+If you omit the port, or set it to 0, Ekko will let the OS assign a random open port. 
+This allows you to run multiple servers without keeping track of all ports being used. (As seen in Example 2)
+
 ###### Example 2 Dynamic Port (Ekko only)
-By either setting port to 0, or removing the field, Ekko will let the OS assign a random port
 
 >
 ```javascript
 servers: {
     web: {
         host: "0.0.0.0",
+        //port: 0 will also create dynamic ports
     }
 }
 ```
@@ -236,14 +241,14 @@ servers: {
     },
     api: {
         host: "127.0.0.1",
-        port: 7777,
+        port: 7777, //proxies need defined ports
         proxy: true,
         proxies: 
         [
             {
-                context: "/api",
+                context: "/api", // if url context matches the proxy is triggered for this route
                 rewrite: {
-                    from: "^/api",
+                    from: "^/api", // (optional) allows url to be rewritten before forwarding request to proxied server
                     to: ""
                 }
             }
@@ -274,7 +279,7 @@ servers: {
                     to: ""
                 }
             },
-            {
+            {   //you can define multiple context's for a proxy server
                 context: "/api2",
                 rewrite: {
                     from: "^/api2",
@@ -308,8 +313,8 @@ servers: {
                 }
             }
         ]
-    },
-    test: {
+    }, 
+    test: { //multiple proxy servers are possible
         host: "127.0.0.1",
         port: 7777,
         proxy: true,
@@ -327,9 +332,49 @@ servers: {
 }
 ```
 
-###### Example 4
 
-Servers with proxy set to false, or undefined, will be ignored by Ekko
+###### Example 6
+>
+```javascript
+servers: {
+    web: {
+        host: "127.0.0.1",
+        port: 9999
+    },
+    api: {
+        host: "127.0.0.1",
+        port: 7777,
+        proxy: true,
+        proxies: 
+        [
+            {
+                context: "/api",    //the first defined context is used
+                rewrite: {
+                    from: "^/api",
+                    to: ""
+                }
+            }
+        ]
+    }, 
+    test: {
+        host: "127.0.0.1",
+        port: 7777,
+        proxy: true,
+        proxies: 
+        [
+            {
+                context: "/api", //as long as api proxy is true, this will not be triggered
+                rewrite: {
+                    from: "^/api",
+                    to: ""
+                }
+            }
+        ]
+    }
+}
+```
+
+###### Example 7
 
 >
 ```javascript
@@ -341,7 +386,7 @@ servers: {
     api: {
         host: "127.0.0.1",
         port: 7777,
-        proxy: false,
+        proxy: false, //by deleting the proxy line, or setting it to false, the server will not use this server
         proxies: 
         [
             {
