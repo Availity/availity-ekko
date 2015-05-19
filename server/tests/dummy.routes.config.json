@@ -149,6 +149,26 @@
     ]
   },
 
+  "v1/route8": {
+    "file": "dummy-response-1.json",
+    "get": [
+      {
+        "file": "dummy-response-1.json",
+        "response": [
+          {
+            "status": 202,
+            "file": "dummy-response-1.json",
+            "repeat": 3
+          },
+          {
+            "status": 201,
+            "file": "dummy-response-2.json"
+          }
+        ]
+      }
+    ]
+  },
+
   "no/params": {
     "file": "dummy-response-4.json"
   },

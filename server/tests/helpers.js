@@ -10,6 +10,9 @@ var test = {
   serverSpecHelper: function() {
 
     before(function (done) {
+
+      process.env.NODE_ENV = 'testing';
+
       test.ekko = new Ekko();
       test.ekko.start().then(function () {
         done();
