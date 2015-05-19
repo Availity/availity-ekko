@@ -7,7 +7,7 @@ var test = {
 
   ekko: null,
 
-  serverSpecHelper: function(){
+  serverSpecHelper: function() {
 
     before(function (done) {
       test.ekko = new Ekko();
@@ -28,7 +28,7 @@ var test = {
     return url;
   },
 
-  getFile: function (name){
+  getFile: function (name) {
     var filePath =path.join(__dirname, 'data', name);
     return filePath;
   }

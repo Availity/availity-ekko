@@ -11,7 +11,7 @@ describe('Scoring', function () {
 
   helper.serverSpecHelper();
 
-  describe('Parameters', function(){
+  describe('Parameters', function() {
 
     it('route 3 should respond with dummy-response2.json for GET with partial parameters', function (done) {
       request.get(helper.getUrl('/v1/route3?param1=1'))
@@ -61,10 +61,10 @@ describe('Scoring', function () {
           expect(_.isEqual(res.body, {'b': 2})).to.be.ok;
           done();
         });
-      });
     });
+  });
 
-  describe('Array Parameters', function(){
+  describe('Array Parameters', function() {
 
     it('should respond with dummy-response-2.json for GET with 3 matching params (1 non-array, 2 array)', function (done) {
       request.get(helper.getUrl('/v1/route4?param1=a&param2=c&param2=d'))

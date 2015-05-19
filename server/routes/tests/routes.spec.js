@@ -67,7 +67,7 @@ describe('Routes', function () {
 
     request.post(helper.getUrl('/internal/v2/route2'))
       .send({bar: 'baz'})
-      .end(function(err,res){
+      .end(function(err,res) {
         expect(err).to.be.null;
         expect(res.status).to.equal(200);
         expect(_.isEqual(res.body, {'c': 3})).to.be.ok;
@@ -78,7 +78,7 @@ describe('Routes', function () {
   it('route 4 should respond with dummy-response-2.json for POST with parameters', function (done) {
     request.post(helper.getUrl('/v1/route4'))
       .send({a:{ b: 'b'}})
-      .end(function(err,res){
+      .end(function(err,res) {
         expect(err).to.be.null;
         expect(res.status).to.equal(200);
         expect(_.isEqual(res.body, {'b': 2})).to.be.ok;

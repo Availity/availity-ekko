@@ -33,7 +33,7 @@ describe('Multi-part', function () {
         expect(_.isEqual(res.body, {'b':2})).to.be.ok;
         done();
       });
-   });
+  });
 
   it('should respond with dummy-response-2.json for 1 matching form field and one file attachment', function (done) {
     request.post(helper.getUrl('/v1/route5'))

@@ -12,7 +12,7 @@ describe('Behavior', function () {
 
   it('should respond with 404 for undefined route', function (done) {
     request.get(helper.getUrl('/dummy/route'))
-      .end(function(err,res){
+      .end(function(err,res) {
         expect(res.status).to.equal(404);
         done();
       });

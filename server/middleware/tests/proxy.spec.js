@@ -52,13 +52,13 @@ describe('Proxy', function () {
       done();
     });
 
-    if(proxy1 && proxy1.close){
+    if(proxy1 && proxy1.close) {
       proxy1.close(finished);
     }else {
       finished();
     }
 
-    if(proxy2 && proxy2.close){
+    if(proxy2 && proxy2.close) {
       proxy2.close(finished);
     }else {
       finished();
@@ -88,8 +88,7 @@ describe('Proxy', function () {
   });
 
   it('should get a response from /test/v2/route2', function(done) {
-
-   request.get(helper.getUrl('/test/v2/route2'))
+    request.get(helper.getUrl('/test/v2/route2'))
       .end(function (err, res) {
         expect(err).to.be.null;
         expect(res.status).to.equal(200);

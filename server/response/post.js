@@ -33,7 +33,7 @@ var post =  {
           return;
         }
 
-        logger.info(key + ", " + value);
+        logger.info(key + ', ' + value);
 
         req.body[key] = value;
       });

@@ -56,9 +56,7 @@ proto.set = function(options) {
   config = _.merge(config, options);
 
   // Pluck out environment specific config and save to `this.options`
-  //var environment = process.env.NODE_ENV;
-  //this.environment = environment || 'development';
-  this.environment = process.env.NODE_ENV || "development";
+  this.environment = process.env.NODE_ENV || 'development';
   this.options = config[this.environment];
 
   // Merge in any command line overrides

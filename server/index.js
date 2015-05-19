@@ -29,7 +29,6 @@ proto.start = function(options) {
   config.app.set('port', port);
   config.server = http.createServer(config.app);
 
-//  config.server.address().port ?
   return new BPromise(function (resolve, reject) {
 
     config.server.listen(config.options.servers.web.port, function () {
@@ -68,7 +67,7 @@ proto.stop = function() {
 
     var shouldClose = config.server && config.server.close;
 
-    if(!shouldClose){
+    if(!shouldClose) {
       resolve(true);
       return;
     }
