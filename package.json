@@ -4,12 +4,15 @@
   "description": "Mock server simulating Availity API rest services",
   "main": "./server/index.js",
   "scripts": {
-    "test": "gulp test",
+    "test": "./node_modules/.bin/mocha --reporter spec --recursive server",
     "start": "node index.js"
   },
   "repository": {
     "type": "git",
     "url": "ssh://git@github.com:Availity/availity-ekko.git"
+  },
+  "bugs": {
+    "url" : "https://github.com/Availity/availity-ekko/issues"
   },
   "keywords": [
     "mock",
@@ -19,10 +22,14 @@
     "availity"
   ],
   "author": "Robert McGuinness <robert.mcguinness.iii@gmail.com> (http://robmcguinness.com/)",
-  "authors": [
+  "contributors": [
     {
       "name": "Robert McGuinness",
       "email": "rob.mcguinness@availity.com"
+    },
+    {
+      "name": "Kasey Powers",
+      "url": "https://github.com/KaseyPowers"
     }
   ],
   "license": "MIT",
@@ -55,10 +62,13 @@
     "gulp-tag-version": "^1.2.1",
     "gulp-verb": "^0.3.0",
     "jshint-stylish": "^1.0.1",
+    "mocha": "^2.2.5",
     "request": "^2.54.0",
     "require-dir": "^0.3.0",
     "run-sequence": "^1.0.2",
-    "semver": "^4.3.3"
+    "semver": "^4.3.3",
+    "superagent": "^1.2.0",
+    "superagent-bluebird-promise": "^2.0.2"
   },
   "engines": {
     "node": ">=0.10.0"
