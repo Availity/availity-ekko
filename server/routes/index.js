@@ -3,6 +3,7 @@ var _ = require('lodash');
 var config = require('../config');
 var response = require('../response');
 var models = require('../models');
+var Route = models.Route;
 
 var routes = {
 
@@ -18,7 +19,7 @@ var routes = {
     config.routes = {};
 
     _.each(config.options.endpoints, function(endpoint, url) {
-      var route = new models.Route(url, endpoint);
+      var route = new Route(url, endpoint);
       self.add(route);
     });
   },

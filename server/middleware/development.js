@@ -17,7 +17,6 @@ module.exports = function development() {
   config.app.use(expressLogger('dev'));
   config.app.use(errorhandler());
   config.app.use(compression());
-  config.app.use(methodOverride('X-HTTP-Method-Override'));
   config.app.use(cors());
   config.app.use(negotiate());
 
@@ -26,9 +25,11 @@ module.exports = function development() {
   if(config.isProxyEnabled()) {
     logger.success('proxy configurations detected');
     config.app.use(proxy());
-  }else {
+  } else {
     logger.warn('no proxy configurations detected');
   }
+
+  config.app.use(methodOverride('X-HTTP-Method-Override'));
 
   config.app.use(bodyParser.json()); // parse application/json
   config.app.use(bodyParser.urlencoded({

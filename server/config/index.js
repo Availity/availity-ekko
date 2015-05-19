@@ -8,6 +8,8 @@ var Configuration = function() {
   this.app = null;
   this.router = null;
   this.routes = [];
+  this.path = null;
+  this.addressInUse = null;
 };
 
 var proto = Configuration.prototype;
@@ -18,9 +20,6 @@ var proto = Configuration.prototype;
  * @param  {Sring} path full path to configuration. Ex: path.join(__dirname, 'config.js')
 
  */
-proto.path = function(path) {
-  this.path = path;
-};
 
 proto.isProduction = function() {
   return process.env.NODE_ENV === 'production';
@@ -57,8 +56,7 @@ proto.set = function(options) {
   config = _.merge(config, options);
 
   // Pluck out environment specific config and save to `this.options`
-  var environment = process.env.NODE_ENV;
-  this.environment = environment || 'development';
+  this.environment = process.env.NODE_ENV || 'development';
   this.options = config[this.environment];
 
   // Merge in any command line overrides
@@ -71,7 +69,7 @@ proto.set = function(options) {
 
 proto.isProxyEnabled = function() {
 
-  return _.some(this.servers, function(server) {
+  return _.some(this.options.servers, function(server) {
     return server.proxy;
   });
 

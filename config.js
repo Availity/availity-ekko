@@ -44,8 +44,49 @@ var config = {
     limit: '50mb',
     servers: {
       web: {
-        host: "127.0.0.1", // 0.0.0.0 or localhost causes windows tests to fail?
-        port: 8888
+        host: "127.0.0.1" // 0.0.0.0 or localhost causes windows tests to fail?
+      },
+      api: {
+        host: "127.0.0.1",
+        port: 7777,
+        proxy: true,
+        proxies: [
+          {
+            context: "/api",
+            rewrite: {
+              from: "^/api",
+              to: ""
+            }
+          },
+          {
+            context: "/ui",
+            rewrite: {
+              from: "^/ui",
+              to: "/v1"
+            }
+          }
+        ]
+      },
+      other: {
+        host: "127.0.0.1",
+        port: 9999,
+        proxy: true,
+        proxies: [
+          {
+            context: "/api",
+            rewrite: {
+              from: "^/api",
+              to: ""
+            }
+          },
+          {
+            context: "/test",
+            rewrite: {
+              from: "^/test",
+              to: ""
+            }
+          }
+        ]
       }
     },
     data: path.join(__dirname, '/server/tests/data'),
