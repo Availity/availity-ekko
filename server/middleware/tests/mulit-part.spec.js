@@ -7,8 +7,6 @@ var expect = chai.expect;
 
 describe('Multi-part', function () {
 
-  process.env.NODE_ENV = 'testing';
-
   helper.serverSpecHelper();
 
   it('should respond with dummy-response-1.json for empty form fields and one file attachment', function (done) {

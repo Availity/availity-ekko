@@ -4,7 +4,6 @@ var chai = require('chai');
 var _ = require('lodash');
 var helper = require('../../tests/helpers');
 var expect = chai.expect;
-process.env.NODE_ENV = 'testing';
 
 describe('Headers', function () {
 

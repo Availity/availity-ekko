@@ -4,13 +4,12 @@ var chai = require('chai');
 var _ = require('lodash');
 var helper = require('../../tests/helpers');
 var expect = chai.expect;
-process.env.NODE_ENV = 'testing';
 
 describe('Routes', function () {
 
   helper.serverSpecHelper();
 
-  it('route 1 should be defined with GET, PUT, POST and DELETE', function () {
+  it('route 1 should be defined with GET, PUT, POST and DELETE', function (done) {
 
     // since no verbs were defined the the mock server
     // will configure all verbs for this route
@@ -32,14 +31,13 @@ describe('Routes', function () {
       .value();
 
       return verbs;
-
     };
 
     var _verbs = getConfiguredVerbs(helper.ekko, verbs, '/v1/route1.:format?');
 
     var count = _.intersection(verbs, _verbs).length;
     expect(count).to.equal(4);
-
+    done();
   });
 
   it('route 1 should respond with dummy-response1.json', function (done) {

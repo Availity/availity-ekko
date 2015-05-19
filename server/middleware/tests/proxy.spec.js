@@ -8,8 +8,6 @@ var expect = chai.expect;
 
 describe('Proxy', function () {
 
-  process.env.NODE_ENV = 'testing';
-
   helper.serverSpecHelper();
 
   var proxy1;
@@ -31,6 +29,7 @@ describe('Proxy', function () {
     var express = require('express');
 
     var finished = _.after(2, function() {
+      console.log('started proxy server');
       done();
     });
 
@@ -55,6 +54,7 @@ describe('Proxy', function () {
 
 
     var finished = _.after(2, function() {
+      console.log('closed proxy server');
       done();
     });
 

@@ -6,8 +6,6 @@ var expect = chai.expect;
 
 describe('Behavior', function () {
 
-  process.env.NODE_ENV = 'testing';
-
   helper.serverSpecHelper();
 
   it('should respond with 404 for undefined route', function (done) {

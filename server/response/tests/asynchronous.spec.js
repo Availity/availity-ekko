@@ -15,7 +15,6 @@ describe('Asynchronous', function () {
       .then(function(res) {
         expect(res.status).to.be.equal(202);
         expect(_.isEqual(res.body,{'c': 3})).to.be.ok;
-
         return request.get(helper.getUrl('/v1/route6'));
       })
       .then(function(res) {
