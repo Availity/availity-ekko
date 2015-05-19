@@ -25,7 +25,7 @@ describe('Asynchronous', function () {
       });
   });
 
-  it('should repeate dummy-response1.json x3 followed by a dummy-response2', function () {
+  it('should repeat dummy-response1.json x 3 followed by a dummy-response2', function (done) {
     request.get(helper.getUrl('/v1/route8'))
       .then(function (res) {
         expect(res.status).to.equal(202);
@@ -42,7 +42,6 @@ describe('Asynchronous', function () {
       }).then(function (res) {
         expect(res.status).to.equal(201);
         expect(_.isEqual(res.body, {'b': 2})).to.be.ok;
-        return request.get(helper.getUrl('/v1/route8'));
         done();
       });
   });
