@@ -8,8 +8,6 @@ var expect = chai.expect;
 
 describe('Asynchronous', function () {
 
-  process.env.NODE_ENV = 'testing';
-
   helper.serverSpecHelper();
 
   it('should respond with 202 then 201', function (done) {
@@ -23,6 +21,28 @@ describe('Asynchronous', function () {
       .then(function(res) {
         expect(res.status).to.be.equal(201);
         expect(_.isEqual(res.body, {'d': 4})).to.be.ok;
+        done();
+      });
+  });
+
+  it('should repeate dummy-response1.json x3 followed by a dummy-response2', function () {
+    request.get(helper.getUrl('/v1/route8'))
+      .then(function (res) {
+        expect(res.status).to.equal(202);
+        expect(_.isEqual(res.body, {'a': 1})).to.be.ok;
+        return request.get(helper.getUrl('/v1/route8'));
+      }).then(function (res) {
+        expect(res.status).to.equal(202);
+        expect(_.isEqual(res.body, {'a': 1})).to.be.ok;
+        return request.get(helper.getUrl('/v1/route8'));
+      }).then(function (res) {
+        expect(res.status).to.equal(202);
+        expect(_.isEqual(res.body, {'a': 1})).to.be.ok;
+        return request.get(helper.getUrl('/v1/route8'));
+      }).then(function (res) {
+        expect(res.status).to.equal(201);
+        expect(_.isEqual(res.body, {'b': 2})).to.be.ok;
+        return request.get(helper.getUrl('/v1/route8'));
         done();
       });
   });
