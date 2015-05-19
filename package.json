@@ -11,6 +11,9 @@
     "type": "git",
     "url": "ssh://git@github.com:Availity/availity-ekko.git"
   },
+  "bugs": {
+    "url" : "https://github.com/Availity/availity-ekko/issues"
+  },
   "keywords": [
     "mock",
     "api",
@@ -19,10 +22,14 @@
     "availity"
   ],
   "author": "Robert McGuinness <robert.mcguinness.iii@gmail.com> (http://robmcguinness.com/)",
-  "authors": [
+  "contributors": [
     {
       "name": "Robert McGuinness",
       "email": "rob.mcguinness@availity.com"
+    },
+    {
+      "name": "Kasey Powers",
+      "url": "https://github.com/KaseyPowers"
     }
   ],
   "license": "MIT",
