@@ -1,14 +1,13 @@
-/*globals describe, before, after, it*/
+/*globals describe, it*/
 var request = require('superagent');
 var chai = require('chai');
 var _ = require('lodash');
-var path = require('path');
 var helper = require('../../tests/helpers');
 var expect = chai.expect;
 process.env.NODE_ENV = 'testing';
 
+describe('Routes', function () {
 
-describe('Ekko | routes |', function () {
   helper.serverSpecHelper();
 
   it('route 1 should be defined with GET, PUT, POST and DELETE', function () {
@@ -17,9 +16,11 @@ describe('Ekko | routes |', function () {
     // will configure all verbs for this route
     var verbs = ['get', 'put', 'post', 'delete'];
 
-    var routeConfigs = helper.ekko.config().router.stack;
+    var getConfiguredVerbs = function(ekko, expectedVerbs, path) {
 
-    var _verbs = _.chain(routeConfigs)
+      var routeConfigs = ekko.config().router.stack;
+
+      var verbs = _.chain(routeConfigs)
       .map(function(routeConfig) {
         if(routeConfig.route.path === path) {
           return _.keys(routeConfig.route.methods)[0];
@@ -29,6 +30,15 @@ describe('Ekko | routes |', function () {
         return method !== undefined;
       })
       .value();
+
+      return verbs;
+
+    };
+
+    var _verbs = getConfiguredVerbs(helper.ekko, verbs, '/v1/route1.:format?');
+
+    var count = _.intersection(verbs, _verbs).length;
+    expect(count).to.equal(4);
 
   });
 

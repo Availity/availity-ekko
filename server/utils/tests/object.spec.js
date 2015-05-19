@@ -4,7 +4,7 @@ var object = require('../object');
 var chai = require('chai');
 var expect = chai.expect;
 
-describe('utils | object |', function () {
+describe('Object', function () {
 
   var obj1 = {
     a: {

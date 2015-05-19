@@ -1,4 +1,3 @@
-var expressLogger = require('morgan');
 var errorhandler = require('errorhandler');
 var compression = require('compression');
 var methodOverride = require('method-override');
@@ -14,7 +13,6 @@ var routes = require('../routes');
 
 module.exports = function production() {
 
-  config.app.use(expressLogger('dev'));
   config.app.use(errorhandler());
   config.app.use(compression());
   config.app.use(cors());

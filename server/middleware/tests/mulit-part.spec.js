@@ -1,13 +1,14 @@
-/*globals describe, before, after, it*/
+/*globals describe, it*/
 var request = require('superagent');
 var chai = require('chai');
 var _ = require('lodash');
 var helper = require('../../tests/helpers');
 var expect = chai.expect;
-process.env.NODE_ENV = 'testing';
 
+describe('Multi-part', function () {
 
-describe('Ekko | multi-part |', function () {
+  process.env.NODE_ENV = 'testing';
+
   helper.serverSpecHelper();
 
   it('should respond with dummy-response-1.json for empty form fields and one file attachment', function (done) {

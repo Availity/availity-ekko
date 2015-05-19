@@ -1,14 +1,15 @@
-/*globals describe, before, after, it*/
+/*globals describe, it*/
+
 var request = require('superagent-bluebird-promise');
 var chai = require('chai');
 var _ = require('lodash');
-var path = require('path');
 var helper = require('../../tests/helpers');
 var expect = chai.expect;
-process.env.NODE_ENV = 'testing';
 
+describe('Asynchronous', function () {
 
-describe('Ekko | asynchronous |', function () {
+  process.env.NODE_ENV = 'testing';
+
   helper.serverSpecHelper();
 
   it('should respond with 202 then 201', function (done) {

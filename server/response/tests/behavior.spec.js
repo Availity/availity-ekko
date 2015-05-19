@@ -1,14 +1,13 @@
-/*globals describe, before, after, it*/
+/*globals describe, it*/
 var request = require('superagent');
 var chai = require('chai');
-var _ = require('lodash');
-var path = require('path');
 var helper = require('../../tests/helpers');
 var expect = chai.expect;
-process.env.NODE_ENV = 'testing';
 
+describe('Behavior', function () {
 
-describe('Ekko | behavior |', function () {
+  process.env.NODE_ENV = 'testing';
+
   helper.serverSpecHelper();
 
   it('should respond with 404 for undefined route', function (done) {

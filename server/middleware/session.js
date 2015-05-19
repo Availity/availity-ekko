@@ -1,6 +1,6 @@
 'use strict';
 
-var logger = require('./mock.logger');
+var logger = require('../logger');
 
 /**
  * `server.options.token` is flag used to force token authentication on API request.

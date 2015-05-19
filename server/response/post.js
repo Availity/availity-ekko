@@ -1,6 +1,7 @@
 var _ = require('lodash');
 var BPromise = require('bluebird');
-var fs = require("fs");
+
+var logger = require('../logger');
 var match = require('./match');
 var result = require('./result');
 
@@ -32,7 +33,7 @@ var post =  {
           return;
         }
 
-        console.log(key + ", " + value);
+        logger.info(key + ", " + value);
 
         req.body[key] = value;
       });
