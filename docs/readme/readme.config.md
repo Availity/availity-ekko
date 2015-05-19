@@ -17,6 +17,9 @@
 ## Route Configuration
 {%= docs("configuration") %}
 
+## Proxy Configuration
+{%= docs("proxy") %}
+
 ## Authors
 {%= docs("authors") %}
 

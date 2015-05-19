@@ -29,7 +29,7 @@ gulp.task('test:js', function() {
 
   return gulp.src(config.specs.src, { read: false })
     .pipe(mocha({
-      reporter: 'list',
+      reporter: 'spec',
       globals: ['describe', 'before', 'after']
     }));
 });
