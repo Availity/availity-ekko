@@ -21,7 +21,6 @@
     "requireCurlyBraces": ["if", "else", "for", "while", "do", "try", "catch", "case", "default"],
     "requireSpaceBeforeBinaryOperators": ["+", "-", "/", "*", "=", "==", "===", "!=", "!=="],
     "requireSpaceBeforeBlockStatements": true,
-    "validateLineBreaks": "LF",
     "validateIndentation": 2,
     "validateQuoteMarks": "'",
     "requireParenthesesAroundIIFE": true,

@@ -30,8 +30,8 @@ var result =  {
   },
 
   url: function(res, response) {
-    console.log("url");
-      console.log(response);
+    console.log('url');
+    console.log(response);
 
     res.redirect(response.url);
   },
@@ -53,11 +53,12 @@ var result =  {
       // nothing cached so set the index to 0 to return the first response configuration
       index = result.cache[cacheKey] = 0;
     }else {
-      for(var i = 0; i < request.responses.length; i++){
-        if(request.responses[i].repeat && request.responses[i].repeat > 1)
+      for(var i = 0; i < request.responses.length; i++) {
+        if(request.responses[i].repeat && request.responses[i].repeat > 1) {
           innerIndex += request.responses[i].repeat;
-        else
+        }else {
           innerIndex++;
+        }
       }
 
       // increment the response index in a circular fashion
@@ -68,14 +69,15 @@ var result =  {
     // return the appropriate response object
     var response;
     innerIndex = 0;
-    for(var i = 0; i < request.responses.length; i++){
-      if(request.responses[i].repeat && request.responses[i].repeat > 1)
-        innerIndex += request.responses[i].repeat;
-      else
+    for(var j = 0; j < request.responses.length; j++) {
+      if(request.responses[j].repeat && request.responses[j].repeat > 1) {
+        innerIndex += request.responses[j].repeat;
+      }else {
         innerIndex++;
+      }
 
-      if(index < innerIndex){
-        response = request.responses[i];
+      if(index < innerIndex) {
+        response = request.responses[j];
         break;
       }
     }

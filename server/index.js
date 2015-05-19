@@ -65,11 +65,11 @@ proto.stop = function() {
 
   return new BPromise(function (resolve) {
 
-    if(config.server  && config.server.close){
-      config.server.close(function(){
+    if(config.server  && config.server.close) {
+      config.server.close(function() {
         resolve(true);
       });
-    }else{
+    }else {
       resolve(true);
     }
 

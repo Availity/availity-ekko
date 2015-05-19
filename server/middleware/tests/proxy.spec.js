@@ -17,12 +17,12 @@ describe('Proxy', function () {
   var proxy2;
   var server2;
 
-  before(function(){
+  before(function() {
     config.testing.servers.api.proxy = true;
     config.testing.servers.other.proxy = true;
   });
 
-  after(function(){
+  after(function() {
     config.testing.servers.api.proxy = false;
     config.testing.servers.other.proxy = false;
   });
