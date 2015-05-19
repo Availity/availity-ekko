@@ -1,4 +1,4 @@
-/*globals describe, before, after, it*/
+/*globals describe, beforeEach, before, after, afterEach, it*/
 var request = require('superagent');
 var chai = require('chai');
 var _ = require('lodash');
@@ -17,11 +17,17 @@ describe('Proxy', function () {
   var proxy2;
   var server2;
 
-  before(function (done) {
-
+  before(function(){
     config.testing.servers.api.proxy = true;
     config.testing.servers.other.proxy = true;
+  });
 
+  after(function(){
+    config.testing.servers.api.proxy = false;
+    config.testing.servers.other.proxy = false;
+  });
+
+  beforeEach(function (done) {
     var express = require('express');
 
     var finished = _.after(2, function() {
@@ -45,10 +51,8 @@ describe('Proxy', function () {
 
   });
 
-  after(function(done) {
+  afterEach(function(done) {
 
-    config.testing.servers.api.proxy = false;
-    config.testing.servers.other.proxy = false;
 
     var finished = _.after(2, function() {
       done();

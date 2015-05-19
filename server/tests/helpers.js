@@ -1,4 +1,4 @@
-/*globals before, after*/
+/*globals beforeEach, afterEach */
 var path = require('path');
 var config = require('../config');
 var Ekko = require('../index');
@@ -9,14 +9,14 @@ var test = {
 
   serverSpecHelper: function() {
 
-    before(function (done) {
+    beforeEach(function (done) {
       test.ekko = new Ekko();
       test.ekko.start().then(function () {
         done();
       });
     });
 
-    after(function (done) {
+    afterEach(function (done) {
       test.ekko.stop().then(function () {
         done();
       });
