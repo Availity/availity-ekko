@@ -13,7 +13,9 @@ describe('Proxy', function () {
   helper.serverSpecHelper();
 
   var proxy1;
+  var server1;
   var proxy2;
+  var server2;
 
   before(function (done) {
 
@@ -38,8 +40,8 @@ describe('Proxy', function () {
       res.json({y: 35});
     });
 
-    proxy1.listen(config.testing.servers.api.port, finished);
-    proxy2.listen(config.testing.servers.other.port, finished);
+    server1 = proxy1.listen(config.testing.servers.api.port, finished);
+    server2 = proxy2.listen(config.testing.servers.other.port, finished);
 
   });
 
@@ -52,14 +54,14 @@ describe('Proxy', function () {
       done();
     });
 
-    if(proxy1 && proxy1.close) {
-      proxy1.close(finished);
+    if(server1 && server1.close) {
+      server1.close(finished);
     }else {
       finished();
     }
 
-    if(proxy2 && proxy2.close) {
-      proxy2.close(finished);
+    if(server2 && server2.close) {
+      server2.close(finished);
     }else {
       finished();
     }
