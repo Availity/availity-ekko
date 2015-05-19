@@ -1,4 +1,4 @@
-/*globals describe, before, after, it*/
+/*globals describe, beforeEach, before, after, afterEach, it*/
 var request = require('superagent');
 var chai = require('chai');
 var _ = require('lodash');
@@ -13,13 +13,21 @@ describe('Proxy', function () {
   helper.serverSpecHelper();
 
   var proxy1;
+  var server1;
   var proxy2;
+  var server2;
 
-  before(function (done) {
-
+  before(function(){
     config.testing.servers.api.proxy = true;
     config.testing.servers.other.proxy = true;
+  });
 
+  after(function(){
+    config.testing.servers.api.proxy = false;
+    config.testing.servers.other.proxy = false;
+  });
+
+  beforeEach(function (done) {
     var express = require('express');
 
     var finished = _.after(2, function() {
@@ -38,28 +46,26 @@ describe('Proxy', function () {
       res.json({y: 35});
     });
 
-    proxy1.listen(config.testing.servers.api.port, finished);
-    proxy2.listen(config.testing.servers.other.port, finished);
+    server1 = proxy1.listen(config.testing.servers.api.port, finished);
+    server2 = proxy2.listen(config.testing.servers.other.port, finished);
 
   });
 
-  after(function(done) {
+  afterEach(function(done) {
 
-    config.testing.servers.api.proxy = false;
-    config.testing.servers.other.proxy = false;
 
     var finished = _.after(2, function() {
       done();
     });
 
-    if(proxy1 && proxy1.close) {
-      proxy1.close(finished);
+    if(server1 && server1.close) {
+      server1.close(finished);
     }else {
       finished();
     }
 
-    if(proxy2 && proxy2.close) {
-      proxy2.close(finished);
+    if(server2 && server2.close) {
+      server2.close(finished);
     }else {
       finished();
     }

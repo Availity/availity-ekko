@@ -10,8 +10,6 @@ var result =  {
 
   file: function(res, response) {
     BPromise.delay(response.latency || 200).then(function() {
-      console.log("file");
-      console.log(response);
 
       var filePath = path.join(config.options.data, response.file);
       var status = response.status || 200;
