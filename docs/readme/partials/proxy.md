@@ -3,10 +3,13 @@ You define Ekko server configurations in `config.json`.  Each configuration requ
 ##### Example 1
 >
 ```javascript
-servers: {
-    web: { // (required) server used for static resources
-        host: "0.0.0.0",
-        port: 9999
+{
+    user: 'johndoe', // automatically set the `RemoteUser` header for all proxy requests
+    servers: {
+        web: { // (required) server used for static resources
+            host: "0.0.0.0",
+            port: 9999
+        }
     }
 }
 ```
@@ -39,6 +42,9 @@ servers: {
         host: "127.0.0.1",
         port: 7777, // port number to proxied server
         proxy: true, // defaults to false.  when true the proxy is enabled
+        headers: {
+          RemoteUser: 'otheruser' // set customer header for proxy request to this server
+        },
         proxies: 
         [
             {
@@ -46,7 +52,10 @@ servers: {
                 rewrite: { // (optional) allows url to be rewritten before forwarding request to a proxied server
                     from: "^/api", // convert /api/v1/ping 
                     to: "" // to /v1/ping
-                }
+                },
+                headers: { // set customer header for requests for this context only
+                  custom1: 'abc123'
+                },
             }
         ]
     }
