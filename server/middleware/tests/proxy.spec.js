@@ -115,7 +115,7 @@ describe('Proxy', function() {
       });
   });
 
-  it('should get return the RemoteUser for /api/v1/me from testing.user', function(done) {
+  it('should set custom header from global user option', function(done) {
     request.get(helper.getUrl('/api/v1/me'))
       .end(function(err, res) {
         expect(err).to.be.null;
@@ -125,7 +125,7 @@ describe('Proxy', function() {
       });
   });
 
-  it('should get return the RemoteUser for /test1/v2/me from testing.other.headers', function(done) {
+  it('should set custom header from server options', function(done) {
     request.get(helper.getUrl('/test1/v2/me'))
       .end(function(err, res) {
         expect(err).to.be.null;
@@ -135,7 +135,7 @@ describe('Proxy', function() {
       });
   });
 
-  it('should get return the RemoteUser and custom1 for /test2/v2/me from proxy.headers', function(done) {
+  it('should set custom header from proxy options', function(done) {
     request.get(helper.getUrl('/test2/v2/me'))
       .end(function(err, res) {
         expect(err).to.be.null;
