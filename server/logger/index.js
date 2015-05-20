@@ -1,9 +1,10 @@
 var chalk = require('chalk');
+var argv = require('minimist');
 
 var logger = {
 
   log: function() {
-    if(process.env.NODE_ENV === 'testing') {
+    if(process.env.NODE_ENV === 'testing' && !argv(process.argv.slice(2)).verbose) {
       return;
     }
 

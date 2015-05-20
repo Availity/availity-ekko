@@ -24,7 +24,7 @@ var post =  {
         });
         file.on('end', function(){
           // Treat the file name as a field so we can match and score
-          console.info('File Finsished:', filename);
+          logger.info('File Finsished:' + filename);
          // console.log('File Finsished:', filename);
           req.body[fieldname] = filename;
         });
@@ -49,6 +49,7 @@ var post =  {
       });
 
       req.busboy.on('finish', function() {
+        logger.info("finished request");
         resolve(true);
       });
 
