@@ -6,7 +6,7 @@ var helper = require('../../tests/helpers');
 var config = require('../../../config');
 var expect = chai.expect;
 
-describe('Proxy', function () {
+describe('Proxy', function() {
 
   helper.serverSpecHelper();
 
@@ -25,7 +25,7 @@ describe('Proxy', function () {
     config.testing.servers.other.proxy = false;
   });
 
-  beforeEach(function (done) {
+  beforeEach(function(done) {
     var express = require('express');
 
     var finished = _.after(2, function() {
@@ -34,14 +34,29 @@ describe('Proxy', function () {
 
     proxy1 = express();
 
-    proxy1.get('/v1/route1', function (req, res) {
+    proxy1.get('/v1/route1', function(req, res) {
       res.json({z: 36});
+    });
+
+    proxy1.get('/v1/me', function(req, res) {
+      res.json({me: req.headers.remoteuser});
     });
 
     proxy2 = express();
 
     proxy2.get('/v2/route2', function(req, res) {
       res.json({y: 35});
+    });
+
+    proxy2.get('/v2/me', function(req, res) {
+      var body = {
+        'me': req.headers.remoteuser,
+        'custom1': ''
+      };
+      if (req.headers.custom1) {
+        body.custom1 = req.headers.custom1;
+      }
+      res.json(body);
     });
 
     server1 = proxy1.listen(config.testing.servers.api.port, finished);
@@ -57,13 +72,13 @@ describe('Proxy', function () {
 
     if(server1 && server1.close) {
       server1.close(finished);
-    }else {
+    } else {
       finished();
     }
 
     if(server2 && server2.close) {
       server2.close(finished);
-    }else {
+    } else {
       finished();
     }
 
@@ -72,32 +87,63 @@ describe('Proxy', function () {
   it('should get a response from /api/v1/route1', function(done) {
 
     request.get(helper.getUrl('/api/v1/route1'))
-      .end(function (err, res) {
+      .end(function(err, res) {
         expect(err).to.be.null;
         expect(res.status).to.equal(200);
-        expect(_.isEqual(res.body,{'z': 36})).to.be.ok;
+        expect(_.isEqual(res.body, {'z': 36})).to.be.ok;
         done();
       });
   });
 
   it('should rewrite /ui/route1 and proxy to /v1/route1', function(done) {
     request.get(helper.getUrl('/ui/route1'))
-      .end(function (err, res) {
+      .end(function(err, res) {
         expect(err).to.be.null;
         expect(res.status).to.equal(200);
-        expect(_.isEqual(res.body,{'z': 36})).to.be.ok;
+        expect(_.isEqual(res.body, {'z': 36})).to.be.ok;
         done();
       });
   });
 
-  it('should get a response from /test/v2/route2', function(done) {
-    request.get(helper.getUrl('/test/v2/route2'))
-      .end(function (err, res) {
+  it('should get a response from /test1/v2/route2', function(done) {
+    request.get(helper.getUrl('/test1/v2/route2'))
+      .end(function(err, res) {
         expect(err).to.be.null;
         expect(res.status).to.equal(200);
-        expect(_.isEqual(res.body,{'y': 35})).to.be.ok;
+        expect(_.isEqual(res.body, {'y': 35})).to.be.ok;
         done();
       });
   });
 
-});
+  it('should set custom header from global user option', function(done) {
+    request.get(helper.getUrl('/api/v1/me'))
+      .end(function(err, res) {
+        expect(err).to.be.null;
+        expect(res.status).to.equal(200);
+        expect(_.isEqual(res.body, {'me': 'testuser'})).to.be.ok;
+        done();
+      });
+  });
+
+  it('should set custom header from server options', function(done) {
+    request.get(helper.getUrl('/test1/v2/me'))
+      .end(function(err, res) {
+        expect(err).to.be.null;
+        expect(res.status).to.equal(200);
+        expect(_.isEqual(res.body, {'me': 'otheruser', 'custom1': ''})).to.be.ok;
+        done();
+      });
+  });
+
+  it('should set custom header from proxy options', function(done) {
+    request.get(helper.getUrl('/test2/v2/me'))
+      .end(function(err, res) {
+        expect(err).to.be.null;
+        expect(res.status).to.equal(200);
+        expect(_.isEqual(res.body, {'me': 'otheruser', 'custom1': 'abc123'})).to.be.ok;
+        done();
+      });
+  });
+
+})
+;
