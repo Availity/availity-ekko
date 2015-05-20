@@ -1,6 +1,6 @@
 {
   "name": "availity-ekko",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Mock server simulating Availity API rest services",
   "main": "./server/index.js",
   "scripts": {
@@ -12,7 +12,7 @@
     "url": "ssh://git@github.com:Availity/availity-ekko.git"
   },
   "bugs": {
-    "url" : "https://github.com/Availity/availity-ekko/issues"
+    "url": "https://github.com/Availity/availity-ekko/issues"
   },
   "keywords": [
     "mock",

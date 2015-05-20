@@ -188,6 +188,36 @@ The mock server support deeply nested introspection of JSON POST/PUT requests as
 }
 ```
 
+####### Example 10 Repeated Async
+>
+```javascript
+"v1/route10": {
+    "get": [
+      {
+        "file": "example1.json",
+        "response": [
+          {
+            "file": "example1.json",
+            "repeat": 3
+          },
+          {
+            "status": 201,
+            "file": "example2.json"
+          },
+          {
+            "file": "example3.json",
+            "repeat": 4
+          },
+          {
+            "file": "example4.json",
+            "repeat": 2
+          }
+        ]
+      }
+    ]
+  }
+```
+
 ###### Example 9 Url Redirect
 >
 ```javascript
@@ -198,25 +228,21 @@ The mock server support deeply nested introspection of JSON POST/PUT requests as
 
 
 ## Proxy Configuration
-You define Ekko server configurations in `config.json`.
-Each configuration requires a `host`.
-Other configuration options are outlined below.
-You must have a configuration called `web`.
-An example configuration looks like this:
+You define Ekko server configurations in `config.json`.  Each configuration requires a `host`.  Other configuration options are outlined below.  You must have a configuration called `web` that is used to serve static files and the proxy server.  An example configuration looks like this:
 
 ###### Example 1
 >
 ```javascript
 servers: {
-    web: {
+    web: { // (required) server used for static resources
         host: "0.0.0.0",
         port: 9999
     }
 }
 ```
 
-If you omit the port, or set it to 0, Ekko will let the OS assign a random open port. 
-This allows you to run multiple servers without keeping track of all ports being used. (As seen in Example 2)
+If you omit the port, or set it to `0`, Ekko will let the OS assign a random open port. 
+This allows you to run multiple servers without keeping track of all ports being used. (see Example 2)
 
 ###### Example 2 Dynamic Port (Ekko only)
 
@@ -225,7 +251,7 @@ This allows you to run multiple servers without keeping track of all ports being
 servers: {
     web: {
         host: "0.0.0.0",
-        //port: 0 will also create dynamic ports
+        port: 0 // dynamic port
     }
 }
 ```
@@ -241,15 +267,15 @@ servers: {
     },
     api: {
         host: "127.0.0.1",
-        port: 7777, //proxies need defined ports
-        proxy: true,
+        port: 7777, // port number to proxied server
+        proxy: true, // defaults to false.  when true the proxy is enabled
         proxies: 
         [
             {
-                context: "/api", // if url context matches the proxy is triggered for this route
-                rewrite: {
-                    from: "^/api", // (optional) allows url to be rewritten before forwarding request to proxied server
-                    to: ""
+                context: "/api", // if url context matches the proxy is triggered for all routes
+                rewrite: { // (optional) allows url to be rewritten before forwarding request to a proxied server
+                    from: "^/api", // convert /api/v1/ping 
+                    to: "" // to /v1/ping
                 }
             }
         ]
@@ -257,7 +283,7 @@ servers: {
 }
 ```
 
-###### Example 4 Multiple Proxies on one server
+###### Example 4 Multiple contexts
 
 >
 ```javascript
@@ -279,8 +305,8 @@ servers: {
                     to: ""
                 }
             },
-            {   //you can define multiple context's for a proxy server
-                context: "/api2",
+            {   
+                context: "/api2", // you can define multiple context's for a proxied server
                 rewrite: {
                     from: "^/api2",
                     to: "/v1"
@@ -291,7 +317,7 @@ servers: {
 }
 ```
 
-###### Example 5 Multiple Servers with Proxies
+###### Example 5 Multiple Proxied Servers
 >
 ```javascript
 servers: {
@@ -314,93 +340,10 @@ servers: {
             }
         ]
     }, 
-    test: { //multiple proxy servers are possible
+    other: { // define more servers to proxy
         host: "127.0.0.1",
-        port: 7777,
+        port: 8888,
         proxy: true,
-        proxies: 
-        [
-            {
-                context: "/test",
-                rewrite: {
-                    from: "^/test",
-                    to: ""
-                }
-            }
-        ]
-    }
-}
-```
-
-
-###### Example 6
->
-```javascript
-servers: {
-    web: {
-        host: "127.0.0.1",
-        port: 9999
-    },
-    api: {
-        host: "127.0.0.1",
-        port: 7777,
-        proxy: true,
-        proxies: 
-        [
-            {
-                context: "/api",    //the first defined context is used
-                rewrite: {
-                    from: "^/api",
-                    to: ""
-                }
-            }
-        ]
-    }, 
-    test: {
-        host: "127.0.0.1",
-        port: 7777,
-        proxy: true,
-        proxies: 
-        [
-            {
-                context: "/api", //as long as api proxy is true, this will not be triggered
-                rewrite: {
-                    from: "^/api",
-                    to: ""
-                }
-            }
-        ]
-    }
-}
-```
-
-###### Example 7
-
->
-```javascript
-servers: {
-    web: {
-        host: "127.0.0.1",
-        port: 9999
-    },
-    api: {
-        host: "127.0.0.1",
-        port: 7777,
-        proxy: false, //by deleting the proxy line, or setting it to false, the server will not use this server
-        proxies: 
-        [
-            {
-                context: "/api",
-                rewrite: {
-                    from: "^/api",
-                    to: ""
-                }
-            }
-        ]
-    },
-    test: {
-        host: "127.0.0.1",
-        port: 6666,
         proxies: 
         [
             {
@@ -420,6 +363,9 @@ servers: {
 
 **Robert McGuinness**
 + [rob.mcguinness@availity.com](rob.mcguinness@availity.com)
+
+**Kasey Powers**
++ []()
 
 
 
