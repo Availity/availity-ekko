@@ -21,7 +21,7 @@ var Response = function(response) {
   this.file = null;
   this.url = null;
   this.status = null;
-  this.repeat = null;
+  this.repeat = 1;
 
   if(response) {
     _.extend(this, response);
@@ -77,7 +77,7 @@ Route.prototype.addMethod = function(method, endpoint) {
   response.url = endpoint.url;
   response.latency = endpoint.latency;
   response.status = endpoint.status;
-  response.repeat = endpoint.repeat;
+  response.repeat = endpoint.repeat || 1;
 
   // Handle the syntactic sugar case where you can just define a method
   // and a file response in one line.

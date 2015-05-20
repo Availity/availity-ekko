@@ -161,8 +161,13 @@
             "repeat": 3
           },
           {
+            "status": 202,
+            "file": "dummy-response-2.json",
+            "repeat": 0
+          },
+          {
             "status": 201,
-            "file": "dummy-response-2.json"
+            "file": "dummy-response-3.json"
           }
         ]
       }

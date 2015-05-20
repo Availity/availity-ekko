@@ -39,47 +39,37 @@ var result =  {
 
     var routeId = route.id;
     var requestId = request.id;
+
     // cache: {
-    //  'route1_request2': 0
+    //  'route1_request2': [0,0] //  position 0 === response index; position 1 === repeat index
     // }
     var cacheKey = routeId + '_' + requestId;
 
-    var index = result.cache[cacheKey];
-    var innerIndex = 0;
-    if(index === undefined || index === null) {
-      // nothing cached so set the index to 0 to return the first response configuration
-      index = result.cache[cacheKey] = 0;
-    }else {
-      for(var i = 0; i < request.responses.length; i++) {
-        if(request.responses[i].repeat && request.responses[i].repeat > 1) {
-          innerIndex += request.responses[i].repeat;
-        }else {
-          innerIndex++;
-        }
-      }
+    var indexes = result.cache[cacheKey];
 
-      // increment the response index in a circular fashion
-      index = (index + 1) % innerIndex;
+    if(!indexes) { // empty cache so hydrate
+      indexes = result.cache[cacheKey] = [0, 0];
     }
-    // cache the latest index
-    result.cache[cacheKey] = index;
+
+    var responseIndex = indexes[0];
+    var repeatIndex = indexes[1];
+
+    var response = request.responses[responseIndex];
+
+    if(repeatIndex >= response.repeat) {
+      responseIndex = (responseIndex + 1) % request.responses.length;
+      repeatIndex = 0;
+    }
+
+    repeatIndex++;
+
+    // cache the latest index for the next request
+    indexes[0] = responseIndex;
+    indexes[1] = repeatIndex;
+    result.cache[cacheKey] = indexes;
 
     // return the appropriate response object
-    var response;
-    innerIndex = 0;
-    for(var j = 0; j < request.responses.length; j++) {
-      if(request.responses[j].repeat && request.responses[j].repeat > 1) {
-        innerIndex += request.responses[j].repeat;
-      }else {
-        innerIndex++;
-      }
-
-      if(index < innerIndex) {
-        response = request.responses[j];
-        break;
-      }
-    }
-
+    response = request.responses[responseIndex];
 
     if(response.file) {
       this.file(res, response);
