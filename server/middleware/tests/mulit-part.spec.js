@@ -5,7 +5,7 @@ var _ = require('lodash');
 var helper = require('../../tests/helpers');
 var expect = chai.expect;
 
-describe('Multi-part', function () {
+describe.skip('Multi-part', function () {
 
   helper.serverSpecHelper();
 
