@@ -16,7 +16,7 @@ var logger = {
   },
 
   error: function(text) {
-    this.log(chalk.red('EKKO %s'), text);
+    console.log(chalk.red('EKKO %s'), text);
   },
 
   success: function(text) {
