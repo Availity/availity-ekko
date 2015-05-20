@@ -42,6 +42,7 @@ var config = {
   testing: {
     latency: 0,
     limit: '50mb',
+    user: 'testuser',
     servers: {
       web: {
         host: "127.0.0.1" // 0.0.0.0 or localhost causes windows tests to fail?
@@ -71,18 +72,24 @@ var config = {
         host: "127.0.0.1",
         port: 9999,
         proxy: true,
+        headers: {
+          RemoteUser: 'otheruser'
+        },
         proxies: [
           {
-            context: "/api",
+            context: "/test1",
             rewrite: {
-              from: "^/api",
+              from: "^/test1",
               to: ""
             }
           },
           {
-            context: "/test",
+            headers: {
+              custom1: 'abc123'
+            },
+            context: "/test2",
             rewrite: {
-              from: "^/test",
+              from: "^/test2",
               to: ""
             }
           }
