@@ -18,14 +18,19 @@ var post =  {
 
       req.busboy.on('file', function(fieldname, file, filename) {
 
-        // Treat the file name as a field so we can match and score
-        req.body[fieldname] = filename;
-
+        file.on('error', function (error) {
+          logger.error('Error', 'Something went wrong uploading the file', error);
+         // console.log('Error', 'Something went wrong uploading the file', error);
+        });
+        file.on('end', function(){
+          // Treat the file name as a field so we can match and score
+          console.info('File Finsished:', filename);
+         // console.log('File Finsished:', filename);
+          req.body[fieldname] = filename;
+        });
         // `file` is a `ReadableStream`...always do something with it
         // else busboy won't fire the 'finish' even.  At minimum do:
         file.resume();
-        //var saveTo = path.join(os.tmpDir(), path.basename(fieldname));
-        //file.pipe(fs.createWriteStream('C:/Users/kpowers/Desktop/sample.txt'));
       });
 
       req.busboy.on('field', function(key, value) {
