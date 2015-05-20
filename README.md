@@ -233,10 +233,13 @@ You define Ekko server configurations in `config.json`.  Each configuration requ
 ###### Example 1
 >
 ```javascript
-servers: {
-    web: { // (required) server used for static resources
-        host: "0.0.0.0",
-        port: 9999
+{
+    user: 'johndoe', // globall set `RemoteUser` header across all proxy requests
+    servers: {
+        web: { // (required) server used for static resources
+            host: "0.0.0.0",
+            port: 9999
+        }
     }
 }
 ```
@@ -269,6 +272,9 @@ servers: {
         host: "127.0.0.1",
         port: 7777, // port number to proxied server
         proxy: true, // defaults to false.  when true the proxy is enabled
+        header: {
+            "userid": "johndoe" // set custom header for proxy requests to this server
+        },
         proxies: 
         [
             {
@@ -303,6 +309,9 @@ servers: {
                 rewrite: {
                     from: "^/api",
                     to: ""
+                },
+                header: {
+                    "userid": "johndoe" // set custom header for proxy requests this context for this server
                 }
             },
             {   
