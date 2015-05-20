@@ -9,7 +9,7 @@ describe('Routes', function () {
 
   helper.serverSpecHelper();
 
-  it('route 1 should be defined with GET, PUT, POST and DELETE', function (done) {
+  it('route 1 should be defined with GET, PUT, POST and DELETE', function() {
 
     // since no verbs were defined the the mock server
     // will configure all verbs for this route
@@ -37,7 +37,6 @@ describe('Routes', function () {
 
     var count = _.intersection(verbs, _verbs).length;
     expect(count).to.equal(4);
-    done();
   });
 
   it('route 1 should respond with dummy-response1.json', function (done) {

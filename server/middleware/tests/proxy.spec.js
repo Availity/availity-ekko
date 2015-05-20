@@ -29,7 +29,6 @@ describe('Proxy', function () {
     var express = require('express');
 
     var finished = _.after(2, function() {
-      console.log('started proxy server');
       done();
     });
 
@@ -52,9 +51,7 @@ describe('Proxy', function () {
 
   afterEach(function(done) {
 
-
     var finished = _.after(2, function() {
-      console.log('closed proxy server');
       done();
     });
 

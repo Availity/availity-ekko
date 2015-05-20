@@ -63,7 +63,6 @@
     "gulp-verb": "^0.3.0",
     "jshint-stylish": "^1.0.1",
     "mocha": "^2.2.5",
-    "request": "^2.54.0",
     "require-dir": "^0.3.0",
     "run-sequence": "^1.0.2",
     "semver": "^4.3.3",
