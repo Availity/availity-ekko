@@ -43,7 +43,7 @@ servers: {
         port: 7777, // port number to proxied server
         proxy: true, // defaults to false.  when true the proxy is enabled
         headers: {
-          RemoteUser: 'otheruser' // set customer header for proxy request to this server
+          RemoteUser: 'otheruser' // set custom header for proxy request to this server
         },
         proxies: 
         [
@@ -53,7 +53,7 @@ servers: {
                     from: "^/api", // convert /api/v1/ping 
                     to: "" // to /v1/ping
                 },
-                headers: { // set customer header for requests for this context only
+                headers: { // set custom header for requests for this proxy context only
                   custom1: 'abc123'
                 },
             }
