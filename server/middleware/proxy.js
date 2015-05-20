@@ -16,6 +16,14 @@ var buildProxyCache = function() {
 
   cache = [];
 
+
+  if(config.options.user) {
+    config.headers = {
+      'RemoteUser': config.options.user
+    };
+  }
+
+
   // for each server configuration...
   _.each(config.options.servers, function(server) {
 
@@ -26,14 +34,10 @@ var buildProxyCache = function() {
 
     // ... get the proxy configuration and push into cache
     _.each(server.proxies, function(proxy) {
-      var headers = _.extend({
-        'RemoteUser': config.options.user
-      }, server.headers, proxy.headers);
-
       var proxyConfig = {
         port: server.port,
         host: server.host || 'localhost',
-        headers: headers,
+        headers: _.extend({}, config.headers, server.headers, proxy.headers),
         context: proxy.context,
         rewrite: proxy.rewrite
       };
