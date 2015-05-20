@@ -3,8 +3,8 @@ var mocha = require('gulp-mocha');
 var istanbul = require('gulp-istanbul');
 var config = require('../config');
 
-gulp.task('test', ['test:js']);
-gulp.task('coverage', ['coverage:js']);
+gulp.task('test', ['coverage']);
+gulp.task('coverage', ['lint', 'coverage:js']);
 
 gulp.task('coverage:js', function(done) {
 
