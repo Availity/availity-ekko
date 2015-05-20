@@ -26,21 +26,18 @@ var buildProxyCache = function() {
 
     // ... get the proxy configuration and push into cache
     _.each(server.proxies, function(proxy) {
-
-      var host = server.host || 'localhost';
-
-      logger.warn('proxy created for context[' +  proxy.context + '] host[' + host + ':' + server.port + ']');
-      if(proxy.rewrite) {
-        logger.warn('rewrite rule created for: [' + proxy.rewrite.from + ' ==> ' + proxy.rewrite.to + '].');
-      }
-
-      cache.push({
+      var proxyConfig = {
         port: server.port,
         host: server.host || 'localhost',
+        user: proxy.user || config.options.user,
         context: proxy.context,
         rewrite: proxy.rewrite
-      });
-
+      };
+      logger.warn('proxy created for context[' + proxyConfig.context + '] host[' + proxyConfig.host + ':' + proxyConfig.port + ']' + '] user[' + proxyConfig.user + ']');
+      if(proxyConfig.rewrite) {
+        logger.warn('rewrite rule created for: [' + proxyConfig.rewrite.from + ' ==> ' + proxyConfig.rewrite.to + '].');
+      }
+      cache.push(proxyConfig);
     });
 
   });
@@ -49,13 +46,12 @@ var buildProxyCache = function() {
 
 // Rewrite the url and add the appropriate header if applicable
 var buildRequest = function(req, proxyConfig) {
-
   if(proxyConfig.rewrite) {
-
     req.url = req.url.replace(new RegExp(proxyConfig.rewrite.from), proxyConfig.rewrite.to);
   }
-  if(config.user) {
-    req.headers['RemoteUser'] = config.user;
+
+  if(proxyConfig.user) {
+    req.headers['RemoteUser'] = proxyConfig.user;
   }
 
 };
@@ -85,7 +81,7 @@ module.exports = function proxy() {
         logger.error(e);
       });
 
-    }else {
+    } else {
       next();
     }
 
