@@ -30,9 +30,6 @@ var result =  {
   },
 
   url: function(res, response) {
-    console.log('url');
-    console.log(response);
-
     res.redirect(response.url);
   },
 
@@ -66,6 +63,7 @@ var result =  {
     }
     // cache the latest index
     result.cache[cacheKey] = index;
+
     // return the appropriate response object
     var response;
     innerIndex = 0;
