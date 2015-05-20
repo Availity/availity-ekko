@@ -29,7 +29,7 @@ var buildProxyCache = function() {
       var proxyConfig = {
         port: server.port,
         host: server.host || 'localhost',
-        user: proxy.user || config.options.user,
+        user: server.user || config.options.user,
         context: proxy.context,
         rewrite: proxy.rewrite
       };

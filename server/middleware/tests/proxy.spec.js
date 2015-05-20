@@ -38,10 +38,18 @@ describe('Proxy', function () {
       res.json({z: 36});
     });
 
+    proxy1.get('/v1/me', function (req, res) {
+      res.json({me: req.headers.remoteuser});
+    });
+
     proxy2 = express();
 
     proxy2.get('/v2/route2', function(req, res) {
       res.json({y: 35});
+    });
+
+    proxy2.get('/v2/me', function (req, res) {
+      res.json({me: req.headers.remoteuser});
     });
 
     server1 = proxy1.listen(config.testing.servers.api.port, finished);
@@ -96,6 +104,26 @@ describe('Proxy', function () {
         expect(err).to.be.null;
         expect(res.status).to.equal(200);
         expect(_.isEqual(res.body,{'y': 35})).to.be.ok;
+        done();
+      });
+  });
+
+  it('should get return the RemoteUser for /api/v1/me from testing.user', function(done) {
+    request.get(helper.getUrl('/api/v1/me'))
+      .end(function (err, res) {
+        expect(err).to.be.null;
+        expect(res.status).to.equal(200);
+        expect(_.isEqual(res.body,{'me': 'testuser'})).to.be.ok;
+        done();
+      });
+  });
+
+  it('should get return the RemoteUser for /test/v2/me from testing.other.user', function(done) {
+    request.get(helper.getUrl('/test/v2/me'))
+      .end(function (err, res) {
+        expect(err).to.be.null;
+        expect(res.status).to.equal(200);
+        expect(_.isEqual(res.body,{'me': 'otheruser'})).to.be.ok;
         done();
       });
   });
