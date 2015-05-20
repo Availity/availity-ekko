@@ -20,12 +20,11 @@ var post =  {
 
         file.on('error', function (error) {
           logger.error('Error', 'Something went wrong uploading the file', error);
-         // console.log('Error', 'Something went wrong uploading the file', error);
+          // console.log('Error', 'Something went wrong uploading the file', error);
         });
-        file.on('end', function(){
+        file.on('end', function() {
           // Treat the file name as a field so we can match and score
           logger.info('File Finsished:' + filename);
-         // console.log('File Finsished:', filename);
           req.body[fieldname] = filename;
         });
         // `file` is a `ReadableStream`...always do something with it
@@ -49,7 +48,7 @@ var post =  {
       });
 
       req.busboy.on('finish', function() {
-        logger.info("finished request");
+        logger.info('finished request');
         resolve(true);
       });
 
