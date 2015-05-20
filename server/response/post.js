@@ -39,6 +39,7 @@ var post =  {
       });
 
       req.busboy.on('error', function(err) {
+        logger.error(err);
         reject(err);
       });
 
@@ -56,6 +57,8 @@ var post =  {
     post.multipart(req).then(function() {
       match.set(req, res);
       result.send(req, res);
+    }, function() {
+      res.status(500).send({ error: 'mock server error' });
     });
   }
 };
