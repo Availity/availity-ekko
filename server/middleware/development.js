@@ -36,7 +36,7 @@ module.exports = function development() {
     extended: true,
     limit: config.options.limit
   })); // // parse application/x-www-form-urlencoded
-  config.app.use(busboy({ immediate: true }));
+  config.app.use(busboy({ immediate: false }));
 
   config.app.use('/', config.router);
   routes.init();
