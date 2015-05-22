@@ -87,9 +87,9 @@ var config = {
             headers: {
               custom1: 'abc123'
             },
-            context: "/test2",
+            context: "/public/api",
             rewrite: {
-              from: "^/test2",
+              from: "^/public/api",
               to: ""
             }
           }

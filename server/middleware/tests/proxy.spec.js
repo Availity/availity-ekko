@@ -135,12 +135,11 @@ describe('Proxy', function() {
       });
   });
 
-  it('should set custom header from proxy options', function(done) {
-    request.get(helper.getUrl('/test2/v2/me'))
-      .end(function(err, res) {
+  it('should get a response from /public/api/v2/route2', function(done) {
+    request.get(helper.getUrl('/public/api/v2/route2'))
+      .end(function (err, res) {
         expect(err).to.be.null;
         expect(res.status).to.equal(200);
-        expect(_.isEqual(res.body, {'me': 'otheruser', 'custom1': 'abc123'})).to.be.ok;
         done();
       });
   });

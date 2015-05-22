@@ -39,6 +39,8 @@ module.exports = function development() {
   config.app.use(busboy({ immediate: false }));
 
   config.app.use('/', config.router);
+  config.app.use('/api', config.router);
+  config.app.use('/public/api', config.router);
   routes.init();
 
 };

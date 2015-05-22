@@ -25,6 +25,7 @@ module.exports = function production() {
 
   config.app.use('/', config.router);
   config.app.use('/api', config.router);
+  config.app.use('/public/api', config.router);
   routes.init();
 
   var options = { maxAge: config.options.cache}; // one day
