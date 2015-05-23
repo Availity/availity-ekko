@@ -159,7 +159,7 @@ The mock server support deeply nested introspection of JSON POST/PUT requests as
 }
 ```
 
-###### Example 10 Repeated Async
+##### Example 10 Async with repeat option
 >
 ```javascript
 "v1/route10": {
@@ -168,20 +168,22 @@ The mock server support deeply nested introspection of JSON POST/PUT requests as
         "file": "example1.json",
         "response": [
           {
+            "status": 202,
             "file": "example1.json",
             "repeat": 3
           },
           {
-            "status": 201,
+            "status": 202,
             "file": "example2.json"
           },
           {
+            "status": 202,
             "file": "example3.json",
             "repeat": 4
           },
           {
-            "file": "example4.json",
-            "repeat": 2
+            "status": 201,
+            "file": "example4.json"      
           }
         ]
       }
