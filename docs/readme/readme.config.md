@@ -20,6 +20,9 @@
 ## Proxy Configuration
 {%= docs("proxy") %}
 
+## Contributing
+{%= docs("contributing") %}
+
 ## Authors
 {%= docs("authors") %}
 
