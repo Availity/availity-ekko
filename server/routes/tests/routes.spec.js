@@ -94,4 +94,26 @@ describe('Routes', function () {
       });
   });
 
+  it('route 9 should response with dummy-response1.json and status 201 for GET', function (done) {
+
+    request.get(helper.getUrl('/v1/route9'))
+      .end(function (err, res) {
+        expect(err).to.be.null;
+        expect(res.status).to.equal(201);
+        expect(_.isEqual(res.body, {'a': 1})).to.be.ok;
+        done();
+      });
+  });
+
+  it('route 9 should response with dummy-response2.json and status 422 for POST', function (done) {
+
+    request.post(helper.getUrl('/v1/route9'))
+      .end(function (err, res) {
+        expect(err).to.be.null;
+        expect(res.status).to.equal(203);
+        expect(_.isEqual(res.body, {'b': 2})).to.be.ok;
+        done();
+      });
+  });
+
 });
