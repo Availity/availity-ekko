@@ -65,6 +65,9 @@ var config = {
               from: "^/ui",
               to: "/v1"
             }
+          },
+          {
+            context: "/services"
           }
         ]
       },
