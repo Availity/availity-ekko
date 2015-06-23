@@ -71,7 +71,7 @@ module.exports = function proxy() {
   return function(req, res, next) {
 
     var proxyConfig = _.find(cache, function(config) {
-      return req.url.match(new RegExp('^\\' + config.context + '\/.*'));
+      return req.url.match(new RegExp('^\\' + config.context + '.*'));
     });
 
     if(proxyConfig) {

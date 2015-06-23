@@ -12,6 +12,7 @@
   * [Intro](#intro)
   * [Route Configuration](#route-configuration)
   * [Proxy Configuration](#proxy-configuration)
+  * [Contributing](#contributing)
   * [Authors](#authors)
   * [Disclaimer](#disclaimer)
   * [License](#license)
@@ -368,13 +369,21 @@ servers: {
 ```
 
 
+## Contributing
+To update master:
+
+* merge pull request into develop branch
+* Once tests are finished and they succeed, run "gulp release"
+* This will update version number, push to develop, then merge into master
+
+
 ## Authors
 
 **Robert McGuinness**
 + [rob.mcguinness@availity.com](rob.mcguinness@availity.com)
 
 **Kasey Powers**
-+ []()
++ [kasey.powers@availity.com](kasey.powers@availity.com)
 
 
 

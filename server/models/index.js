@@ -20,14 +20,24 @@ var Response = function(response) {
   this.headers = null;
   this.file = null;
   this.url = null;
+  this.latency = null;
   this.status = null;
   this.repeat = 1;
 
   if(response) {
-    _.extend(this, response);
+    this.changeResponse(response);
   }
 
   this.id = _.uniqueId('response');
+};
+
+Response.prototype.changeResponse = function(response) {
+  this.headers = response.headers || this.headers;
+  this.file = response.file || this.file;
+  this.url = response.url || this.url;
+  this.latency = response.latency || this.latency;
+  this.status = response.status || this.status;
+  this.repeat = response.repeat || this.repeat;
 };
 
 //-- Route
@@ -73,11 +83,7 @@ Route.prototype.addMethod = function(method, endpoint) {
   //   "file": "example2.json"
   // }
   var response = new Response();
-  response.file = endpoint.file;
-  response.url = endpoint.url;
-  response.latency = endpoint.latency;
-  response.status = endpoint.status;
-  response.repeat = endpoint.repeat || 1;
+  response.changeResponse(endpoint);
 
   // Handle the syntactic sugar case where you can just define a method
   // and a file response in one line.
@@ -120,8 +126,8 @@ Route.prototype.addMethod = function(method, endpoint) {
 
         // If necessary, override the default response from the routes global response.
         if(self.methods[method][0]) {
-          self.methods[method][0].responses[0].file = _request.file;
-          self.methods[method][0].responses[0].url  = _request.file;
+          self.methods[method][0].responses[0].changeResponse(_request);
+          //self.methods[method][0].responses[0].url  = _request.file;
         }
 
         return;
@@ -141,10 +147,7 @@ Route.prototype.addMethod = function(method, endpoint) {
       // if a request configuration has both a file and response attribute defined, ignore the file
       // attribute and continue...this is most likely an async configuration
       if((_request.file || _request.url || _request.status) && !_.isArray(_request.response)) {
-        response = new Response();
-        response.file = _request.file;
-        response.url = _request.url;
-        response.status  = _request.status;
+        response = new Response(_request);
         request.responses.push(response);
       }
 
@@ -160,7 +163,8 @@ Route.prototype.addMethod = function(method, endpoint) {
       // ]...
       if(_.isArray(_request.response)) {
         _.each(_request.response, function(_response) {
-          var r = new Response(_response);
+          var r = new Response(_request);
+          r.changeResponse(_response);
           request.responses.push(r);
         });
       }

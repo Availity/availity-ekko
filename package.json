@@ -1,6 +1,6 @@
 {
   "name": "availity-ekko",
-  "version": "0.2.1",
+  "version": "0.2.3",
   "description": "Mock server simulating Availity API rest services",
   "main": "./server/index.js",
   "scripts": {
