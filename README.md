@@ -275,7 +275,7 @@ servers: {
         host: "127.0.0.1",
         port: 7777, // port number to proxied server
         proxy: true, // defaults to false.  when true the proxy is enabled
-        header: {
+        headers: {
             "userid": "johndoe" // set custom header for proxy requests to this server
         },
         proxies: 
@@ -313,7 +313,7 @@ servers: {
                     from: "^/api",
                     to: ""
                 },
-                header: {
+                headers: {
                     "userid": "johndoe" // set custom header for proxy requests this context for this server
                 }
             },
