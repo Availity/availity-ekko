@@ -10,6 +10,7 @@
 
 # Table of Contents
   * [Intro](#intro)
+  * [Server Configuraiton](#server-configuraiton)
   * [Route Configuration](#route-configuration)
   * [Proxy Configuration](#proxy-configuration)
   * [Contributing](#contributing)
@@ -19,12 +20,43 @@
 
 
 ## Intro
-Develop your web application with no dependencies on back end services by running a simple Express http server which can deliver mock responses. 
+Develop web applications without heavy back-end services by running a simple Express http server which can deliver mock responses. 
 
-Responses can be JSON, XML,to simulate REST or SOAP services. Access-Control HTTP Headers are set by default to allow CORS requests. Mock services are configured in the [routes.json](./routes.json) file.
+Responses can be JSON, XML, to simulate REST services. Access-Control HTTP Headers are set by default to allow CORS requests. Mock services are configured in the [routes.json](./routes.json) file.
 
 >
 This server can return other file types besides XML or JSON (PDFs, images, etc).  The appropriate response headers will be automatically set for different file types.  For a complete list of file types supported view the [mime types here](https://github.com/jshttp/mime-db/blob/88d8b0424d93aefef4ef300dc35ad2c8d1e1f9d4/db.json).
+
+
+## Server Configuraiton
+The default server configuration can be found in [config.js](./config.js).  Pass a different configuration file to the Ekko server to override the defaults.
+
+```js
+var path = require('path');
+var Ekko = require('availity-ekko');
+
+var configPath = path.join(__dirname, 'path/to/config.js');
+
+var ekko = new Ekko(configPath);
+ekko.start();
+```
+
+Ekko also supports overriding defaults using command line arguments (useful to setup different configurations in WebStorm).  The CLI commands are equivalent to the `config.js` object using dot notation.  Using example configuration below, run `node index.js --severs.web.port=8888` o override the web server port for `development` mode.
+
+```javascript
+{
+  development: {
+    ...
+    servers: {
+      web: {
+        host: "0.0.0.0",
+        port: 9999
+      }
+    }
+    ...
+  }
+}
+```
 
 
 ## Route Configuration
@@ -36,7 +68,7 @@ The mock server support deeply nested introspection of JSON POST/PUT requests as
 >
 ```javascript
 "v1/route1": {
-  "file": "example1.json" // response for all GET|PUT|POST|DELETE requests
+  "file": "example1.json" // match for GET|PUT|POST|DELETE 
 }
 ```
 
@@ -45,7 +77,7 @@ The mock server support deeply nested introspection of JSON POST/PUT requests as
 ```javascript
 "v1/route2": {
   "latency": 250, // latency in (ms) 
-  "file": "example2.json", // response for all GET|PUT|POST|DELETE requests
+  "file": "example2.json", // match for all GET|PUT|POST|DELETE requests
   "status": 201 // return status code 201
 }
 ```
@@ -55,8 +87,8 @@ The mock server support deeply nested introspection of JSON POST/PUT requests as
 >
 ```javascript
 "v1/route3": {
-  "file": "example3.json", // response for GET|PUT|DELETE requests
-  "post": "example1.json" // response for POST requests
+  "file": "example3.json", // match for GET|PUT|DELETE requests
+  "post": "example1.json" // match for POST requests
 }
 ```
 
@@ -65,10 +97,10 @@ The mock server support deeply nested introspection of JSON POST/PUT requests as
 >
 ```javascript
 "v1/route4": {
-  "get": "example1.json", // response for all GET requests 
-  "put": "example2.json", // response for all PUT requests
-  "post": "example3.json", // response for all POST requests
-  "delete": "example4.json" // response for all DELETE requests
+  "get": "example1.json", // match for all GET requests 
+  "put": "example2.json", // match for all PUT requests
+  "post": "example3.json", // match for all POST requests
+  "delete": "example4.json" // match for all DELETE requests
 }
 ```
 
@@ -77,12 +109,12 @@ The mock server support deeply nested introspection of JSON POST/PUT requests as
 >
 ```javascript
 "v1/route5": {
-  "file": "example1.json", // response for all POST|PUT|DELETE requests
+  "file": "example1.json", // match for all POST|PUT|DELETE requests
   "get": [
     {
       "file": "example2.json",
       "status": 200, // default status code is 200
-      "params": { // response for GET /v1/router?a=1&b=2&c=3
+      "params": { // match for GET /v1/router?a=1&b=2&c=3
         "a": "1",
         "b": "2",
         "c": "3"
@@ -90,7 +122,7 @@ The mock server support deeply nested introspection of JSON POST/PUT requests as
     },
     {
       "file": "example3.json",
-      "params": { // response for GET /v1/router?a=1&a=2&a=3&a=4
+      "params": { // match for GET /v1/router?a=1&a=2&a=3&a=4
         "a": [1, 2, 3, 4] 
       }
     }
@@ -102,23 +134,23 @@ The mock server support deeply nested introspection of JSON POST/PUT requests as
 >
 ```javascript
 "v1/route6": {
-  "file": "example1.json", // response for all GET|PUT|DELETE requests
+  "file": "example1.json", // match for all GET|PUT|DELETE requests
   "post": [
     {
       "file": "example2.json",
-      "params": { // response for POST with JSON payload {"a": 1}
+      "params": { // match for POST with JSON payload {"a": 1}
         "a": 1
       }
     },
     {
       "file": "example3.json",
-      "params": { // response for POST with JSON payload {a: {b: {c: "1"} } }
+      "params": { // match for POST with JSON payload {a: {b: {c: "1"} } }
         "a.b.c": 1 // config allows for nested attributes
       }
     },
     {
       "file": "example4.json",
-      "params": { // response for POST with JSON payload {a : {b: [0,1,2] } }
+      "params": { // match for POST with JSON payload {a : {b: [0,1,2] } }
         "a.b[2]": 2 // config allows for nested array attributes
       }
     }
@@ -140,21 +172,21 @@ The mock server support deeply nested introspection of JSON POST/PUT requests as
 >
 ```javascript
 "v1/route7": {
-  "file": "example1.json", // response for all GET|PUT|DELETE requests
+  "file": "example1.json", // match for all GET|PUT|DELETE requests
   "post": [
     {
       "file": "example2.json" // default response if none match below      
     },
     {
       "file": "example3.json",
-      "params": { // response for form submit where form fields a=1 and b="sample.pdf"
+      "params": { // match for form submit where form fields a=1 and b="sample.pdf"
         "a": 1,
         "b": "sample.pdf"
       }
     },
     {
       "file": "example4.json",
-      "params": { // response for form submit where form fields a=2 and b="another.name.jpg"
+      "params": { // match for form submit where form fields a=2 and b="another.name.jpg"
         "a": 2,
         "b": "another.name.jpg"
       }
@@ -174,12 +206,12 @@ The mock server support deeply nested introspection of JSON POST/PUT requests as
       "file": "example1.json",
       "response": [ 
         {
-          // response for first GET request to /v1/route8
+          // match for first GET request to /v1/route8
           "status": 202,
           "file": "example1.json"
         },
         {
-          // response for second GET request to /v1/route8
+          // match for second GET request to /v1/route8
           "status": 201,
           "file": "example2.json"
         }
@@ -237,7 +269,7 @@ You define Ekko server configurations in `config.json`.  Each configuration requ
 >
 ```javascript
 {
-    user: 'johndoe', // globall set `RemoteUser` header across all proxy requests
+    user: 'johndoe', // global set `RemoteUser` header across all proxy requests
     servers: {
         web: { // (required) server used for static resources
             host: "0.0.0.0",
@@ -372,11 +404,13 @@ servers: {
 
 
 ## Contributing
-To update master:
-
-* merge pull request into develop branch
-* Once tests are finished and they succeed, run "gulp release"
-* This will update version number, push to develop, then merge into master
+1. `git clone https://github.com/Availity/availity-ekko`
+1. `git checkout develop`
+1. `git pull upstream develop`
+1. `git checkout -b feature/branch-name`
+1. Create some awesome code or fabulous bug fixes
+1. Open a [pull request](https://help.github.com/articles/using-pull-requests/) against the develop branch
+1. Wait for a commiter to merge and release
 
 
 ## Authors
