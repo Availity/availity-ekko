@@ -5,7 +5,7 @@ var dateformat = require('dateformat');
 var logger = {
 
   prefix: function() {
-    var time = '['+chalk.grey(dateformat(new Date(), 'HH:MM:ss'))+'] '+ chalk.grey('EKKO');
+    var time = '[' + chalk.grey(dateformat(new Date(), 'HH:MM:ss')) + '] ' + chalk.grey('EKKO');
     process.stdout.write(time + ' - ');
   },
 
@@ -61,7 +61,7 @@ var logger = {
   start: function(port, mode) {
     this.log(
       chalk.grey('Started',
-        chalk.green('http://localhost:'+port),
+        chalk.green('http://localhost:' + port),
         'in',
         chalk.magenta('%s'),
         'mode'
