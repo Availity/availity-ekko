@@ -1,14 +1,22 @@
 var chalk = require('chalk');
 var argv = require('minimist');
+var dateformat = require('dateformat');
 
 var logger = {
 
+  prefix: function() {
+    var time = '['+chalk.grey(dateformat(new Date(), 'HH:MM:ss'))+'] '+ chalk.grey('EKKO');
+    process.stdout.write(time + ' - ');
+  },
+
   log: function() {
-    if(process.env.NODE_ENV === 'testing' && !argv(process.argv.slice(2)).verbose) {
+
+    if(process.env.NODE_ENV === 'testing' && !argv.verbose) {
       return;
     }
 
     var args = Array.prototype.slice.call(arguments);
+    this.prefix();
     console.log.apply(console, args);
   },
 
@@ -17,24 +25,25 @@ var logger = {
   },
 
   error: function(text) {
-    console.log(chalk.red('EKKO %s'), text);
+    this.prefix();
+    console.log(chalk.red('%s'), text);
   },
 
   success: function(text) {
-    this.log(chalk.green('EKKO %s'), text);
+    this.log(chalk.green('%s'), text);
   },
 
   warn: function(text) {
-    this.log(chalk.yellow('EKKO %s'), text);
+    this.log(chalk.yellow('%s'), text);
   },
 
   info: function(text) {
-    this.log(chalk.gray('EKKO %s'), text);
+    this.log(chalk.gray('%s'), text);
   },
 
   fileNotFound: function(file) {
     this.log(chalk.yellow(
-      'EKKO file ',
+      'File ',
       chalk.cyan('%s'),
       'not found'
     ), file);
@@ -42,7 +51,7 @@ var logger = {
 
   fileFound: function(status, file) {
     this.log(chalk.green(
-      'EKKO file',
+      'File',
       chalk.cyan('%s'),
       'return with status',
       chalk.cyan('%s')
@@ -50,18 +59,18 @@ var logger = {
   },
 
   start: function(port, mode) {
-    this.log(chalk.green(
-      'EKKO server started on PORT',
-      chalk.cyan('%s'),
-      'in',
-      chalk.magenta('%s'),
-      'mode'
-    ), port, mode.toUpperCase());
+    this.log(
+      chalk.grey('Started',
+        chalk.green('http://localhost:'+port),
+        'in',
+        chalk.magenta('%s'),
+        'mode'
+      ), mode.toUpperCase());
   },
 
   url: function(text, url) {
     this.log(chalk.blue(
-      'EKKO %s',
+      '%s',
       chalk.yellow('[%s]')
     ), text, url);
   }

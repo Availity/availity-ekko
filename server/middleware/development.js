@@ -23,10 +23,10 @@ module.exports = function development() {
   // Proxies must be configured before the mock routes so they can be intercepted
   // and forwarded to appropriate server
   if(config.isProxyEnabled()) {
-    logger.success('proxy configurations detected');
+    logger.success('Proxy configurations detected');
     config.app.use(proxy());
   } else {
-    logger.warn('no proxy configurations detected');
+    logger.warn('No proxy configurations detected');
   }
 
   config.app.use(methodOverride('X-HTTP-Method-Override'));

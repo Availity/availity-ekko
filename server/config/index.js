@@ -61,9 +61,9 @@ proto.set = function(options) {
 
   // Merge in any command line overrides
   var args = argv(process.argv.slice(2));
-  if(args.servers) {
-    this.options = _.merge(this.options, args);
-  }
+
+  this.options = _.merge(this.options, args);
+
 
 };
 
