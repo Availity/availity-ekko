@@ -2,7 +2,7 @@ The default server configuration can be found in [config.js](./config.js).  Pass
 
 ```js
 var path = require('path');
-var Ekko = require('./server');
+var Ekko = require('availity-ekko');
 
 var configPath = path.join(__dirname, 'path/to/config.js');
 
