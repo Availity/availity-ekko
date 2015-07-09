@@ -6,7 +6,7 @@ The mock server support deeply nested introspection of JSON POST/PUT requests as
 >
 ```javascript
 "v1/route1": {
-  "file": "example1.json" // response for all GET|PUT|POST|DELETE requests
+  "file": "example1.json" // match for GET|PUT|POST|DELETE 
 }
 ```
 
@@ -15,7 +15,7 @@ The mock server support deeply nested introspection of JSON POST/PUT requests as
 ```javascript
 "v1/route2": {
   "latency": 250, // latency in (ms) 
-  "file": "example2.json", // response for all GET|PUT|POST|DELETE requests
+  "file": "example2.json", // match for all GET|PUT|POST|DELETE requests
   "status": 201 // return status code 201
 }
 ```
@@ -25,8 +25,8 @@ The mock server support deeply nested introspection of JSON POST/PUT requests as
 >
 ```javascript
 "v1/route3": {
-  "file": "example3.json", // response for GET|PUT|DELETE requests
-  "post": "example1.json" // response for POST requests
+  "file": "example3.json", // match for GET|PUT|DELETE requests
+  "post": "example1.json" // match for POST requests
 }
 ```
 
@@ -35,10 +35,10 @@ The mock server support deeply nested introspection of JSON POST/PUT requests as
 >
 ```javascript
 "v1/route4": {
-  "get": "example1.json", // response for all GET requests 
-  "put": "example2.json", // response for all PUT requests
-  "post": "example3.json", // response for all POST requests
-  "delete": "example4.json" // response for all DELETE requests
+  "get": "example1.json", // match for all GET requests 
+  "put": "example2.json", // match for all PUT requests
+  "post": "example3.json", // match for all POST requests
+  "delete": "example4.json" // match for all DELETE requests
 }
 ```
 
@@ -47,12 +47,12 @@ The mock server support deeply nested introspection of JSON POST/PUT requests as
 >
 ```javascript
 "v1/route5": {
-  "file": "example1.json", // response for all POST|PUT|DELETE requests
+  "file": "example1.json", // match for all POST|PUT|DELETE requests
   "get": [
     {
       "file": "example2.json",
       "status": 200, // default status code is 200
-      "params": { // response for GET /v1/router?a=1&b=2&c=3
+      "params": { // match for GET /v1/router?a=1&b=2&c=3
         "a": "1",
         "b": "2",
         "c": "3"
@@ -60,7 +60,7 @@ The mock server support deeply nested introspection of JSON POST/PUT requests as
     },
     {
       "file": "example3.json",
-      "params": { // response for GET /v1/router?a=1&a=2&a=3&a=4
+      "params": { // match for GET /v1/router?a=1&a=2&a=3&a=4
         "a": [1, 2, 3, 4] 
       }
     }
@@ -72,23 +72,23 @@ The mock server support deeply nested introspection of JSON POST/PUT requests as
 >
 ```javascript
 "v1/route6": {
-  "file": "example1.json", // response for all GET|PUT|DELETE requests
+  "file": "example1.json", // match for all GET|PUT|DELETE requests
   "post": [
     {
       "file": "example2.json",
-      "params": { // response for POST with JSON payload {"a": 1}
+      "params": { // match for POST with JSON payload {"a": 1}
         "a": 1
       }
     },
     {
       "file": "example3.json",
-      "params": { // response for POST with JSON payload {a: {b: {c: "1"} } }
+      "params": { // match for POST with JSON payload {a: {b: {c: "1"} } }
         "a.b.c": 1 // config allows for nested attributes
       }
     },
     {
       "file": "example4.json",
-      "params": { // response for POST with JSON payload {a : {b: [0,1,2] } }
+      "params": { // match for POST with JSON payload {a : {b: [0,1,2] } }
         "a.b[2]": 2 // config allows for nested array attributes
       }
     }
@@ -110,21 +110,21 @@ The mock server support deeply nested introspection of JSON POST/PUT requests as
 >
 ```javascript
 "v1/route7": {
-  "file": "example1.json", // response for all GET|PUT|DELETE requests
+  "file": "example1.json", // match for all GET|PUT|DELETE requests
   "post": [
     {
       "file": "example2.json" // default response if none match below      
     },
     {
       "file": "example3.json",
-      "params": { // response for form submit where form fields a=1 and b="sample.pdf"
+      "params": { // match for form submit where form fields a=1 and b="sample.pdf"
         "a": 1,
         "b": "sample.pdf"
       }
     },
     {
       "file": "example4.json",
-      "params": { // response for form submit where form fields a=2 and b="another.name.jpg"
+      "params": { // match for form submit where form fields a=2 and b="another.name.jpg"
         "a": 2,
         "b": "another.name.jpg"
       }
@@ -144,12 +144,12 @@ The mock server support deeply nested introspection of JSON POST/PUT requests as
       "file": "example1.json",
       "response": [ 
         {
-          // response for first GET request to /v1/route8
+          // match for first GET request to /v1/route8
           "status": 202,
           "file": "example1.json"
         },
         {
-          // response for second GET request to /v1/route8
+          // match for second GET request to /v1/route8
           "status": 201,
           "file": "example2.json"
         }

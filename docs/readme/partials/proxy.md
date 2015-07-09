@@ -4,7 +4,7 @@ You define Ekko server configurations in `config.json`.  Each configuration requ
 >
 ```javascript
 {
-    user: 'johndoe', // globall set `RemoteUser` header across all proxy requests
+    user: 'johndoe', // global set `RemoteUser` header across all proxy requests
     servers: {
         web: { // (required) server used for static resources
             host: "0.0.0.0",
