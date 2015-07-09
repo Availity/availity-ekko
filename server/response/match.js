@@ -51,7 +51,7 @@ var match = {
 
   },
 
-  scoreParams: function(_request, params) {
+  scoreParams: function(_request, params, method) {
 
     var self = this;
 
@@ -67,7 +67,7 @@ var match = {
 
     _.each(_params, function(_paramValue, _paramKey) {
 
-      var paramValue = utils.object.deep(params, _paramKey);
+      var paramValue = (method === 'get') ? params[_paramKey] : utils.object.deep(params, _paramKey);
 
       if(_.isArray(_paramValue)) {
         self.scoreArray(score, _paramValue, paramValue);
@@ -94,7 +94,8 @@ var match = {
     var self = this;
 
     var _route = res.locals.route;
-    var _requests = _route.methods[req.method.toLowerCase()];
+    var method = req.method.toLowerCase();
+    var _requests = _route.methods[method];
 
     var params =  _.isEmpty(req.query) ? req.body : req.query;
     // var headers = req.headers;
@@ -109,7 +110,7 @@ var match = {
 
     _.each(_requests, function(_request) {
 
-      var score = self.scoreParams(_request, params);
+      var score = self.scoreParams(_request, params, method);
       // self.scoreHeaders(score, _request, headers);
 
       if(!score.valid) {

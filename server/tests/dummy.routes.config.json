@@ -43,6 +43,12 @@
           "param1": "1",
           "param2": "2"
         }
+      },
+      {
+        "file": "dummy-response-3.json",
+        "params":{
+          "param1.2" : "abc"
+        }
       }
     ]
   },
