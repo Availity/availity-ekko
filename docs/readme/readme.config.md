@@ -14,6 +14,9 @@
 ## Intro
 {%= docs("intro") %}
 
+## Server Configuraiton
+{%= docs("server") %}
+
 ## Route Configuration
 {%= docs("configuration") %}
 
