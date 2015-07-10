@@ -34,3 +34,11 @@ test_script:
   - node --version
   - npm --version
   - cmd: npm test
+
+matrix:
+  fast_finish: true
+
+cache:
+  - '%APPDATA%\npm\node_modules -> package.json'    # global npm modules
+  - '%APPDATA%\npm-cache -> package.json'           # npm cache
+  - 'node_modules -> package.json'                  # local npm modules
