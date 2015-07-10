@@ -24,7 +24,7 @@ var test = {
   },
 
   getUrl: function (endpoint) {
-    var url = [':', config.addressInUse.port, endpoint].join('');
+    var url = [':', config.server.address().port, endpoint].join('');
     return url;
   },
 

@@ -33,10 +33,7 @@ proto.start = function(options) {
 
     config.server.listen(config.options.servers.web.port, function () {
 
-      config.addressInUse = config.server.address();
-
-      var port = config.addressInUse.port;
-      logger.start(port, config.environment);
+      logger.start(config.server.address().port, config.environment);
 
       resolve(true);
 
@@ -44,10 +41,8 @@ proto.start = function(options) {
 
     config.server.on('error', function (e) {
 
-      var port = config.addressInUse.port;
-
       if(e.errno === 'EADDRINUSE') {
-        logger.error('Cannot start server on PORT ' + port + '. Check if port is already in use.');
+        logger.error('Cannot start server on PORT ' + config.options.servers.web.port + '. Check if port is already in use.');
       }
 
       reject(new Error(e));
