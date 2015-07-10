@@ -37,7 +37,7 @@ var buildProxyCache = function() {
       var proxyConfig = {
         port: server.port,
         host: server.host || 'localhost',
-        headers: _.extend({}, config.headers, server.headers, proxy.headers),
+        headers: _.merge({}, config.headers, server.headers, proxy.headers),
         context: proxy.context,
         rewrite: proxy.rewrite
       };
@@ -58,8 +58,10 @@ var buildRequest = function(req, proxyConfig) {
     req.url = req.url.replace(new RegExp(proxyConfig.rewrite.from), proxyConfig.rewrite.to);
   }
 
+  // _.merge recursively copies over values that are not undefined within the source object
+  // _.defaults only assigns to those properties that are still undefined in the target
   if(proxyConfig.headers) {
-    _.extend(req.headers, proxyConfig.headers);
+    _.merge(req.headers, proxyConfig.headers);
   }
 
 };
