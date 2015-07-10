@@ -1,6 +1,6 @@
 The `routes.json` defines the mock responses for rest services. Below are some sample scenarios that should help you understand the configuration options.  
 
-The mock server support deeply nested introspection of JSON POST/PUT requests as well as multi-part from data to provider the proper response.
+The mock configuration supports deep nested introspection of JSON and multi-part form data when matching routes. See [Example 6](#example-6-post-with-params-with-deep-introspection) below.
 
 ##### Example 1
 >
@@ -68,7 +68,7 @@ The mock server support deeply nested introspection of JSON POST/PUT requests as
 }
 ```
 
-##### Example 6 POST with Params
+##### Example 6 POST with Params with deep introspection
 >
 ```javascript
 "v1/route6": {
