@@ -10,7 +10,7 @@ var ekko = new Ekko(configPath);
 ekko.start();
 ```
 
-Ekko also supports overriding defaults using command line arguments (useful to setup different configurations in WebStorm).  The CLI commands are equivalent to the `config.js` object using dot notation.  Using example configuration below, run `node index.js --severs.web.port=8888` o override the web server port for `development` mode.
+Ekko also supports overriding defaults using command line arguments (useful to setup different configurations in WebStorm).  The CLI commands are equivalent to the `config.js` object using dot notation.  Using example configuration below, run `node index.js --severs.web.port=8888` to override the web server port for `development` mode.
 
 ```javascript
 {
@@ -19,7 +19,7 @@ Ekko also supports overriding defaults using command line arguments (useful to s
     servers: {
       web: {
         host: "0.0.0.0",
-        port: 9999
+        port: 9999 // --severs.web.port=8888 
       }
     }
     ...
