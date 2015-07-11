@@ -43,6 +43,8 @@ proto.start = function(options) {
 
       if(e.errno === 'EADDRINUSE') {
         logger.error('Cannot start server on PORT ' + config.options.servers.web.port + '. Check if port is already in use.');
+      }else {
+        logger.error('Failed to start server on PORT ' + config.options.servers.web.port);
       }
 
       reject(new Error(e));
