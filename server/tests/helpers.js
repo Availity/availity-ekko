@@ -29,7 +29,7 @@ var test = {
   },
 
   getFile: function (name) {
-    var filePath =path.join(__dirname, 'data', name);
+    var filePath = path.join(__dirname, 'data', name);
     return filePath;
   }
 };
