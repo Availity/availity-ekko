@@ -19,7 +19,6 @@ gulp.task('release:sequence', function() {
     'lint',
     'test:js',
     'release:bump',
-    'readme',
     'release:tag'
   );
 });
