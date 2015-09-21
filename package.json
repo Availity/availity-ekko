@@ -5,6 +5,7 @@
   "main": "./server/index.js",
   "scripts": {
     "test": "NODE_ENV=testing ./node_modules/.bin/mocha --reporter spec --recursive server",
+    "test_windows": "set NODE_ENV testing&&./node_modules/.bin/mocha --reporter spec --recursive server",
     "start": "node index.js"
   },
   "repository": {
