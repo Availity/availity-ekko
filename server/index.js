@@ -18,7 +18,7 @@ proto.start = function(options) {
   config.set(options);
 
   config.app = express();
-  config.router = express.Router();
+  config.router = new express.Router();
 
   middleware.headers();
 
@@ -29,9 +29,9 @@ proto.start = function(options) {
   config.app.set('port', port);
   config.server = http.createServer(config.app);
 
-  return new BPromise(function (resolve, reject) {
+  return new BPromise(function(resolve, reject) {
 
-    config.server.listen(config.options.servers.web.port, function () {
+    config.server.listen(config.options.servers.web.port, function() {
 
       logger.start(config.server.address().port, config.environment);
 
@@ -39,9 +39,9 @@ proto.start = function(options) {
 
     });
 
-    config.server.on('error', function (e) {
+    config.server.on('error', function(e) {
 
-      if(e.errno === 'EADDRINUSE') {
+      if (e.errno === 'EADDRINUSE') {
         logger.error('Cannot start server on PORT ' + config.options.servers.web.port + '. Check if port is already in use.');
       }else {
         logger.error('Failed to start server on PORT ' + config.options.servers.web.port);
@@ -57,9 +57,9 @@ proto.start = function(options) {
 
 proto.stop = function() {
 
-  return new BPromise(function (resolve) {
+  return new BPromise(function(resolve) {
 
-    if(config.server  && config.server.close) {
+    if (config.server  && config.server.close) {
       config.server.close(function() {
         resolve(true);
       });

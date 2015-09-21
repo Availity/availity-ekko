@@ -22,7 +22,7 @@ module.exports = function development() {
 
   // Proxies must be configured before the mock routes so they can be intercepted
   // and forwarded to appropriate server
-  if(config.isProxyEnabled()) {
+  if (config.isProxyEnabled()) {
     logger.success('Proxy configurations detected');
     config.app.use(proxy());
   } else {

@@ -14,12 +14,12 @@ var result =  {
       var filePath = path.join(config.options.data, response.file);
       var status = response.status || 200;
 
-      if(response.headers) {
+      if (response.headers) {
         res.set(response.headers);
       }
 
       res.status(status).sendFile(filePath, function(err) {
-        if(err) {
+        if (err) {
           logger.fileNotFound(filePath);
           res.sendStatus(404);
         } else {
@@ -47,7 +47,7 @@ var result =  {
 
     var indexes = result.cache[cacheKey];
 
-    if(!indexes) { // empty cache so hydrate
+    if (!indexes) { // empty cache so hydrate
       indexes = result.cache[cacheKey] = [0, 0];
     }
 
@@ -56,7 +56,7 @@ var result =  {
 
     var response = request.responses[responseIndex];
 
-    if(repeatIndex >= response.repeat) {
+    if (repeatIndex >= response.repeat) {
       responseIndex = (responseIndex + 1) % request.responses.length;
       repeatIndex = 0;
     }
@@ -71,7 +71,7 @@ var result =  {
     // return the appropriate response object
     response = request.responses[responseIndex];
 
-    if(response.file) {
+    if (response.file) {
       this.file(res, response);
       return;
     }

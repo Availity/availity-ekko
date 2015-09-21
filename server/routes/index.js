@@ -5,7 +5,7 @@ var response = require('../response');
 var models = require('../models');
 var Route = models.Route;
 
-var routes = {
+var _routes = {
 
   /**
    * Initialize the Express routes from the endpoints in the configurations file.
@@ -39,9 +39,9 @@ var routes = {
     var methods = _.keys(route.methods);
     var router = config.router;
 
-    _.each(methods, function (method) {
+    _.each(methods, function(method) {
       // builds get|post|put|delete routes like /v1/payers
-      router[method](route.url, function (req, res, next) {
+      router[method](route.url, function(req, res, next) {
         // get from cache and attach to request local
         res.locals.route = config.routes[route.id];
         response.send(req, res, next);
@@ -50,4 +50,4 @@ var routes = {
   }
 };
 
-module.exports = routes;
+module.exports = _routes;

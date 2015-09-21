@@ -1,5 +1,3 @@
-'use strict';
-
 var logger = require('../logger');
 
 /**
@@ -22,7 +20,7 @@ module.exports = function token(options) {
       return;
     }
 
-    if(!options.token || req.path === '/availity/JwsServlet') {
+    if (!options.token || req.path === '/availity/JwsServlet') {
       // if
       next();
       return;
@@ -31,7 +29,7 @@ module.exports = function token(options) {
     var authorization = req.get('Authorization');
     authorization =  authorization || '';
 
-    if(!authorization && !authorization.match('JWS [a-zA-Z0-9-_=.]+')) {
+    if (!authorization && !authorization.match('JWS [a-zA-Z0-9-_=.]+')) {
       res.send(419, { error: 'Mock server require authorization token' });
       return;
     }

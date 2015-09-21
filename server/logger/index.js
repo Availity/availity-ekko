@@ -11,7 +11,7 @@ var logger = {
 
   log: function() {
 
-    if(process.env.NODE_ENV === 'testing' && !argv.verbose) {
+    if (process.env.NODE_ENV === 'testing' && !argv.verbose) {
       return;
     }
 

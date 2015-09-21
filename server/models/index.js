@@ -1,7 +1,7 @@
 var _ = require('lodash');
 
 
-//-- Request
+// -- Request
 
 var Request = function() {
   this.params = null;
@@ -14,7 +14,7 @@ Request.prototype.addResponse = function(response) {
   this.responses.push(response);
 };
 
-//-- Response
+// -- Response
 
 var Response = function(response) {
   this.headers = null;
@@ -24,7 +24,7 @@ var Response = function(response) {
   this.status = null;
   this.repeat = 1;
 
-  if(response) {
+  if (response) {
     this.changeResponse(response);
   }
 
@@ -40,7 +40,7 @@ Response.prototype.changeResponse = function(response) {
   this.repeat = response.repeat || this.repeat;
 };
 
-//-- Route
+// -- Route
 
 var Route = module.exports = function(url, endpoint) {
   this.url = url;
@@ -69,7 +69,7 @@ Route.prototype.addMethod = function(method, endpoint) {
 
   var self = this;
 
-  if(!this.methods[method]) {
+  if (!this.methods[method]) {
     // creates property get|post|put|delete... on route object
     this.methods[method] = [];
   }
@@ -96,7 +96,7 @@ Route.prototype.addMethod = function(method, endpoint) {
   //   "post": "example3.json",
   //   "delete": "example4.json"
   // }
-  if(_.isString(endpoint[method])) {
+  if (_.isString(endpoint[method])) {
     response.file = endpoint[method];
   }
 
@@ -109,7 +109,7 @@ Route.prototype.addMethod = function(method, endpoint) {
   //     "file": "example2.json",
   //     ...
   //   }...
-  if(_.isArray(endpoint[method])) {
+  if (_.isArray(endpoint[method])) {
 
     _.each(endpoint[method], function(_request) {
 
@@ -122,12 +122,12 @@ Route.prototype.addMethod = function(method, endpoint) {
       //     "file": "example2.json"
       //   }
       // ]
-      if(!_request.params && !_request.headers && !_.isArray(_request.response)) {
+      if (!_request.params && !_request.headers && !_.isArray(_request.response)) {
 
         // If necessary, override the default response from the routes global response.
-        if(self.methods[method][0]) {
+        if (self.methods[method][0]) {
           self.methods[method][0].responses[0].changeResponse(_request);
-          //self.methods[method][0].responses[0].url  = _request.file;
+          // self.methods[method][0].responses[0].url  = _request.file;
         }
 
         return;
@@ -146,7 +146,7 @@ Route.prototype.addMethod = function(method, endpoint) {
       request.headers = _request.headers;
       // if a request configuration has both a file and response attribute defined, ignore the file
       // attribute and continue...this is most likely an async configuration
-      if((_request.file || _request.url || _request.status) && !_.isArray(_request.response)) {
+      if ((_request.file || _request.url || _request.status) && !_.isArray(_request.response)) {
         response = new Response(_request);
         request.responses.push(response);
       }
@@ -161,7 +161,7 @@ Route.prototype.addMethod = function(method, endpoint) {
       //     "file": "example2.json"
       //   }
       // ]...
-      if(_.isArray(_request.response)) {
+      if (_.isArray(_request.response)) {
         _.each(_request.response, function(_response) {
           var r = new Response(_request);
           r.changeResponse(_response);
@@ -173,9 +173,6 @@ Route.prototype.addMethod = function(method, endpoint) {
 
     });
   }
-
-
-
 };
 
 module.exports = {

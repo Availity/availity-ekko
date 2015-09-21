@@ -9,16 +9,16 @@ var post =  {
 
   multipart: function(req) {
 
-    return new BPromise(function (resolve, reject) {
+    return new BPromise(function(resolve, reject) {
 
-      if(!req.is('multipart')) {
+      if (!req.is('multipart')) {
         resolve(true);
         return;
       }
 
       req.busboy.on('file', function(fieldname, file, filename) {
 
-        file.on('error', function (error) {
+        file.on('error', function(error) {
           logger.error('Error', 'Something went wrong uploading the file', error);
           // console.log('Error', 'Something went wrong uploading the file', error);
         });
@@ -33,7 +33,7 @@ var post =  {
       });
 
       req.busboy.on('field', function(key, value) {
-        if(_.isEmpty(value)) {
+        if (_.isEmpty(value)) {
           return;
         }
 
