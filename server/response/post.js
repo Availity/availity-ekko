@@ -19,12 +19,11 @@ var post =  {
       req.busboy.on('file', function(fieldname, file, filename) {
 
         file.on('error', function(error) {
-          logger.error('Error', 'Something went wrong uploading the file', error);
-          // console.log('Error', 'Something went wrong uploading the file', error);
+          logger.error('{red:Something went wrong uploading the file', error);
         });
         file.on('end', function() {
           // Treat the file name as a field so we can match and score
-          logger.info('File Finsished:' + filename);
+          logger.info('File finished %s:', filename);
           req.body[fieldname] = filename;
         });
         // `file` is a `ReadableStream`...always do something with it
