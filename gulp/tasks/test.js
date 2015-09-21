@@ -13,7 +13,7 @@ gulp.task('coverage:js', function(done) {
   gulp.src(config.js.src)
     .pipe(istanbul()) // instrument the source files
     .pipe(istanbul.hookRequire()) // always use this option if you're running tests in Node.js
-    .on('finish', function () {
+    .on('finish', function() {
       gulp.src(config.specs.src, { read: false })
         .pipe(mocha({
           globals: ['describe', 'before', 'after']

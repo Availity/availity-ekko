@@ -1,4 +1,4 @@
-/*globals describe, beforeEach, before, after, afterEach, it*/
+/* globals describe, beforeEach, before, after, afterEach, it*/
 var request = require('superagent');
 var chai = require('chai');
 var _ = require('lodash');

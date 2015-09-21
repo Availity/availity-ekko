@@ -42,12 +42,12 @@ proto.defaultConfig = function(path) {
  *
  * @param {Object} options configuration object with production|development|testing settings.
  */
-proto.set = function(options) {
+proto.set = function(_options) {
 
-  options = options || {};
+  var options = _options || {};
 
   // Get the config object by path or from root
-  if(this.path) {
+  if (this.path) {
     logger.info('Loading configuration file ' + this.path);
   }
   var config = this.path ? require(this.path) : this.defaultConfig();

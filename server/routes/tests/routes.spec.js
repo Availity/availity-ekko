@@ -1,11 +1,11 @@
-/*globals describe, it*/
+/* globals describe, it*/
 var request = require('superagent');
 var chai = require('chai');
 var _ = require('lodash');
 var helper = require('../../tests/helpers');
 var expect = chai.expect;
 
-describe('Routes', function () {
+describe('Routes', function() {
 
   helper.serverSpecHelper();
 
@@ -19,18 +19,18 @@ describe('Routes', function () {
 
       var routeConfigs = ekko.config().router.stack;
 
-      var verbs = _.chain(routeConfigs)
-      .map(function(routeConfig) {
-        if(routeConfig.route.path === path) {
-          return _.keys(routeConfig.route.methods)[0];
-        }
-      })
-      .filter(function(method) {
-        return method !== undefined;
-      })
-      .value();
+      var _verbs = _.chain(routeConfigs)
+        .map(function(routeConfig) {
+          if (routeConfig.route.path === path) {
+            return _.keys(routeConfig.route.methods)[0];
+          }
+        })
+        .filter(function(method) {
+          return method !== undefined;
+        })
+        .value();
 
-      return verbs;
+      return _verbs;
     };
 
     var _verbs = getConfiguredVerbs(helper.ekko, verbs, '/v1/route1.:format?');
@@ -39,9 +39,9 @@ describe('Routes', function () {
     expect(count).to.equal(4);
   });
 
-  it('route 1 should respond with dummy-response1.json', function (done) {
+  it('route 1 should respond with dummy-response1.json', function(done) {
     request.get(helper.getUrl('/v1/route1'))
-      .end(function (err, res) {
+      .end(function(err, res) {
         expect(err).to.be.null;
         expect(res.status).to.equal(200);
         expect(_.isEqual(res.body, {'a': 1})).to.be.ok;
@@ -49,10 +49,10 @@ describe('Routes', function () {
       });
   });
 
-  it('route 2 should respond with dummy-response2.json for GET', function (done) {
+  it('route 2 should respond with dummy-response2.json for GET', function(done) {
 
     request.get(helper.getUrl('/internal/v2/route2'))
-      .end(function (err, res) {
+      .end(function(err, res) {
         expect(err).to.be.null;
         expect(res.status).to.equal(200);
         expect(_.isEqual(res.body, {'b': 2})).to.be.ok;
@@ -60,11 +60,11 @@ describe('Routes', function () {
       });
   });
 
-  it('route 2 should respond with dummy-response3.json for POST', function (done) {
+  it('route 2 should respond with dummy-response3.json for POST', function(done) {
 
     request.post(helper.getUrl('/internal/v2/route2'))
       .send({bar: 'baz'})
-      .end(function(err,res) {
+      .end(function(err, res) {
         expect(err).to.be.null;
         expect(res.status).to.equal(200);
         expect(_.isEqual(res.body, {'c': 3})).to.be.ok;
@@ -72,10 +72,10 @@ describe('Routes', function () {
       });
   });
 
-  it('route 4 should respond with dummy-response-2.json for POST with parameters', function (done) {
+  it('route 4 should respond with dummy-response-2.json for POST with parameters', function(done) {
     request.post(helper.getUrl('/v1/route4'))
-      .send({a:{ b: 'b'}})
-      .end(function(err,res) {
+      .send({a: { b: 'b'}})
+      .end(function(err, res) {
         expect(err).to.be.null;
         expect(res.status).to.equal(200);
         expect(_.isEqual(res.body, {'b': 2})).to.be.ok;
@@ -83,10 +83,10 @@ describe('Routes', function () {
       });
   });
 
-  it('route 4 should response with dummy-response1.json [default file] for POST with no parameters', function (done) {
+  it('route 4 should response with dummy-response1.json [default file] for POST with no parameters', function(done) {
 
     request.post(helper.getUrl('/v1/route4'))
-      .end(function (err, res) {
+      .end(function(err, res) {
         expect(err).to.be.null;
         expect(res.status).to.equal(200);
         expect(_.isEqual(res.body, {'a': 1})).to.be.ok;
@@ -94,10 +94,10 @@ describe('Routes', function () {
       });
   });
 
-  it('route 9 should response with dummy-response1.json and status 201 for GET', function (done) {
+  it('route 9 should response with dummy-response1.json and status 201 for GET', function(done) {
 
     request.get(helper.getUrl('/v1/route9'))
-      .end(function (err, res) {
+      .end(function(err, res) {
         expect(err).to.be.null;
         expect(res.status).to.equal(201);
         expect(_.isEqual(res.body, {'a': 1})).to.be.ok;
@@ -105,10 +105,10 @@ describe('Routes', function () {
       });
   });
 
-  it('route 9 should response with dummy-response2.json and status 422 for POST', function (done) {
+  it('route 9 should response with dummy-response2.json and status 422 for POST', function(done) {
 
     request.post(helper.getUrl('/v1/route9'))
-      .end(function (err, res) {
+      .end(function(err, res) {
         expect(err).to.be.null;
         expect(res.status).to.equal(203);
         expect(_.isEqual(res.body, {'b': 2})).to.be.ok;

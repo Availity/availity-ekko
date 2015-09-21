@@ -15,7 +15,7 @@ var response =  {
 
     var method = req.method.toLowerCase();
 
-    if(this[method]) {
+    if (this[method]) {
       this[method](req, res, next);
       return;
     }

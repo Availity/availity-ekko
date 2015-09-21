@@ -10,14 +10,14 @@ var cache = null;
 var buildProxyCache = function() {
 
   // once the cache is hydrated with configs just return it
-  if(cache) {
+  if (cache) {
     return;
   }
 
   cache = [];
 
 
-  if(config.options.user) {
+  if (config.options.user) {
     config.headers = {
       'RemoteUser': config.options.user
     };
@@ -28,7 +28,7 @@ var buildProxyCache = function() {
   _.each(config.options.servers, function(server) {
 
     // if proxy flag is not true just continue
-    if(!server.proxy) {
+    if (!server.proxy) {
       return;
     }
 
@@ -42,7 +42,7 @@ var buildProxyCache = function() {
         rewrite: proxy.rewrite
       };
       logger.warn('proxy created for context[' + proxyConfig.context + '] host[' + proxyConfig.host + ':' + proxyConfig.port + ']' + '] user[' + proxyConfig.headers.RemoteUser + ']');
-      if(proxyConfig.rewrite) {
+      if (proxyConfig.rewrite) {
         logger.warn('rewrite rule created for: [' + proxyConfig.rewrite.from + ' ==> ' + proxyConfig.rewrite.to + '].');
       }
       cache.push(proxyConfig);
@@ -54,13 +54,13 @@ var buildProxyCache = function() {
 
 // Rewrite the url and add the appropriate header if applicable
 var buildRequest = function(req, proxyConfig) {
-  if(proxyConfig.rewrite) {
+  if (proxyConfig.rewrite) {
     req.url = req.url.replace(new RegExp(proxyConfig.rewrite.from), proxyConfig.rewrite.to);
   }
 
   // _.merge recursively copies over values that are not undefined within the source object
   // _.defaults only assigns to those properties that are still undefined in the target
-  if(proxyConfig.headers) {
+  if (proxyConfig.headers) {
     _.merge(req.headers, proxyConfig.headers);
   }
 
@@ -72,11 +72,11 @@ module.exports = function proxy() {
 
   return function(req, res, next) {
 
-    var proxyConfig = _.find(cache, function(config) {
-      return req.url.match(new RegExp('^\\' + config.context + '.*'));
+    var proxyConfig = _.find(cache, function(_config) {
+      return req.url.match(new RegExp('^\\' + _config.context + '.*'));
     });
 
-    if(proxyConfig) {
+    if (proxyConfig) {
 
       buildRequest(req, proxyConfig);
 

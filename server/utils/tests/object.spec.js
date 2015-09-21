@@ -1,10 +1,10 @@
-/*globals describe, it*/
+/* globals describe, it*/
 
 var object = require('../object');
 var chai = require('chai');
 var expect = chai.expect;
 
-describe('Object', function () {
+describe('Object', function() {
 
   var obj1 = {
     a: {
@@ -34,7 +34,7 @@ describe('Object', function () {
     }
   }];
 
-  it('should get deep value', function () {
+  it('should get deep value', function() {
 
     var value = object.deep(obj1, 'a.b.c');
     expect(value).to.equal('d');

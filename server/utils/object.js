@@ -31,12 +31,15 @@ var utils = {
    * @param  {[type]} value [description]
    * @return {[type]}       [description]
    */
-  deep: function(obj, key, value) {
+  deep: function(_obj, _key, _value) {
 
-    var keys = key.replace(/\[(["']?)([^\1]+?)\1?\]/g, '.$2').replace(/^\./, '').split('.');
+    var keys = _key.replace(/\[(["']?)([^\1]+?)\1?\]/g, '.$2').replace(/^\./, '').split('.');
     var root;
     var i = 0;
     var n = keys.length;
+    var key;
+    var obj = _obj;
+    var value = _value;
 
     // Set deep value
     if (arguments.length > 2) {
@@ -55,8 +58,9 @@ var utils = {
 
     // Get deep value
     } else {
+
       while ((obj = obj[keys[i++]]) !== null && i < n) {
-        if(!obj) {
+        if (!obj) {
           break;
         }
         continue;
@@ -66,8 +70,6 @@ var utils = {
 
     return value;
   },
-
-
 
 
   /**

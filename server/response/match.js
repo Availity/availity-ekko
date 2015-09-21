@@ -13,7 +13,7 @@ var match = {
     _.each(_headers, function(_headerValue, _headerKey) {
       var headerValue = utils.object.deep(headers, _headerKey);
 
-      if(_headerValue ===  headerValue) {
+      if (_headerValue ===  headerValue) {
         score++;  // values are equal
       }
 
@@ -26,26 +26,26 @@ var match = {
 
     // Note: variables prefixed with "_" underscore signify config object|key|value
 
-    if(_paramValue ===  paramValue) {
+    if (_paramValue ===  paramValue) {
       score.hits++; // perfect match
-    }else if(!paramValue) {
+    }else if (!paramValue) {
       score.misses++; // request config is looking for a param but actual request doesn't have it
     }else {
       score.valid = false; // request config {a:1} not match value of requst params {a:10}
     }
   },
 
-  scoreArray: function(score, _paramValue, paramValue) {
+  scoreArray: function(score, _paramValue, __paramValue) {
 
     // Note: variables prefixed with "_" underscore signify config object|key|value
 
-    paramValue = _.toArray(paramValue);
+    var paramValue = _.toArray(__paramValue);
 
     var hits = _.intersection(_paramValue, paramValue);
-    score.hits+= hits.length;
+    score.hits += hits.length;
 
     var misses = _.difference(_paramValue, paramValue);
-    score.misses+= misses.length;
+    score.misses += misses.length;
 
     return score;
 
@@ -69,7 +69,7 @@ var match = {
 
       var paramValue = (method === 'get') ? params[_paramKey] : utils.object.deep(params, _paramKey);
 
-      if(_.isArray(_paramValue)) {
+      if (_.isArray(_paramValue)) {
         self.scoreArray(score, _paramValue, paramValue);
       }else {
         self.scoreParam(score, _paramValue, paramValue);
@@ -113,7 +113,7 @@ var match = {
       var score = self.scoreParams(_request, params, method);
       // self.scoreHeaders(score, _request, headers);
 
-      if(!score.valid) {
+      if (!score.valid) {
         return;
       }
 
@@ -122,7 +122,7 @@ var match = {
       //  1. Top hits
       //  2. Unless top hits are equal the one with least amount of misses
       //  3. Unless both hits and misses are equal last configuration should win
-      if(score.hits > topScore.hits || (score.hits === topScore.hits && score.misses < topScore.misses || (score.hits === topScore.hits && score.misses === topScore.misses))) {
+      if (score.hits > topScore.hits || (score.hits === topScore.hits && score.misses < topScore.misses || (score.hits === topScore.hits && score.misses === topScore.misses))) {
         topScore.hits = score.hits;
         topScore.misses = score.misses;
         res.locals.request = _request;
