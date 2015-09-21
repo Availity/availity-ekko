@@ -8,5 +8,9 @@ var logger = new Logger({
   useLevelPrefixes: false
 });
 
+if (process.env.NODE_ENV === 'testing') {
+  logger.mute(true);
+}
+
 module.exports = logger;
 
