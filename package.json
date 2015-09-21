@@ -36,18 +36,19 @@
   "dependencies": {
     "bluebird": "^2.9.32",
     "body-parser": "^1.13.2",
-    "chalk": "^1.1.0",
     "compression": "^1.5.1",
     "connect-busboy": "0.0.2",
     "cors": "^2.7.1",
     "dateformat": "^1.0.11",
+    "eazy-logger": "^2.1.2",
     "errorhandler": "^1.4.1",
     "express": "^4.13.1",
     "http-proxy": "^1.11.1",
     "lodash": "^3.10.0",
     "method-override": "^2.3.3",
     "minimist": "^1.1.1",
-    "morgan": "^1.6.1"
+    "morgan": "^1.6.1",
+    "tfunk": "^3.0.1"
   },
   "devDependencies": {
     "chai": "^2.2.0",

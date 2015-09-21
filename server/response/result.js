@@ -20,10 +20,10 @@ var result =  {
 
       res.status(status).sendFile(filePath, function(err) {
         if (err) {
-          logger.fileNotFound(filePath);
+          logger.error('{red:FILE {cyan:%s} {bold:NOT FOUND}', filePath);
           res.sendStatus(404);
         } else {
-          logger.fileFound(filePath, status);
+          logger.info('{green:FILE {cyan:%s} {gray:%s}', filePath, status);
         }
       });
     });

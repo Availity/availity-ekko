@@ -48,7 +48,7 @@ proto.set = function(_options) {
 
   // Get the config object by path or from root
   if (this.path) {
-    logger.info('Loading configuration file ' + this.path);
+    logger.info('Loading configuration file [{cyan:%s}]', this.path);
   }
   var config = this.path ? require(this.path) : this.defaultConfig();
 

@@ -41,9 +41,9 @@ var buildProxyCache = function() {
         context: proxy.context,
         rewrite: proxy.rewrite
       };
-      logger.warn('proxy created for context[' + proxyConfig.context + '] host[' + proxyConfig.host + ':' + proxyConfig.port + ']' + '] user[' + proxyConfig.headers.RemoteUser + ']');
+      logger.info('proxy created for context[%s] host[%s:%s] user[%s]', proxyConfig.context, proxyConfig.host, proxyConfig.port, proxyConfig.headers.RemoteUser);
       if (proxyConfig.rewrite) {
-        logger.warn('rewrite rule created for: [' + proxyConfig.rewrite.from + ' ==> ' + proxyConfig.rewrite.to + '].');
+        logger.info('rewrite rule created for: [ %s ==> %s]', proxyConfig.rewrite.from, proxyConfig.rewrite.to);
       }
       cache.push(proxyConfig);
     });
@@ -88,7 +88,7 @@ module.exports = function proxy() {
       };
 
       routingProxy.web(req, res, options, function(e) {
-        logger.error(e);
+        logger.error('{red:%s', e);
       });
 
     } else {

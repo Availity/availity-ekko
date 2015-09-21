@@ -5,16 +5,37 @@ var methodOverride = require('method-override');
 var cors = require('cors');
 var bodyParser = require('body-parser');
 var busboy = require('connect-busboy');
+var tFunk = require('tfunk');
 
 var config = require('../config');
 var proxy = require('./proxy');
 var logger = require('../logger');
 var negotiate = require('./negotiation');
 var routes = require('../routes');
+var dateformat = require('dateformat');
+
+var avPrefixFunk = tFunk('[{grey:%s}]} {yellow:[av-ekko]}');
+var avMethodFunk = tFunk('{bold:%s');
+
+expressLogger.token('prefix', function() {
+  return avPrefixFunk.replace('%s', dateformat(new Date(), 'HH:MM:ss'));
+});
+
+expressLogger.token('avMethod', function getMethodToken(req) {
+  return avMethodFunk.replace('%s', req.method);
+});
+
+expressLogger.token('avStatus', function getStatusToken(req, res) {
+  var code = res._header
+    ? String(res.statusCode)
+    : '';
+
+  return avMethodFunk.replace('%s', code);
+});
 
 module.exports = function development() {
 
-  config.app.use(expressLogger('dev'));
+  config.app.use(expressLogger(':prefix :avMethod :url :avStatus :response-time'));
   config.app.use(errorhandler());
   config.app.use(compression());
   config.app.use(cors());
@@ -23,10 +44,10 @@ module.exports = function development() {
   // Proxies must be configured before the mock routes so they can be intercepted
   // and forwarded to appropriate server
   if (config.isProxyEnabled()) {
-    logger.success('Proxy configurations detected');
+    logger.info('Proxy configurations detected');
     config.app.use(proxy());
   } else {
-    logger.warn('No proxy configurations detected');
+    logger.info('No proxy configurations detected');
   }
 
   config.app.use(methodOverride('X-HTTP-Method-Override'));
