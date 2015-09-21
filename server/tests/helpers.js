@@ -1,10 +1,11 @@
 /* globals beforeEach, afterEach */
 
+process.env.NODE_ENV = 'testing';
+
 var path = require('path');
 var config = require('../config');
 var Ekko = require('../index');
 
-process.env.NODE_ENV = 'testing';
 
 var test = {
 
