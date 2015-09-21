@@ -33,7 +33,7 @@ proto.start = function(options) {
 
     config.server.listen(config.options.servers.web.port, function() {
 
-      logger.start(config.server.address().port, config.environment);
+      logger.info('Started {green:http://localhost:%s} in {magenta:%s} mode', config.server.address().port, config.environment.toUpperCase());
 
       resolve(true);
 
@@ -42,9 +42,9 @@ proto.start = function(options) {
     config.server.on('error', function(e) {
 
       if (e.errno === 'EADDRINUSE') {
-        logger.error('Cannot start server on PORT ' + config.options.servers.web.port + '. Check if port is already in use.');
+        logger.error('Cannot start server on PORT %s. Check if port is already in use.', config.options.servers.web.port);
       }else {
-        logger.error('Failed to start server on PORT ' + config.options.servers.web.port);
+        logger.error('Failed to start server on PORT %s',  config.options.servers.web.port);
       }
 
       reject(new Error(e));
