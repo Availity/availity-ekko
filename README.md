@@ -22,7 +22,7 @@
 ## Intro
 Develop web applications without heavy back-end services by running a simple Express http server which can deliver mock responses. 
 
-Responses can be JSON, XML, to simulate REST services. Access-Control HTTP Headers are set by default to allow CORS requests. Mock services are configured in the [routes.json](./routes.json) file.
+Responses can be JSON or other formats to simulate REST services. Access-Control HTTP Headers are set by default to allow CORS requests. Mock services are configured in the [routes.json](./routes.json) file.
 
 >
 This server can return other file types besides XML or JSON (PDFs, images, etc).  The appropriate response headers will be automatically set for different file types.  For a complete list of file types supported view the [mime types here](https://github.com/jshttp/mime-db/blob/88d8b0424d93aefef4ef300dc35ad2c8d1e1f9d4/db.json).
@@ -31,6 +31,7 @@ This server can return other file types besides XML or JSON (PDFs, images, etc).
 ## Server Configuraiton
 The default server configuration can be found in [config.js](./config.js).  Pass a different configuration file to the Ekko server to override the defaults.
 
+>
 ```js
 var path = require('path');
 var Ekko = require('availity-ekko');
@@ -41,8 +42,9 @@ var ekko = new Ekko(configPath);
 ekko.start();
 ```
 
-Ekko also supports overriding defaults using command line arguments (useful to setup different configurations in WebStorm).  The CLI commands are equivalent to the `config.js` object using dot notation.  Using example configuration below, run `node index.js --severs.web.port=8888` o override the web server port for `development` mode.
+Ekko also supports overriding defaults using command line arguments (useful to setup different configurations in WebStorm).  The CLI commands are equivalent to the `config.js` object using dot notation.  Using example configuration below, run `node index.js --severs.web.port=8888` to override the web server port for `development` mode.
 
+>
 ```javascript
 {
   development: {
@@ -50,7 +52,7 @@ Ekko also supports overriding defaults using command line arguments (useful to s
     servers: {
       web: {
         host: "0.0.0.0",
-        port: 9999
+        port: 9999 // --severs.web.port=8888 
       }
     }
     ...
@@ -62,7 +64,7 @@ Ekko also supports overriding defaults using command line arguments (useful to s
 ## Route Configuration
 The `routes.json` defines the mock responses for rest services. Below are some sample scenarios that should help you understand the configuration options.  
 
-The mock server support deeply nested introspection of JSON POST/PUT requests as well as multi-part from data to provider the proper response.
+The mock configuration supports deep nested introspection of JSON and multi-part form data when matching routes. See [Example 6](#example-6-post-with-params-with-deep-introspection) below.
 
 ###### Example 1
 >
@@ -130,7 +132,7 @@ The mock server support deeply nested introspection of JSON POST/PUT requests as
 }
 ```
 
-###### Example 6 POST with Params
+###### Example 6 POST with Params with deep introspection
 >
 ```javascript
 "v1/route6": {
