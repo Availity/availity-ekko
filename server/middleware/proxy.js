@@ -88,7 +88,7 @@ module.exports = function proxy() {
       };
 
       routingProxy.web(req, res, options, function(e) {
-        logger.error(e);
+        logger.error('{red:%s', e);
       });
 
     } else {
