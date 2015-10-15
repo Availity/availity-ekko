@@ -6,6 +6,7 @@ var cors = require('cors');
 var bodyParser = require('body-parser');
 var busboy = require('connect-busboy');
 var tFunk = require('tfunk');
+var _ = require('lodash');
 
 var config = require('../config');
 var proxy = require('./proxy');
@@ -53,12 +54,14 @@ module.exports = function development() {
   config.app.use(methodOverride('X-HTTP-Method-Override'));
 
   config.app.use(bodyParser.json({
-    limit: config.options.limit
+    limit: _.get(config, 'options.limit', '50mb')
   })); // parse application/json
+
   config.app.use(bodyParser.urlencoded({
     extended: true,
     limit: config.options.limit
   })); // // parse application/x-www-form-urlencoded
+
   config.app.use(busboy({ immediate: false }));
 
   config.app.use('/', config.router);
