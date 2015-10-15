@@ -52,6 +52,7 @@
   },
   "devDependencies": {
     "chai": "^2.2.0",
+    "eslint": "1.6.0",
     "eslint-config-availity": "1.0.1",
     "gulp": "^3.9.0",
     "gulp-bump": "^0.3.1",
