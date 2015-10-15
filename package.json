@@ -5,6 +5,7 @@
   "main": "./server/index.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha --reporter spec --recursive server",
+    "lint": "eslint ./server ./gulp",
     "start": "node index.js"
   },
   "repository": {
