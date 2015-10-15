@@ -4,6 +4,7 @@ var methodOverride = require('method-override');
 var cors = require('cors');
 var bodyParser = require('body-parser');
 var busboy = require('connect-busboy');
+var _ = require('lodash');
 
 var config = require('../config');
 var proxy = require('./proxy');
