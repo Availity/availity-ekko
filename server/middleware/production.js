@@ -5,8 +5,9 @@ var methodOverride = require('method-override');
 var cors = require('cors');
 var bodyParser = require('body-parser');
 var busboy = require('connect-busboy');
-var routes = require('../routes');
+var _ = require('lodash');
 
+var routes = require('../routes');
 var config = require('../config');
 
 module.exports = function production() {
@@ -16,11 +17,15 @@ module.exports = function production() {
   config.app.use(methodOverride('X-HTTP-Method-Override'));
   config.app.use(cors());
 
-  config.app.use(bodyParser.json()); // parse application/json
+  config.app.use(bodyParser.json({
+    limit: _.get(config, 'options.limit', '50mb')
+  })); // parse application/json
+
   config.app.use(bodyParser.urlencoded({  // parse application/x-www-form-urlencoded
     extended: true,
     limit: config.options.limit
   }));
+
   config.app.use(busboy({ immediate: true }));
 
   config.app.use('/', config.router);

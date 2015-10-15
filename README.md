@@ -10,7 +10,7 @@
 
 # Table of Contents
   * [Intro](#intro)
-  * [Server Configuraiton](#server-configuraiton)
+  * [Server Configuration](#server-configuration)
   * [Route Configuration](#route-configuration)
   * [Proxy Configuration](#proxy-configuration)
   * [Contributing](#contributing)
@@ -28,7 +28,7 @@ Responses can be JSON or other formats to simulate REST services. Access-Control
 This server can return other file types besides XML or JSON (PDFs, images, etc).  The appropriate response headers will be automatically set for different file types.  For a complete list of file types supported view the [mime types here](https://github.com/jshttp/mime-db/blob/88d8b0424d93aefef4ef300dc35ad2c8d1e1f9d4/db.json).
 
 
-## Server Configuraiton
+## Server Configuration
 The default server configuration can be found in [config.js](./config.js).  Pass a different configuration file to the Ekko server to override the defaults.
 
 >
