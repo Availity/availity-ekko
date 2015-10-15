@@ -17,7 +17,7 @@ module.exports = function production() {
   config.app.use(cors());
 
   config.app.use(bodyParser.json({
-    limit: config.options.jsonLimit
+    limit: config.options.limit
   })); // parse application/json
   config.app.use(bodyParser.urlencoded({  // parse application/x-www-form-urlencoded
     extended: true,

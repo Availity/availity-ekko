@@ -30,7 +30,7 @@ module.exports = function production() {
   config.app.use(methodOverride('X-HTTP-Method-Override'));
 
   config.app.use(bodyParser.json({
-    limit: config.options.jsonLimit
+    limit: config.options.limit
   })); // parse application/json
   config.app.use(bodyParser.urlencoded({
     extended: true,
