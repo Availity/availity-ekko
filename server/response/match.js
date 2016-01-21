@@ -1,6 +1,5 @@
 var _ = require('lodash');
 var utils = require('../utils');
-var _ = require('lodash');
 
 var match = {
 
@@ -15,7 +14,7 @@ var match = {
 
       if (_headerValue ===  headerValue) {
         score.hits++;  // values are equal
-      }else if(!headerValue) {
+      }else if (!headerValue) {
         score.misses--;
       }else {
         score.valid = false;
