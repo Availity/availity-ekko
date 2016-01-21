@@ -144,5 +144,23 @@
         ]
       }
     ]
+  },
+
+  "v1/route11": {
+    "file": "example1.json",
+    "get": [
+      {
+        "file": "example2.json",
+        "headers": {
+          "b": "2"
+        }
+      },
+      {
+        "file": "example3.json",
+        "headers": {
+          "c": "3"
+        }
+      }
+    ]
   }
 }
