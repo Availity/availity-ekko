@@ -255,6 +255,27 @@ The mock configuration supports deep nested introspection of JSON and multi-part
   }
 ```
 
+>
+```javascript
+"v1/route11": {
+  "file": "example1.json",
+  "get": [
+    {     
+      "file": "example2.json",
+      "headers": { // match for GET with header pair b:2
+        "b": "2"
+      }
+    },
+    {
+      "file": "example3.json",
+      "headers": { // match for GET with header pair b:3
+        "c": "3"
+      }
+    }
+  ]
+}
+```
+
 ###### Example 9 Url Redirect
 >
 ```javascript

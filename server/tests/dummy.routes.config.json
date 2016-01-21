@@ -197,6 +197,23 @@
     ]
   },
 
+  "v1/route10": {
+    "get" : [
+      {
+        "file": "dummy-response-1.json",
+        "headers": {
+          "a": "1"
+        }
+      },
+      {
+        "file": "dummy-response-2.json",
+        "headers": {
+          "b": "2"
+        }
+      }
+    ]
+  },
+
   "no/params": {
     "file": "dummy-response-4.json"
   },
@@ -204,5 +221,7 @@
   "bad/file": {
     "file": "this-file-does-not.exits.json"
   }
+
+
 
 }

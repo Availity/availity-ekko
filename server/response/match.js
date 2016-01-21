@@ -1,20 +1,24 @@
 var _ = require('lodash');
 var utils = require('../utils');
+var _ = require('lodash');
 
 var match = {
 
-  scoreHeaders: function(_request, headers) {
+  scoreHeaders: function(score, _request, headers) {
 
     // Note: variables prefixed with "_" underscore signify config object|key|value
 
-    var score = 0;
     var _headers = _request.headers;
 
     _.each(_headers, function(_headerValue, _headerKey) {
-      var headerValue = utils.object.deep(headers, _headerKey);
+      var headerValue = _.get(headers, _headerKey);
 
       if (_headerValue ===  headerValue) {
-        score++;  // values are equal
+        score.hits++;  // values are equal
+      }else if(!headerValue) {
+        score.misses--;
+      }else {
+        score.valid = false;
       }
 
     });
@@ -111,7 +115,7 @@ var match = {
     _.each(_requests, function(_request) {
 
       var score = self.scoreParams(_request, params, method);
-      // self.scoreHeaders(score, _request, headers);
+      self.scoreHeaders(score, _request, req.headers);
 
       if (!score.valid) {
         return;
