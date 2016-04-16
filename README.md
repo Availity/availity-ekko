@@ -20,6 +20,7 @@
 
 
 ## Intro
+
 Develop web applications without heavy back-end services by running a simple Express http server which can deliver mock responses. 
 
 Responses can be JSON or other formats to simulate REST services. Access-Control HTTP Headers are set by default to allow CORS requests. Mock services are configured in the [routes.json](./routes.json) file.

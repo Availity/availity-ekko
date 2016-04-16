@@ -15,7 +15,7 @@ var config = {
     },
     servers: {
       web: {
-        host: "0.0.0.0",
+        host: '0.0.0.0',
         port: 9999
       }
     },
@@ -30,7 +30,7 @@ var config = {
     limit: '50mb',
     servers: {
       web: {
-        host: "0.0.0.0",
+        host: '0.0.0.0',
         port: 9999
       }
     },
@@ -45,34 +45,34 @@ var config = {
     user: 'testuser',
     servers: {
       web: {
-        host: "127.0.0.1" // 0.0.0.0 or localhost causes windows tests to fail?
+        host: '127.0.0.1' // 0.0.0.0 or localhost causes windows tests to fail?
       },
       api: {
-        host: "127.0.0.1",
+        host: '127.0.0.1',
         port: 7777,
         proxy: true,
         proxies: [
           {
-            context: "/api",
+            context: '/api',
             rewrite: {
-              from: "^/api",
-              to: ""
+              from: '^/api',
+              to: ''
             }
           },
           {
-            context: "/ui",
+            context: '/ui',
             rewrite: {
-              from: "^/ui",
-              to: "/v1"
+              from: '^/ui',
+              to: '/v1'
             }
           },
           {
-            context: "/services"
+            context: '/services'
           }
         ]
       },
       other: {
-        host: "127.0.0.1",
+        host: '127.0.0.1',
         port: 9999,
         proxy: true,
         headers: {
@@ -80,20 +80,20 @@ var config = {
         },
         proxies: [
           {
-            context: "/test1",
+            context: '/test1',
             rewrite: {
-              from: "^/test1",
-              to: ""
+              from: '^/test1',
+              to: ''
             }
           },
           {
             headers: {
               custom1: 'abc123'
             },
-            context: "/public/api",
+            context: '/public/api',
             rewrite: {
-              from: "^/public/api",
-              to: ""
+              from: '^/public/api',
+              to: ''
             }
           }
         ]

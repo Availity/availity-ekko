@@ -1,6 +1,5 @@
 var _ = require('lodash');
 
-
 // -- Request
 
 var Request = function() {
@@ -17,6 +16,7 @@ Request.prototype.addResponse = function(response) {
 // -- Response
 
 var Response = function(response) {
+
   this.headers = null;
   this.file = null;
   this.url = null;

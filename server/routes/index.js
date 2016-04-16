@@ -12,7 +12,15 @@ var _routes = {
    */
   init: function() {
 
+
     var self = this;
+
+    var router = config.router;
+
+    // Add default route.  Configurations should be allowed to override this if needed.
+    router.get('/', function(req, res) {
+      res.send({ name: 'availity-ekko', version: require('../../package.json').version});
+    });
 
     var routes = config.options.routes;
     config.options.endpoints = require(routes);
