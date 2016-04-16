@@ -12,7 +12,7 @@ var match = {
     _.each(_headers, function(_headerValue, _headerKey) {
       var headerValue = _.get(headers, _headerKey);
 
-      if (_headerValue ===  headerValue) {
+      if (_headerValue === headerValue) {
         score.hits++;  // values are equal
       } else if (!headerValue) {
         score.misses--;
@@ -29,7 +29,7 @@ var match = {
 
     // Note: variables prefixed with "_" underscore signify config object|key|value
 
-    if (_paramValue ===  paramValue) {
+    if (_paramValue === paramValue) {
       score.hits++; // perfect match
     } else if (!paramValue) {
       score.misses++; // request config is looking for a param but actual request doesn't have it
@@ -60,7 +60,7 @@ var match = {
 
     // Note: variables prefixed with "_" underscore signify config object|key|value
 
-    var score  = {
+    var score = {
       hits: 0, // Matching parameters
       misses: 0, // Parameters specified in route, but not present in query
       valid: true // False if a parameter is specified in route and query, but they are not equal and therefore should never match
@@ -100,7 +100,7 @@ var match = {
     var method = req.method.toLowerCase();
     var _requests = _route.methods[method];
 
-    var params =  _.isEmpty(req.query) ? req.body : req.query;
+    var params = _.isEmpty(req.query) ? req.body : req.query;
     // var headers = req.headers;
 
     var topScore = {

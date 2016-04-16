@@ -44,7 +44,7 @@ proto.start = function(options) {
       if (e.errno === 'EADDRINUSE') {
         logger.error('Cannot start server on PORT %s. Check if port is already in use.', config.options.servers.web.port);
       } else {
-        logger.error('Failed to start server on PORT %s',  config.options.servers.web.port);
+        logger.error('Failed to start server on PORT %s', config.options.servers.web.port);
       }
 
       reject(new Error(e));
@@ -59,7 +59,7 @@ proto.stop = function() {
 
   return new BPromise(function(resolve) {
 
-    if (config.server  && config.server.close) {
+    if (config.server && config.server.close) {
       config.server.close(function() {
         resolve(true);
       });

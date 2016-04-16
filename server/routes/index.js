@@ -12,6 +12,7 @@ var _routes = {
    */
   init: function() {
 
+
     var self = this;
 
     var routes = config.options.routes;

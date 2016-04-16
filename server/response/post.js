@@ -5,7 +5,7 @@ var logger = require('../logger');
 var match = require('./match');
 var result = require('./result');
 
-var post =  {
+var post = {
 
   multipart: function(req) {
 
