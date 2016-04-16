@@ -14,9 +14,9 @@ var match = {
 
       if (_headerValue ===  headerValue) {
         score.hits++;  // values are equal
-      }else if (!headerValue) {
+      } else if (!headerValue) {
         score.misses--;
-      }else {
+      } else {
         score.valid = false;
       }
 
@@ -31,9 +31,9 @@ var match = {
 
     if (_paramValue ===  paramValue) {
       score.hits++; // perfect match
-    }else if (!paramValue) {
+    } else if (!paramValue) {
       score.misses++; // request config is looking for a param but actual request doesn't have it
-    }else {
+    } else {
       score.valid = false; // request config {a:1} not match value of requst params {a:10}
     }
   },
@@ -74,7 +74,7 @@ var match = {
 
       if (_.isArray(_paramValue)) {
         self.scoreArray(score, _paramValue, paramValue);
-      }else {
+      } else {
         self.scoreParam(score, _paramValue, paramValue);
       }
 

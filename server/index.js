@@ -33,7 +33,7 @@ proto.start = function(options) {
 
     config.server.listen(config.options.servers.web.port, function() {
 
-      logger.info('Started {green:http://localhost:%s} in {magenta:%s} mode', config.server.address().port, config.environment.toUpperCase());
+      logger.info('Started mock and proxy server on {green:http://localhost:%s} in {magenta:%s} mode', config.server.address().port, config.environment.toUpperCase());
 
       resolve(true);
 
@@ -43,7 +43,7 @@ proto.start = function(options) {
 
       if (e.errno === 'EADDRINUSE') {
         logger.error('Cannot start server on PORT %s. Check if port is already in use.', config.options.servers.web.port);
-      }else {
+      } else {
         logger.error('Failed to start server on PORT %s',  config.options.servers.web.port);
       }
 
@@ -63,7 +63,7 @@ proto.stop = function() {
       config.server.close(function() {
         resolve(true);
       });
-    }else {
+    } else {
       resolve(true);
     }
 
