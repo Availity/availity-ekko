@@ -1,6 +1,5 @@
 var _ = require('lodash');
 
-
 // -- Request
 
 var Request = function() {
