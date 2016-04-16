@@ -17,7 +17,7 @@ var _routes = {
 
     var router = config.router;
 
-    // Add default route.  Let overrides occur below.
+    // Add default route.  Configurations should be allowed to override this if needed.
     router.get('/', function(req, res) {
       res.send({ name: 'availity-ekko', version: require('../../package.json').version});
     });
