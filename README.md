@@ -128,7 +128,16 @@ The mock configuration supports deep nested introspection of JSON and multi-part
       "params": { // match for GET /v1/router?a=1&a=2&a=3&a=4
         "a": [1, 2, 3, 4] 
       }
-    }
+    },
+    {
+      "file": "example4.json",      
+      "params": { // Regular expression configruation for matching params
+        "a": { // match for GET /v1/router?a=1 OR /v1/router?a=2 OR /v1/router?a=3
+            pattern: "1|2|3",
+            flags: "i" // Javascript regex flags to ignore case
+        }        
+      }
+    },
   ]
 }
 ```

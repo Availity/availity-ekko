@@ -214,6 +214,22 @@
     ]
   },
 
+  "v1/route10": {
+    "file": "dummy-response-1.json",
+    "latency": 250,
+    "get": [
+      {
+        "file": "dummy-response-2.json",
+        "params": {
+          "a": {
+            "pattern": "1|2|3",
+            "flags": "i"
+          }
+        }
+      }
+    ]
+  },
+
   "no/params": {
     "file": "dummy-response-4.json"
   },

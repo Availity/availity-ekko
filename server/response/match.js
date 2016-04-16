@@ -34,7 +34,22 @@ var match = {
     } else if (!paramValue) {
       score.misses++; // request config is looking for a param but actual request doesn't have it
     } else {
-      score.valid = false; // request config {a:1} not match value of requst params {a:10}
+      score.valid = false; // request config {a:1} not match value of request params {a:10}
+    }
+  },
+
+  scorePattern: function(score, _paramValue, paramValue) {
+
+    // Note: variables prefixed with "_" underscore signify config object|key|value
+
+    var regex = new RegExp(_paramValue.pattern, _paramValue.flags || 'i');
+
+    if (regex.test(paramValue)) {
+      score.hits++; // perfect match
+    } else if (!paramValue) {
+      score.misses++; // request config is looking for a param but actual request doesn't have it
+    } else {
+      score.valid = false; // request config {a:1} not match value of request params {a:10}
     }
   },
 
@@ -74,6 +89,8 @@ var match = {
 
       if (_.isArray(_paramValue)) {
         self.scoreArray(score, _paramValue, paramValue);
+      } else if (_.isObject(_paramValue) && _paramValue.pattern) {
+        self.scorePattern(score, _paramValue, paramValue);
       } else {
         self.scoreParam(score, _paramValue, paramValue);
       }
