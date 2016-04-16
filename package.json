@@ -61,9 +61,6 @@
     "eslint-plugin-react": "3.16.1",
     "istanbul": "0.4.3",
     "mocha": "2.4.5",
-    "require-dir": "^0.3.0",
-    "run-sequence": "1.1.5",
-    "semver": "5.1.0",
     "superagent": "1.8.3",
     "superagent-bluebird-promise": "3.0.0"
   },
