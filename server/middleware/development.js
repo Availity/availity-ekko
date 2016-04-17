@@ -42,6 +42,9 @@ module.exports = function development() {
   config.app.use(cors());
   config.app.use(negotiate());
 
+  // pretty print json
+  config.app.set('json spaces', 2);
+
   // Proxies must be configured before the mock routes so they can be intercepted
   // and forwarded to appropriate server
   if (config.isProxyEnabled()) {
