@@ -1,6 +1,8 @@
+// hi
+//
 var express = require('express');
 var http = require('http');
-var BPromise = require('bluebird');
+var Promise = require('bluebird');
 
 var logger = require('./logger');
 var config = require('./config');
@@ -29,11 +31,11 @@ proto.start = function(options) {
   config.app.set('port', port);
   config.server = http.createServer(config.app);
 
-  return new BPromise(function(resolve, reject) {
+  return new Promise(function(resolve, reject) {
 
     config.server.listen(config.options.servers.web.port, function() {
 
-      logger.info('Started {green:http://localhost:%s} in {magenta:%s} mode', config.server.address().port, config.environment.toUpperCase());
+      logger.info('Started mock and proxy server on {green:http://localhost:%s} in {magenta:%s} mode', config.server.address().port, config.environment.toUpperCase());
 
       resolve(true);
 
@@ -43,8 +45,8 @@ proto.start = function(options) {
 
       if (e.errno === 'EADDRINUSE') {
         logger.error('Cannot start server on PORT %s. Check if port is already in use.', config.options.servers.web.port);
-      }else {
-        logger.error('Failed to start server on PORT %s',  config.options.servers.web.port);
+      } else {
+        logger.error('Failed to start server on PORT %s', config.options.servers.web.port);
       }
 
       reject(new Error(e));
@@ -57,13 +59,13 @@ proto.start = function(options) {
 
 proto.stop = function() {
 
-  return new BPromise(function(resolve) {
+  return new Promise(function(resolve) {
 
-    if (config.server  && config.server.close) {
+    if (config.server && config.server.close) {
       config.server.close(function() {
         resolve(true);
       });
-    }else {
+    } else {
       resolve(true);
     }
 

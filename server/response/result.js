@@ -4,7 +4,7 @@ var BPromise = require('bluebird');
 var config = require('../config');
 var logger = require('../logger');
 
-var result =  {
+var result = {
 
   cache: {},
 

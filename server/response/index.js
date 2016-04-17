@@ -1,7 +1,7 @@
 var get = require('./get');
 var post = require('./post');
 
-var response =  {
+var response = {
 
   get: get.send,
 

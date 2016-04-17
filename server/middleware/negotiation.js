@@ -11,9 +11,9 @@ module.exports = function negotiate() {
 
     if (url.parse(req.url).pathname.match(/\.json$/)) {
       req.headers.accept = 'application/json';
-    }else if (url.parse(req.url).pathname.match(/\.xml$/)) {
+    } else if (url.parse(req.url).pathname.match(/\.xml$/)) {
       req.headers.accept = 'application/xml';
-    }else if (url.parse(req.url).pathname.match(/\.txt$/)) {
+    } else if (url.parse(req.url).pathname.match(/\.txt$/)) {
       req.headers.accept = 'text/plain';
     }
 

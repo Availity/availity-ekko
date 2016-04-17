@@ -16,13 +16,11 @@ var buildProxyCache = function() {
 
   cache = [];
 
-
   if (config.options.user) {
     config.headers = {
       'RemoteUser': config.options.user
     };
   }
-
 
   // for each server configuration...
   _.each(config.options.servers, function(server) {

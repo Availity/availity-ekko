@@ -64,7 +64,6 @@ proto.set = function(_options) {
 
   this.options = _.merge(this.options, args);
 
-
 };
 
 proto.isProxyEnabled = function() {

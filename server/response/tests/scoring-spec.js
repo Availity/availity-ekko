@@ -136,6 +136,34 @@ describe('Scoring', function() {
     });
   });
 
+  describe('Regex Parameters', function() {
+
+    it('should respond with dummy-response-2.json for GET with regex pattern', function(done) {
+      request.get(helper.getUrl('/v1/route10?a=1'))
+        .end(function(err, res) {
+          expect(err).to.be.null;
+          expect(res.status).to.equal(200);
+          expect(_.isEqual(res.body, {
+            'b': 2
+          })).to.be.ok;
+          done();
+        });
+    });
+
+    it('should NOT response with dummy-response-2.json for GET with regex pattern', function(done) {
+      request.get(helper.getUrl('/v1/route10?a=4'))
+        .end(function(err, res) {
+          expect(err).to.be.null;
+          expect(res.status).to.equal(200);
+          expect(_.isEqual(res.body, {
+            'b': 2
+          })).to.be.false;
+          done();
+        });
+    });
+
+  });
+
   describe('Headers', function() {
 
     it('should respond dummy-response-1.json when GET headers has pair a:1', function(done) {

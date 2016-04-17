@@ -5,7 +5,7 @@ var logger = require('../logger');
 var match = require('./match');
 var result = require('./result');
 
-var post =  {
+var post = {
 
   multipart: function(req) {
 
@@ -58,12 +58,15 @@ var post =  {
   },
 
   send: function(req, res) {
+
     post.multipart(req).then(function() {
       match.set(req, res);
       result.send(req, res);
+      return null;
     }, function() {
       res.status(500).send({ error: 'mock server error' });
     });
+
   }
 };
 
