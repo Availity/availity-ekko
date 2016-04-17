@@ -450,4 +450,4 @@ Open source software components distributed or made available in the Availity Ma
 
 
 ## License
-Copyright (c) 2015 Availity, LLC
+Copyright (c) Availity, LLC
