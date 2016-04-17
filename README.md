@@ -9,6 +9,7 @@
 [![Windows Passing](https://img.shields.io/appveyor/ci/robmcguinness/availity-ekko.svg?style=flat-square&label=windows)](https://ci.appveyor.com/project/robmcguinness/availity-ekko)
 
 # Table of Contents
+
   * [Intro](#intro)
   * [Server Configuration](#server-configuration)
   * [Route Configuration](#route-configuration)
@@ -21,7 +22,7 @@
 
 ## Intro
 
-Develop web applications without heavy back-end services by running a simple Express http server which can deliver mock responses. 
+Develop web applications without heavy back-end services by running a simple Express http server which can deliver mock responses.
 
 Responses can be JSON or other formats to simulate REST services. Access-Control HTTP Headers are set by default to allow CORS requests. Mock services are configured in the [routes.json](./routes.json) file.
 
@@ -30,22 +31,20 @@ This server can return other file types besides XML or JSON (PDFs, images, etc).
 
 
 ## Server Configuration
+
 The default server configuration can be found in [config.js](./config.js).  Pass a different configuration file to the Ekko server to override the defaults.
 
->
-```js
+```javascript
 var path = require('path');
 var Ekko = require('availity-ekko');
 
 var configPath = path.join(__dirname, 'path/to/config.js');
-
 var ekko = new Ekko(configPath);
 ekko.start();
 ```
 
 Ekko also supports overriding defaults using command line arguments (useful to setup different configurations in WebStorm).  The CLI commands are equivalent to the `config.js` object using dot notation.  Using example configuration below, run `node index.js --severs.web.port=8888` to override the web server port for `development` mode.
 
->
 ```javascript
 {
   development: {
@@ -53,7 +52,7 @@ Ekko also supports overriding defaults using command line arguments (useful to s
     servers: {
       web: {
         host: "0.0.0.0",
-        port: 9999 // --severs.web.port=8888 
+        port: 9999 // --severs.web.port=8888
       }
     }
     ...
@@ -61,25 +60,24 @@ Ekko also supports overriding defaults using command line arguments (useful to s
 }
 ```
 
-
 ## Route Configuration
-The `routes.json` defines the mock responses for rest services. Below are some sample scenarios that should help you understand the configuration options.  
+
+The `routes.json` defines the mock responses for rest services. Below are some sample scenarios that should help you understand the configuration options.
 
 The mock configuration supports deep nested introspection of JSON and multi-part form data when matching routes. See [Example 6](#example-6-post-with-params-with-deep-introspection) below.
 
 ###### Example 1
->
+
 ```javascript
 "v1/route1": {
-  "file": "example1.json" // match for GET|PUT|POST|DELETE 
+  "file": "example1.json" // match for GET|PUT|POST|DELETE
 }
 ```
 
 ###### Example 2
->
 ```javascript
 "v1/route2": {
-  "latency": 250, // latency in (ms) 
+  "latency": 250, // latency in (ms)
   "file": "example2.json", // match for all GET|PUT|POST|DELETE requests
   "status": 201 // return status code 201
 }
@@ -87,7 +85,6 @@ The mock configuration supports deep nested introspection of JSON and multi-part
 
 ###### Example 3
 
->
 ```javascript
 "v1/route3": {
   "file": "example3.json", // match for GET|PUT|DELETE requests
@@ -97,10 +94,9 @@ The mock configuration supports deep nested introspection of JSON and multi-part
 
 ###### Example 4
 
->
 ```javascript
 "v1/route4": {
-  "get": "example1.json", // match for all GET requests 
+  "get": "example1.json", // match for all GET requests
   "put": "example2.json", // match for all PUT requests
   "post": "example3.json", // match for all POST requests
   "delete": "example4.json" // match for all DELETE requests
@@ -109,7 +105,6 @@ The mock configuration supports deep nested introspection of JSON and multi-part
 
 ###### Example 5 Query Params
 
->
 ```javascript
 "v1/route5": {
   "file": "example1.json", // match for all POST|PUT|DELETE requests
@@ -126,24 +121,24 @@ The mock configuration supports deep nested introspection of JSON and multi-part
     {
       "file": "example3.json",
       "params": { // match for GET /v1/router?a=1&a=2&a=3&a=4
-        "a": [1, 2, 3, 4] 
+        "a": [1, 2, 3, 4]
       }
     },
     {
-      "file": "example4.json",      
+      "file": "example4.json",
       "params": { // Regular expression configruation for matching params
         "a": { // match for GET /v1/router?a=1 OR /v1/router?a=2 OR /v1/router?a=3
             pattern: "1|2|3",
             flags: "i" // Javascript regex flags to ignore case
-        }        
+        }
       }
     },
   ]
 }
 ```
 
-###### Example 6 POST with Params with deep introspection
->
+###### Example 6 POST Params
+
 ```javascript
 "v1/route6": {
   "file": "example1.json", // match for all GET|PUT|DELETE requests
@@ -172,22 +167,20 @@ The mock configuration supports deep nested introspection of JSON and multi-part
 
 ###### Example 7 Multipart
 
->
 ```html
 <form action="/api/v1/users" method="post" enctype="multipart/form-data">
   <p><input type="text" name="a" value="example">
   <p><input type="file" name="b"> <!--the name of the file is used below to match and score the proper response -->
   <p><button type="submit">Submit</button>
-</form>
+</for
 ```
 
->
 ```javascript
 "v1/route7": {
   "file": "example1.json", // match for all GET|PUT|DELETE requests
   "post": [
     {
-      "file": "example2.json" // default response if none match below      
+      "file": "example2.json" // default response if none match below
     },
     {
       "file": "example3.json",
@@ -207,16 +200,15 @@ The mock configuration supports deep nested introspection of JSON and multi-part
 }
 ```
 
-###### Example 8 Async
+###### Example 8 Async Responses
 
->
 ```javascript
 "v1/route8": {
   "file": "example1.json",
   "get": [
     {
       "file": "example1.json",
-      "response": [ 
+      "response": [
         {
           // match for first GET request to /v1/route8
           "status": 202,
@@ -233,8 +225,8 @@ The mock configuration supports deep nested introspection of JSON and multi-part
 }
 ```
 
-###### Example 10 Async with repeat option
->
+###### Example 9 Async with repeat option
+
 ```javascript
 "v1/route10": {
     "get": [
@@ -257,7 +249,7 @@ The mock configuration supports deep nested introspection of JSON and multi-part
           },
           {
             "status": 201,
-            "file": "example4.json"      
+            "file": "example4.json"
           }
         ]
       }
@@ -265,12 +257,13 @@ The mock configuration supports deep nested introspection of JSON and multi-part
   }
 ```
 
->
+###### Example 10 Header Matching
+
 ```javascript
 "v1/route11": {
   "file": "example1.json",
   "get": [
-    {     
+    {
       "file": "example2.json",
       "headers": { // match for GET with header pair b:2
         "b": "2"
@@ -286,8 +279,7 @@ The mock configuration supports deep nested introspection of JSON and multi-part
 }
 ```
 
-###### Example 9 Url Redirect
->
+###### Example 11 Url Redirect
 ```javascript
 "v1/route9": {
   "url": "http://www.google.com"
@@ -296,10 +288,11 @@ The mock configuration supports deep nested introspection of JSON and multi-part
 
 
 ## Proxy Configuration
+
 You define Ekko server configurations in `config.json`.  Each configuration requires a `host`.  Other configuration options are outlined below.  You must have a configuration called `web` that is used to serve static files and the proxy server.  An example configuration looks like this:
 
 ###### Example 1
->
+
 ```javascript
 {
     user: 'johndoe', // global set `RemoteUser` header across all proxy requests
@@ -312,12 +305,11 @@ You define Ekko server configurations in `config.json`.  Each configuration requ
 }
 ```
 
-If you omit the port, or set it to `0`, Ekko will let the OS assign a random open port. 
+If you omit the port, or set it to `0`, Ekko will let the OS assign a random open port.
 This allows you to run multiple servers without keeping track of all ports being used. (see Example 2)
 
 ###### Example 2 Dynamic Port (Ekko only)
 
->
 ```javascript
 servers: {
     web: {
@@ -329,7 +321,6 @@ servers: {
 
 ###### Example 3 Proxy
 
->
 ```javascript
 servers: {
     web: {
@@ -343,12 +334,12 @@ servers: {
         headers: {
             "userid": "johndoe" // set custom header for proxy requests to this server
         },
-        proxies: 
+        proxies:
         [
             {
                 context: "/api", // if url context matches the proxy is triggered for all routes
                 rewrite: { // (optional) allows url to be rewritten before forwarding request to a proxied server
-                    from: "^/api", // convert /api/v1/ping 
+                    from: "^/api", // convert /api/v1/ping
                     to: "" // to /v1/ping
                 }
             }
@@ -359,7 +350,6 @@ servers: {
 
 ###### Example 4 Multiple contexts
 
->
 ```javascript
 servers: {
     web: {
@@ -370,7 +360,7 @@ servers: {
         host: "127.0.0.1",
         port: 7777,
         proxy: true,
-        proxies: 
+        proxies:
         [
             {
                 context: "/api",
@@ -382,7 +372,7 @@ servers: {
                     "userid": "johndoe" // set custom header for proxy requests this context for this server
                 }
             },
-            {   
+            {
                 context: "/api2", // you can define multiple context's for a proxied server
                 rewrite: {
                     from: "^/api2",
@@ -395,7 +385,7 @@ servers: {
 ```
 
 ###### Example 5 Multiple Proxied Servers
->
+
 ```javascript
 servers: {
     web: {
@@ -406,7 +396,7 @@ servers: {
         host: "127.0.0.1",
         port: 7777,
         proxy: true,
-        proxies: 
+        proxies:
         [
             {
                 context: "/api",
@@ -416,12 +406,12 @@ servers: {
                 }
             }
         ]
-    }, 
+    },
     other: { // define more servers to proxy
         host: "127.0.0.1",
         port: 8888,
         proxy: true,
-        proxies: 
+        proxies:
         [
             {
                 context: "/test",
@@ -454,9 +444,8 @@ servers: {
 **Kasey Powers**
 + [kasey.powers@availity.com](kasey.powers@availity.com)
 
-
-
 ## Disclaimer
+
 Open source software components distributed or made available in the Availity Materials are licensed to Company under the terms of the applicable open source license agreements, which may be found in text files included in the Availity Materials.
 
 
