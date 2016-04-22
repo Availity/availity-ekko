@@ -1,5 +1,3 @@
-// hi
-//
 var express = require('express');
 var http = require('http');
 var Promise = require('bluebird');
