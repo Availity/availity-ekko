@@ -23,7 +23,7 @@ var buildProxyCache = function() {
   }
 
   // for each server configuration...
-  _.each(config.options.servers, function(server) {
+  _.forEach(config.options.servers, function(server) {
 
     // if proxy flag is not true just continue
     if (!server.proxy) {
@@ -31,7 +31,7 @@ var buildProxyCache = function() {
     }
 
     // ... get the proxy configuration and push into cache
-    _.each(server.proxies, function(proxy) {
+    _.forEach(server.proxies, function(proxy) {
       var proxyConfig = {
         port: server.port,
         host: server.host || 'localhost',
@@ -39,11 +39,16 @@ var buildProxyCache = function() {
         context: proxy.context,
         rewrite: proxy.rewrite
       };
-      logger.info('proxy created for context[%s] host[%s:%s] user[%s]', proxyConfig.context, proxyConfig.host, proxyConfig.port, proxyConfig.headers.RemoteUser);
+
+      logger.info('Proxy created for host {yellow:%s:%s} and context path {yellow:%s} for user {yellow:%s}', proxyConfig.host, proxyConfig.port, proxyConfig.context, proxyConfig.headers.RemoteUser);
+
       if (proxyConfig.rewrite) {
-        logger.info('rewrite rule created for: [ %s ==> %s]', proxyConfig.rewrite.from, proxyConfig.rewrite.to);
+        var to = proxyConfig.rewrite.to === '' ? '\'\'' : proxyConfig.rewrite.to;
+        logger.info('Rewrite rule created for: {yellow:%s} {bold:==>} {yellow:%s}', proxyConfig.rewrite.from, to);
       }
+
       cache.push(proxyConfig);
+
     });
 
   });
