@@ -21,6 +21,11 @@ var result = {
       res.status(status).sendFile(filePath, function(err) {
         if (err) {
           logger.error('{red:FILE {cyan:%s} {bold:NOT FOUND}', filePath);
+
+          config.events.emit(config.constants.EVENTS.FILE_NOT_FOUND, {
+            req: req
+          });
+
           res.sendStatus(404);
         } else {
           logger.info('{green:FILE {cyan:%s} {gray:%s}', filePath, status);

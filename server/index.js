@@ -23,7 +23,6 @@ proto.start = function(options) {
   config.router = new express.Router();
 
   middleware.headers();
-  middleware.events();
 
   var environment = process.env.NODE_ENV;
   middleware[environment || 'development']();

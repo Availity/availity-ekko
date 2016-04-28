@@ -11,9 +11,12 @@ var proxy = require('./proxy');
 var logger = require('../logger');
 var negotiate = require('./negotiation');
 var routes = require('../routes');
+var requestHandler = require('./request');
+var notFoundHandler = require('./not.found');
 
 module.exports = function production() {
 
+  config.app.use(requestHandler());
   config.app.use(errorhandler());
   config.app.use(compression());
   config.app.use(cors());
@@ -46,4 +49,5 @@ module.exports = function production() {
   config.app.use('/public/api', config.router);
   routes.init();
 
+  config.app.use(notFoundHandler());
 };
