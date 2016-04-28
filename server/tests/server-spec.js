@@ -26,7 +26,9 @@ describe('Ekko', function() {
       ekko.on('av:stopped', function() {
         done();
       });
-      ekko.stop();
+      ekko.start().then(function() {
+        ekko.stop();
+      });
     });
   });
 });
