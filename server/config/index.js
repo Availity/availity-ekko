@@ -3,13 +3,27 @@ var argv = require('minimist');
 
 var logger = require('../logger');
 
+var events = {
+  START: 'av:started',
+  STOPPED: 'av:stopped',
+  REQUEST: 'av:request',
+  RESPONSE: 'av:response',
+  REDIRECT: 'av:redirect',
+  FILE_NOT_FOUND: 'av:fileNotFound'
+};
+
 var Configuration = function() {
   this.server = null;
   this.app = null;
   this.router = null;
   this.routes = [];
+  this.events = null;
   this.path = null;
   this.addressInUse = null;
+
+  this.constants = {
+    EVENTS: events
+  };
 };
 
 var proto = Configuration.prototype;
