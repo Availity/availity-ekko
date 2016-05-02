@@ -1,4 +1,5 @@
 var express = require('express');
+var events = require('events');
 var http = require('http');
 var Promise = require('bluebird');
 
@@ -8,6 +9,7 @@ var middleware = require('./middleware');
 
 var Ekko = module.exports = function(configPath) {
   this._configPath = configPath;
+  config.events = new events.EventEmitter();
 };
 
 var proto = Ekko.prototype;
@@ -35,6 +37,10 @@ proto.start = function(options) {
 
       logger.info('Started mock and proxy server on {green:http://localhost:%s} in {magenta:%s} mode', config.server.address().port, config.environment.toUpperCase());
 
+      config.events.emit(config.constants.EVENTS.START, {
+        options: config.options
+      });
+
       resolve(true);
 
     });
@@ -61,14 +67,20 @@ proto.stop = function() {
 
     if (config.server && config.server.close) {
       config.server.close(function() {
+        config.events.emit(config.constants.EVENTS.STOPPED);
         resolve(true);
       });
     } else {
+      config.events.emit(config.constants.EVENTS.STOPPED);
       resolve(true);
     }
 
   });
 
+};
+
+proto.on = function(event, callback) {
+  return config.events.on(event, callback);
 };
 
 proto.config = function() {

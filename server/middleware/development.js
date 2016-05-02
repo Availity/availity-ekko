@@ -14,6 +14,8 @@ var logger = require('../logger');
 var negotiate = require('./negotiation');
 var routes = require('../routes');
 var dateformat = require('dateformat');
+var requestHandler = require('./request');
+var notFoundHandler = require('./not.found');
 
 var avPrefixFunk = tFunk('[{grey:%s}]} {yellow:[av-ekko]}');
 var avMethodFunk = tFunk('{bold:%s');
@@ -37,6 +39,7 @@ expressLogger.token('avStatus', function getStatusToken(req, res) {
 module.exports = function development() {
 
   config.app.use(expressLogger(':prefix :avMethod :url :avStatus :response-time'));
+  config.app.use(requestHandler());
   config.app.use(errorhandler());
   config.app.use(compression());
   config.app.use(cors());
@@ -71,5 +74,7 @@ module.exports = function development() {
   config.app.use('/api', config.router);
   config.app.use('/public/api', config.router);
   routes.init();
+
+  config.app.use(notFoundHandler());
 
 };

@@ -8,7 +8,7 @@ var result = {
 
   cache: {},
 
-  file: function(res, response) {
+  file: function(req, res, response) {
     BPromise.delay(response.latency || 200).then(function() {
 
       var filePath = path.join(config.options.data, response.file);
@@ -21,15 +21,31 @@ var result = {
       res.status(status).sendFile(filePath, function(err) {
         if (err) {
           logger.error('{red:FILE {cyan:%s} {bold:NOT FOUND}', filePath);
+
+          config.events.emit(config.constants.EVENTS.FILE_NOT_FOUND, {
+            req: req
+          });
+
           res.sendStatus(404);
         } else {
           logger.info('{green:FILE {cyan:%s} {gray:%s}', filePath, status);
+
+          config.events.emit(config.constants.EVENTS.RESPONSE, {
+            req: req,
+            res: response,
+            file: filePath
+          });
         }
       });
     });
   },
 
-  url: function(res, response) {
+  url: function(req, res, response) {
+    config.events.emit(config.constants.EVENTS.REDIRECT, {
+      req: req,
+      res: response
+    });
+
     res.redirect(response.url);
   },
 
@@ -72,11 +88,11 @@ var result = {
     response = request.responses[responseIndex];
 
     if (response.file) {
-      this.file(res, response);
+      this.file(req, res, response);
       return;
     }
 
-    this.url(res, response);
+    this.url(req, res, response);
 
   }
 };

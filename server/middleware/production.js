@@ -9,10 +9,13 @@ var _ = require('lodash');
 
 var routes = require('../routes');
 var config = require('../config');
+var requestHandler = require('./request');
+var notFoundHandler = require('./not.found');
 
 module.exports = function production() {
 
   config.app.use(logger('short'));
+  config.app.use(requestHandler());
   config.app.use(compression());
   config.app.use(methodOverride('X-HTTP-Method-Override'));
   config.app.use(cors());
@@ -33,8 +36,9 @@ module.exports = function production() {
   config.app.use('/public/api', config.router);
   routes.init();
 
+  config.app.use(notFoundHandler());
+
   var options = { maxAge: config.options.cache}; // one day
   config.app.use(express.static(config.options.directory, options));
 
 };
-

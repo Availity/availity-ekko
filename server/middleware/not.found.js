@@ -1,8 +1,14 @@
+var config = require('../config');
+
 module.exports = function notfound() {
 
   return function(req, res) {
 
     res.status(404);
+
+    config.events.emit(config.constants.EVENTS.FILE_NOT_FOUND, {
+      req: req
+    });
 
     var message = 'Not Found';
 
@@ -25,6 +31,5 @@ module.exports = function notfound() {
 
     // default to plain-text. send()
     res.type('txt').send({ error: message });
-
   };
 };
