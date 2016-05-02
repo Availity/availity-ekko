@@ -24,4 +24,26 @@ describe('Behavior', function() {
       });
   });
 
+  describe('Events', function() {
+
+    it('should emit file not found event when file does not exist', function(done) {
+      helper.ekko.on('av:fileNotFound', function() {
+        done();
+      });
+
+      request.get(helper.getUrl('/bad/file'))
+      .end();
+    });
+
+    it('should emit response event when file exists', function(done) {
+      helper.ekko.on('av:response', function() {
+        done();
+      });
+
+      request.get(helper.getUrl('/v1/route1'))
+      .end();
+    });
+
+  });
+
 });

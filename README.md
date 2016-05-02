@@ -14,6 +14,7 @@
   * [Server Configuration](#server-configuration)
   * [Route Configuration](#route-configuration)
   * [Proxy Configuration](#proxy-configuration)
+  * [Events](#events)
   * [Contributing](#contributing)
   * [Authors](#authors)
   * [Disclaimer](#disclaimer)
@@ -425,6 +426,28 @@ servers: {
 }
 ```
 
+## Events
+
+Ekko emits events to allow implementations to handle when specific events occur. Descriptions of the events are listed below.
+
+* `av:start` - Triggered when the Ekko server has been started.
+* `av:stop` - Triggered when the Ekko server has been stopped.
+* `av:request` - Triggered when a request has been received.
+* `av:response` - Triggered when a response file has been found for the requested route.
+* `av:fileNotFound` - Triggered when a response file could not be found -- either as a of an undefined route or the route's response file could not be found.
+* `av:redirect` - Triggered when a route specifies to redirect instead of responding with the contents of a file.
+
+To add event handlers, register the events before starting the Ekko server.
+```javascript
+
+var ekko = new Ekko(configPath);
+
+ekko.on('av:request', function(req) {
+    /* your logic here */
+});
+
+ekko.start();
+```
 
 ## Contributing
 1. `git clone https://github.com/Availity/availity-ekko`
