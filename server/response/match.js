@@ -1,5 +1,4 @@
 var _ = require('lodash');
-var utils = require('../utils');
 
 var match = {
 
@@ -85,7 +84,7 @@ var match = {
 
     _.each(_params, function(_paramValue, _paramKey) {
 
-      var paramValue = (method === 'get') ? params[_paramKey] : utils.object.deep(params, _paramKey);
+      var paramValue = (method === 'get') ? params[_paramKey] : _.get(params, _paramKey);
 
       if (_.isArray(_paramValue)) {
         self.scoreArray(score, _paramValue, paramValue);
