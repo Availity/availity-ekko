@@ -1,4 +1,6 @@
-var url = require('url');
+'use strict';
+
+const url = require('url');
 
 /**
  * Middleware that changes the accept header of the request to application/json if the URL ends with .json,

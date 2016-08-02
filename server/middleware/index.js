@@ -1,7 +1,9 @@
-var headers = require('./headers');
-var development = require('./development');
-var production = require('./production');
-var testing = require('./testing');
+'use strict';
+
+const headers = require('./headers');
+const development = require('./development');
+const production = require('./production');
+const testing = require('./testing');
 
 module.exports = {
 

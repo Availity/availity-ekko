@@ -1,26 +1,28 @@
-var expressLogger = require('morgan');
-var errorhandler = require('errorhandler');
-var compression = require('compression');
-var methodOverride = require('method-override');
-var cors = require('cors');
-var bodyParser = require('body-parser');
-var busboy = require('connect-busboy');
-var tFunk = require('tfunk');
-var _ = require('lodash');
+'use strict';
 
-var config = require('../config');
-var proxy = require('./proxy');
-var logger = require('../logger');
-var negotiate = require('./negotiation');
-var routes = require('../routes');
-var dateformat = require('dateformat');
-var requestHandler = require('./request');
-var notFoundHandler = require('./not.found');
+const expressLogger = require('morgan');
+const errorhandler = require('errorhandler');
+const compression = require('compression');
+const methodOverride = require('method-override');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const busboy = require('connect-busboy');
+const tFunk = require('tfunk');
+const _ = require('lodash');
 
-var avPrefixFunk = tFunk('[{grey:%s}]} {yellow:[av-ekko]}');
-var avMethodFunk = tFunk('{bold:%s');
+const config = require('../config');
+const proxy = require('./proxy');
+const logger = require('../logger');
+const negotiate = require('./negotiation');
+const routes = require('../routes');
+const dateformat = require('dateformat');
+const requestHandler = require('./request');
+const notFoundHandler = require('./not.found');
 
-expressLogger.token('prefix', function() {
+const avPrefixFunk = tFunk('[{grey:%s}]} {yellow:[av-ekko]}');
+const avMethodFunk = tFunk('{bold:%s');
+
+expressLogger.token('prefix', () => {
   return avPrefixFunk.replace('%s', dateformat(new Date(), 'HH:MM:ss'));
 });
 
@@ -29,7 +31,7 @@ expressLogger.token('avMethod', function getMethodToken(req) {
 });
 
 expressLogger.token('avStatus', function getStatusToken(req, res) {
-  var code = res._header
+  const code = res._header
     ? String(res.statusCode)
     : '';
 

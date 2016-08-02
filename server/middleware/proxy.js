@@ -1,13 +1,15 @@
-var _ = require('lodash');
-var httpProxy = require('http-proxy');
-var routingProxy = httpProxy.createProxy();
+'use strict';
 
-var logger = require('../logger');
-var config = require('../config');
+const _ = require('lodash');
+const httpProxy = require('http-proxy');
+const routingProxy = httpProxy.createProxy();
 
-var cache = null;
+const logger = require('../logger');
+const config = require('../config');
 
-var buildProxyCache = function() {
+let cache = null;
+
+const buildProxyCache = function() {
 
   // once the cache is hydrated with configs just return it
   if (cache) {
@@ -23,7 +25,7 @@ var buildProxyCache = function() {
   }
 
   // for each server configuration...
-  _.forEach(config.options.servers, function(server) {
+  _.forEach(config.options.servers, (server) => {
 
     // if proxy flag is not true just continue
     if (!server.proxy) {
@@ -31,8 +33,8 @@ var buildProxyCache = function() {
     }
 
     // ... get the proxy configuration and push into cache
-    _.forEach(server.proxies, function(proxy) {
-      var proxyConfig = {
+    _.forEach(server.proxies, (proxy) => {
+      const proxyConfig = {
         port: server.port,
         host: server.host || 'localhost',
         headers: _.merge({}, config.headers, server.headers, proxy.headers),
@@ -43,7 +45,7 @@ var buildProxyCache = function() {
       logger.info('Proxy created for host {yellow:%s:%s} and context path {yellow:%s} for user {yellow:%s}', proxyConfig.host, proxyConfig.port, proxyConfig.context, proxyConfig.headers.RemoteUser);
 
       if (proxyConfig.rewrite) {
-        var to = proxyConfig.rewrite.to === '' ? '\'\'' : proxyConfig.rewrite.to;
+        const to = proxyConfig.rewrite.to === '' ? '\'\'' : proxyConfig.rewrite.to;
         logger.info('Rewrite rule created for: {yellow:%s} {bold:==>} {yellow:%s}', proxyConfig.rewrite.from, to);
       }
 
@@ -56,7 +58,7 @@ var buildProxyCache = function() {
 };
 
 // Rewrite the url and add the appropriate header if applicable
-var buildRequest = function(req, proxyConfig) {
+const buildRequest = function(req, proxyConfig) {
   if (proxyConfig.rewrite) {
     req.url = req.url.replace(new RegExp(proxyConfig.rewrite.from), proxyConfig.rewrite.to);
   }
@@ -75,7 +77,7 @@ module.exports = function proxy() {
 
   return function(req, res, next) {
 
-    var proxyConfig = _.find(cache, function(_config) {
+    const proxyConfig = _.find(cache, (_config) => {
       return req.url.match(new RegExp('^\\' + _config.context + '.*'));
     });
 
@@ -83,14 +85,14 @@ module.exports = function proxy() {
 
       buildRequest(req, proxyConfig);
 
-      var options = {
+      const options = {
         target: {
           host: proxyConfig.host,
           port: proxyConfig.port
         }
       };
 
-      routingProxy.web(req, res, options, function(e) {
+      routingProxy.web(req, res, options, (e) => {
         logger.error('{red:%s', e);
       });
 

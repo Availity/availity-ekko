@@ -1,6 +1,8 @@
-var path = require('path');
+'use strict';
 
-var config = {
+const path = require('path');
+
+const config = {
 
   development: {
     latency: 250,
