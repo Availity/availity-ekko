@@ -1,7 +1,9 @@
-var match = require('./match');
-var result = require('./result');
+'use strict';
 
-var get = {
+const match = require('./match');
+const result = require('./result');
+
+const get = {
 
   send: function(req, res) {
     match.set(req, res);

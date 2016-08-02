@@ -1,26 +1,28 @@
-var _ = require('lodash');
-var fs = require('fs');
+'use strict';
 
-var config = require('../config');
-var response = require('../response');
-var models = require('../models');
-var Route = models.Route;
+const _ = require('lodash');
+const fs = require('fs');
 
-var _routes = {
+const config = require('../config');
+const response = require('../response');
+const models = require('../models');
+const Route = models.Route;
+
+const _routes = {
 
   /**
    * Initialize the Express routes from the endpoints in the configurations file.
    */
   init: function() {
 
-    var self = this;
+    const self = this;
 
-    var router = config.router;
+    const router = config.router;
 
     // Add default route.  Configurations should be allowed to override this if needed.
-    router.get('/', function(req, res) {
+    router.get('/', (req, res) => {
 
-      var pkg = require('../../package.json');
+      const pkg = require('../../package.json');
       res.send({
         name: pkg.name,
         description: pkg.description,
@@ -28,18 +30,18 @@ var _routes = {
       });
     });
 
-    var routePaths = config.options.routes;
+    let routePaths = config.options.routes;
     // convert to array
     routePaths = _.isArray(routePaths) ? routePaths : [routePaths];
 
     config.options.endpoints = {};
-    _.forEach(routePaths, function(path) {
-      var routeConfig = JSON.parse(fs.readFileSync(path, 'utf8'));
+    _.forEach(routePaths, (path) => {
+      const routeConfig = JSON.parse(fs.readFileSync(path, 'utf8'));
       _.merge(config.options.endpoints, routeConfig);
     });
 
-    _.each(config.options.endpoints, function(endpoint, url) {
-      var route = new Route(url, endpoint);
+    _.each(config.options.endpoints, (endpoint, url) => {
+      const route = new Route(url, endpoint);
       self.add(route);
     });
   },
@@ -56,12 +58,12 @@ var _routes = {
     // cache the route configuration
     config.routes[route.id] = route;
 
-    var methods = _.keys(route.methods);
-    var router = config.router;
+    const methods = _.keys(route.methods);
+    const router = config.router;
 
-    _.each(methods, function(method) {
+    _.each(methods, (method) => {
       // builds get|post|put|delete routes like /v1/payers
-      router[method](route.url, function(req, res, next) {
+      router[method](route.url, (req, res, next) => {
         // get from cache and attach to request local
         res.locals.route = config.routes[route.id];
         response.send(req, res, next);

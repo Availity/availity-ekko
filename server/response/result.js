@@ -1,24 +1,26 @@
-var path = require('path');
-var BPromise = require('bluebird');
+'use strict';
 
-var config = require('../config');
-var logger = require('../logger');
+const path = require('path');
+const BPromise = require('bluebird');
 
-var result = {
+const config = require('../config');
+const logger = require('../logger');
+
+const result = {
 
   cache: {},
 
   file: function(req, res, response) {
-    BPromise.delay(response.latency || 200).then(function() {
+    BPromise.delay(response.latency || 200).then(() => {
 
-      var filePath = path.join(config.options.data, response.file);
-      var status = response.status || 200;
+      const filePath = path.join(config.options.data, response.file);
+      const status = response.status || 200;
 
       if (response.headers) {
         res.set(response.headers);
       }
 
-      res.status(status).sendFile(filePath, function(err) {
+      res.status(status).sendFile(filePath, (err) => {
         if (err) {
           logger.error('{red:FILE {cyan:%s} {bold:NOT FOUND}', filePath);
 
@@ -50,27 +52,27 @@ var result = {
   },
 
   send: function(req, res) {
-    var route = res.locals.route;
-    var request = res.locals.request;
+    const route = res.locals.route;
+    const request = res.locals.request;
 
-    var routeId = route.id;
-    var requestId = request.id;
+    const routeId = route.id;
+    const requestId = request.id;
 
     // cache: {
     //  'route1_request2': [0,0] //  position 0 === response index; position 1 === repeat index
     // }
-    var cacheKey = routeId + '_' + requestId;
+    const cacheKey = routeId + '_' + requestId;
 
-    var indexes = result.cache[cacheKey];
+    let indexes = result.cache[cacheKey];
 
     if (!indexes) { // empty cache so hydrate
       indexes = result.cache[cacheKey] = [0, 0];
     }
 
-    var responseIndex = indexes[0];
-    var repeatIndex = indexes[1];
+    let responseIndex = indexes[0];
+    let repeatIndex = indexes[1];
 
-    var response = request.responses[responseIndex];
+    let response = request.responses[responseIndex];
 
     if (repeatIndex >= response.repeat) {
       responseIndex = (responseIndex + 1) % request.responses.length;
