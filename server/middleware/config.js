@@ -13,7 +13,6 @@ const _ = require('lodash');
 const config = require('../config');
 const proxy = require('./proxy');
 const logger = require('../logger');
-const negotiate = require('./negotiation');
 const routes = require('../routes');
 const dateformat = require('dateformat');
 const requestHandler = require('./request');
@@ -45,7 +44,6 @@ module.exports = function development() {
   config.app.use(errorhandler());
   config.app.use(compression());
   config.app.use(cors());
-  config.app.use(negotiate());
 
   // pretty print json
   config.app.set('json spaces', 2);

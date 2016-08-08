@@ -1,15 +1,11 @@
 'use strict';
 
 const headers = require('./headers');
-const development = require('./development');
-const production = require('./production');
-const testing = require('./testing');
+const config = require('./config');
 
 module.exports = {
 
   headers: headers,
-  development: development,
-  production: production,
-  testing: testing
+  config: config
 
 };

@@ -37,20 +37,8 @@ class Configuration {
 
    */
 
-  isProduction() {
-    return process.env.NODE_ENV === 'production';
-  }
-
-  isDevelopment() {
-    return process.env.NODE_ENV === 'development';
-  }
-
-  isTesting() {
-    return process.env.NODE_ENV === 'testing';
-  }
-
   defaultConfig(path) {
-    return this.path ? require(path) : require('../../config');
+    return this.path ? require(path) : require('../../default-config');
   }
 
   /**
@@ -71,9 +59,8 @@ class Configuration {
     // Allow programmatic overrides for environment
     config = _.merge(config, options);
 
-    // Pluck out environment specific config and save to `this.options`
-    this.environment = process.env.NODE_ENV || 'development';
-    this.options = config[this.environment];
+    // Save to `this.options`
+    this.options = config;
 
     // Merge in any command line overrides
     const args = argv(process.argv.slice(2));

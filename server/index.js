@@ -24,9 +24,11 @@ class Ekko {
     config.router = new express.Router();
 
     middleware.headers();
-
-    const environment = process.env.NODE_ENV;
-    middleware[environment || 'development']();
+    if (config.middleware) {
+      config.middleware();
+    } else {
+      middleware.config();
+    }
 
     const port = config.options.servers.web.port || 0;
     config.app.set('port', port);
@@ -36,7 +38,7 @@ class Ekko {
 
       config.server.listen(config.options.servers.web.port, () => {
 
-        logger.info('Started mock and proxy server on {green:http://localhost:%s} in {magenta:%s} mode', config.server.address().port, config.environment.toUpperCase());
+        logger.info('Started mock and proxy server on {green:http://localhost:%s}', config.server.address().port);
 
         config.events.emit(config.constants.EVENTS.START, {
           options: config.options

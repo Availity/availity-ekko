@@ -14,7 +14,7 @@ var test = {
   serverSpecHelper: function() {
 
     beforeEach(function(done) {
-      test.ekko = new Ekko();
+      test.ekko = new Ekko(path.join(__dirname, 'test-config.js'));
       test.ekko.start().then(function() {
         done();
       });

@@ -5,7 +5,7 @@ const request = require('superagent');
 const chai = require('chai');
 const _ = require('lodash');
 const helper = require('../../tests/helpers');
-const config = require('../../../config');
+const config = require('../../tests/test-config');
 const expect = chai.expect;
 
 describe('Proxy', () => {
@@ -18,13 +18,13 @@ describe('Proxy', () => {
   let server2;
 
   before(() => {
-    config.testing.servers.api.proxy = true;
-    config.testing.servers.other.proxy = true;
+    config.servers.api.proxy = true;
+    config.servers.other.proxy = true;
   });
 
   after(() => {
-    config.testing.servers.api.proxy = false;
-    config.testing.servers.other.proxy = false;
+    config.servers.api.proxy = false;
+    config.servers.other.proxy = false;
   });
 
   beforeEach((done) => {
@@ -73,8 +73,8 @@ describe('Proxy', () => {
       res.json(body);
     });
 
-    server1 = proxy1.listen(config.testing.servers.api.port, finished);
-    server2 = proxy2.listen(config.testing.servers.other.port, finished);
+    server1 = proxy1.listen(config.servers.api.port, finished);
+    server2 = proxy2.listen(config.servers.other.port, finished);
 
   });
 
