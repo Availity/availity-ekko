@@ -118,4 +118,26 @@ describe('Routes', () => {
       });
   });
 
+  it('external mock 1 should response with dummy-response1.json due to override defined', (done) => {
+
+    request.post(helper.getUrl('/v1/external/route1'))
+      .end((err, res) => {
+        expect(err).to.be.null;
+        expect(res.status).to.equal(200);
+        expect(_.isEqual(res.body, {'a': 1})).to.be.ok;
+        done();
+      });
+  });
+
+  it('external mock 2 should response with external-dummy-response-1.json', (done) => {
+
+    request.post(helper.getUrl('/v1/external/route2'))
+      .end((err, res) => {
+        expect(err).to.be.null;
+        expect(res.status).to.equal(200);
+        expect(_.isEqual(res.body, {'z': 26})).to.be.ok;
+        done();
+      });
+  });
+
 });

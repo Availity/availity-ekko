@@ -236,8 +236,10 @@
 
   "bad/file": {
     "file": "this-file-does-not.exits.json"
+  },
+
+  "v1/external/route1": {
+    "file": "dummy-response-1.json"
   }
-
-
 
 }

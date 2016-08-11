@@ -63,6 +63,10 @@ const config = {
       ]
     }
   },
+  externalMocks: [{
+    data: path.join(__dirname, '/external-mock/data'),
+    routes: path.join(__dirname, '/external-mock/external.dummy.routes.config.json')
+  }],
   data: path.join(__dirname, '/data'),
   routes: path.join(__dirname, '/dummy.routes.config.json')
 
