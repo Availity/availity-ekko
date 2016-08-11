@@ -15,7 +15,7 @@ const _routes = {
    */
   init: function() {
 
-    const self = this;
+    var self = this;
 
     const router = config.router;
 
@@ -30,19 +30,37 @@ const _routes = {
       });
     });
 
-    let routePaths = config.options.routes;
+    config.options.endpoints = {};
+
+    // Process external routes
+    const externalMocks = _.get(config, 'options.externalMocks');
+    if (_.isArray(externalMocks)) {
+      _.forEach(externalMocks, (externalMock) => {
+        self.processRoutes(externalMock.routes, externalMock.data);
+      });
+    }
+
+    // Process internal routes
+    const routePaths = config.options.routes;
+    const dataPath = config.options.data;
+    this.processRoutes(routePaths, dataPath);
+
+    _.each(config.options.endpoints, (endpoint, url) => {
+      const route = new Route(url, endpoint, endpoint.dataPath);
+      self.add(route);
+    });
+  },
+
+  processRoutes: function(routePaths, dataPath) {
     // convert to array
     routePaths = _.isArray(routePaths) ? routePaths : [routePaths];
 
-    config.options.endpoints = {};
-    _.forEach(routePaths, (path) => {
-      const routeConfig = JSON.parse(fs.readFileSync(path, 'utf8'));
+    _.forEach(routePaths, (routePath) => {
+      const routeConfig = JSON.parse(fs.readFileSync(routePath, 'utf8'));
+      _.each(routeConfig, (route) => {
+        route.dataPath = dataPath;
+      });
       _.merge(config.options.endpoints, routeConfig);
-    });
-
-    _.each(config.options.endpoints, (endpoint, url) => {
-      const route = new Route(url, endpoint);
-      self.add(route);
     });
   },
 

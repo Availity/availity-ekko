@@ -10,10 +10,10 @@ const result = {
 
   cache: {},
 
-  file: function(req, res, response) {
+  file: function(req, res, response, dataPath) {
     BPromise.delay(response.latency || 200).then(() => {
 
-      const filePath = path.join(config.options.data, response.file);
+      const filePath = path.join(dataPath, response.file);
       const status = response.status || 200;
 
       if (response.headers) {
@@ -90,7 +90,7 @@ const result = {
     response = request.responses[responseIndex];
 
     if (response.file) {
-      this.file(req, res, response);
+      this.file(req, res, response, route.dataPath);
       return;
     }
 

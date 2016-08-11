@@ -49,10 +49,11 @@ class Response {
 // -- Route
 
 class Route {
-  constructor(url, endpoint) {
+  constructor(url, endpoint, dataPath) {
     this.url = url;
     this.methods = {};
     this.id = _.uniqueId('route');
+    this.dataPath = dataPath;
 
     this.init(endpoint);
   }
