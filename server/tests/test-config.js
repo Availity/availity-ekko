@@ -9,6 +9,7 @@ const config = {
   user: 'testuser',
   servers: {
     web: {
+      port: 7778,
       host: '127.0.0.1' // 0.0.0.0 or localhost causes windows tests to fail?
     },
     api: {
