@@ -4,6 +4,7 @@ const express = require('express');
 const events = require('events');
 const http = require('http');
 const Promise = require('bluebird');
+const chalk = require('chalk');
 
 const logger = require('./logger');
 const config = require('./config');
@@ -38,7 +39,8 @@ class Ekko {
 
       config.server.listen(config.options.servers.web.port, () => {
 
-        logger.info('Started mock and proxy server on {green:http://localhost:%s}', config.server.address().port);
+        const url = `http://localhost:${config.server.address().port}`;
+        logger.info(`Started ${chalk.yellow('Ekko')} server on ${chalk.green(url)}`);
 
         config.events.emit(config.constants.EVENTS.START, {
           options: config.options

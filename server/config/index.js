@@ -2,6 +2,7 @@
 
 const _ = require('lodash');
 const argv = require('minimist');
+const chalk = require('chalk');
 
 const logger = require('../logger');
 
@@ -50,7 +51,7 @@ class Configuration {
 
     // Get the config object by path or from root
     if (this.path) {
-      logger.info('Loading configuration file {cyan:%s}', this.path);
+      logger.info(`Using configuration file ${chalk.blue(this.path)}`);
     }
     let config = this.path ? require(this.path) : this.defaultConfig();
 
