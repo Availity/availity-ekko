@@ -11,6 +11,7 @@ const config = require('./config');
 const middleware = require('./middleware');
 
 class Ekko {
+
   constructor(configPath) {
     this._configPath = configPath;
     config.events = new events.EventEmitter();

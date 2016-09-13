@@ -7,8 +7,8 @@ const methodOverride = require('method-override');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const busboy = require('connect-busboy');
-const tFunk = require('tfunk');
 const _ = require('lodash');
+const chalk = require('chalk');
 
 const config = require('../config');
 const proxy = require('./proxy');
@@ -18,15 +18,14 @@ const dateformat = require('dateformat');
 const requestHandler = require('./request');
 const notFoundHandler = require('./not.found');
 
-const avPrefixFunk = tFunk('[{grey:%s}]} {yellow:[av-ekko]}');
-const avMethodFunk = tFunk('{bold:%s');
-
 expressLogger.token('prefix', () => {
-  return avPrefixFunk.replace('%s', dateformat(new Date(), 'HH:MM:ss'));
+  const timestamp = `[${chalk.cyan(dateformat(new Date(), 'HH:MM:ss'))}]`;
+  return timestamp;
 });
 
 expressLogger.token('avMethod', function getMethodToken(req) {
-  return avMethodFunk.replace('%s', req.method);
+  const method = chalk.magenta(req.method);
+  return method;
 });
 
 expressLogger.token('avStatus', function getStatusToken(req, res) {
@@ -34,12 +33,12 @@ expressLogger.token('avStatus', function getStatusToken(req, res) {
     ? String(res.statusCode)
     : '';
 
-  return avMethodFunk.replace('%s', code);
+  return chalk.yellow(code);
 });
 
 module.exports = function development() {
 
-  config.app.use(expressLogger(':prefix :avMethod :url :avStatus :response-time'));
+  config.app.use(expressLogger(':prefix :avMethod :url :avStatus in :response-time'));
   config.app.use(requestHandler());
   config.app.use(errorhandler());
   config.app.use(compression());

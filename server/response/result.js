@@ -2,15 +2,16 @@
 
 const path = require('path');
 const BPromise = require('bluebird');
+const chalk = require('chalk');
 
 const config = require('../config');
-const logger = require('../logger');
+const Logger = require('../logger');
 
 const result = {
 
   cache: {},
 
-  file: function(req, res, response, dataPath) {
+  file(req, res, response, dataPath) {
     BPromise.delay(response.latency || 200).then(() => {
 
       const filePath = path.join(dataPath, response.file);
@@ -22,18 +23,21 @@ const result = {
 
       res.status(status).sendFile(filePath, (err) => {
         if (err) {
-          logger.error('{red:FILE {cyan:%s} {bold:NOT FOUND}', filePath);
+          Logger.error(`NOT FOUND ${filePath} `);
 
           config.events.emit(config.constants.EVENTS.FILE_NOT_FOUND, {
-            req: req
+            req
           });
 
           res.sendStatus(404);
         } else {
-          logger.info('{green:FILE {cyan:%s} {gray:%s}', filePath, status);
+
+          const fileStatus = chalk.yellow(status);
+          const file = chalk.blue(filePath);
+          Logger.info(`${chalk.magenta('FILE')} ${file} ${fileStatus}`);
 
           config.events.emit(config.constants.EVENTS.RESPONSE, {
-            req: req,
+            req,
             res: response,
             file: filePath
           });
@@ -42,16 +46,16 @@ const result = {
     });
   },
 
-  url: function(req, res, response) {
+  url(req, res, response) {
     config.events.emit(config.constants.EVENTS.REDIRECT, {
-      req: req,
+      req,
       res: response
     });
 
     res.redirect(response.url);
   },
 
-  send: function(req, res) {
+  send(req, res) {
     const route = res.locals.route;
     const request = res.locals.request;
 
