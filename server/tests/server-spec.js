@@ -1,8 +1,10 @@
 /* globals describe, it */
-var chai = require('chai');
-var expect = chai.expect;
+'use strict';
 
-var Ekko = require('../index');
+const chai = require('chai');
+const expect = chai.expect;
+
+const Ekko = require('../index');
 
 describe('Ekko', function() {
   it('should be defined', function() {
@@ -12,7 +14,7 @@ describe('Ekko', function() {
   describe('Events', function() {
 
     it('should emit started event when started', function(done) {
-      var ekko = new Ekko();
+      const ekko = new Ekko();
       ekko.on('av:started', function() {
         ekko.stop().then(function() {
           done();
@@ -22,7 +24,7 @@ describe('Ekko', function() {
     });
 
     it('should emit stopped event when stopped', function(done) {
-      var ekko = new Ekko();
+      const ekko = new Ekko();
       ekko.on('av:stopped', function() {
         done();
       });

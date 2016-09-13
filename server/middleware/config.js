@@ -12,7 +12,7 @@ const _ = require('lodash');
 
 const config = require('../config');
 const proxy = require('./proxy');
-const logger = require('../logger');
+const Logger = require('../logger');
 const routes = require('../routes');
 const dateformat = require('dateformat');
 const requestHandler = require('./request');
@@ -51,10 +51,10 @@ module.exports = function development() {
   // Proxies must be configured before the mock routes so they can be intercepted
   // and forwarded to appropriate server
   if (config.isProxyEnabled()) {
-    logger.info('Proxy configurations detected');
+    Logger.info('Proxy configurations detected');
     config.app.use(proxy());
   } else {
-    logger.info('No proxy configurations detected');
+    Logger.info('No proxy configurations detected');
   }
 
   config.app.use(methodOverride('X-HTTP-Method-Override'));
@@ -72,7 +72,6 @@ module.exports = function development() {
 
   config.app.use('/', config.router);
   config.app.use('/api', config.router);
-  config.app.use('/public/api', config.router);
   routes.init();
 
   config.app.use(notFoundHandler());

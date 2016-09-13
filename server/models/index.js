@@ -3,8 +3,8 @@
 const _ = require('lodash');
 
 // -- Request
-
 class Request {
+
   constructor() {
     this.params = null;
     this.headers = null;
@@ -181,8 +181,8 @@ class Route {
 }
 
 module.exports = {
-  Request: Request,
-  Response: Response,
-  Route: Route
+  Request,
+  Response,
+  Route
 };
 

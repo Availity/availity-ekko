@@ -41,32 +41,31 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "bluebird": "3.3.5",
-    "body-parser": "1.15.0",
-    "compression": "1.6.1",
+    "bluebird": "3.4.1",
+    "body-parser": "1.15.2",
+    "compression": "1.6.2",
     "connect-busboy": "0.0.2",
     "cors": "^2.7.1",
     "dateformat": "1.0.12",
-    "eazy-logger": "2.1.3",
     "errorhandler": "1.4.3",
-    "express": "4.13.4",
-    "http-proxy": "1.13.2",
-    "lodash": "4.14.1",
-    "method-override": "2.3.5",
+    "express": "4.14.0",
+    "http-proxy": "1.14.0",
+    "lodash": "4.15.0",
+    "log-symbols": "1.0.2",
+    "method-override": "2.3.6",
     "minimist": "1.2.0",
-    "morgan": "1.7.0",
-    "tfunk": "3.0.2"
+    "morgan": "1.7.0"
   },
   "devDependencies": {
-    "babel-eslint": "6.0.2",
+    "babel-eslint": "6.1.2",
     "chai": "3.5.0",
-    "eslint": "2.8.0",
+    "eslint": "3.3.0",
     "eslint-config-availity": "2.0.0-beta.10",
-    "eslint-plugin-react": "^4.3.0",
-    "istanbul": "0.4.3",
-    "mocha": "2.4.5",
-    "superagent": "1.8.3",
-    "superagent-bluebird-promise": "3.0.0"
+    "eslint-plugin-react": "6.0.0",
+    "istanbul": "0.4.4",
+    "mocha": "3.0.2",
+    "superagent": "2.2.0",
+    "superagent-bluebird-promise": "3.0.2"
   },
   "engines": {
     "node": ">=5.0.0"

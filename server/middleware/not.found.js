@@ -9,7 +9,7 @@ module.exports = function notfound() {
     res.status(404);
 
     config.events.emit(config.constants.EVENTS.FILE_NOT_FOUND, {
-      req: req
+      req
     });
 
     const message = 'Not Found';

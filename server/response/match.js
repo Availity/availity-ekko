@@ -4,7 +4,7 @@ const _ = require('lodash');
 
 const match = {
 
-  scoreHeaders: function(score, _request, headers) {
+  scoreHeaders(score, _request, headers) {
 
     // Note: variables prefixed with "_" underscore signify config object|key|value
 
@@ -26,7 +26,7 @@ const match = {
     return score;
   },
 
-  scoreParam: function(score, _paramValue, paramValue) {
+  scoreParam(score, _paramValue, paramValue) {
 
     // Note: variables prefixed with "_" underscore signify config object|key|value
 
@@ -39,7 +39,7 @@ const match = {
     }
   },
 
-  scorePattern: function(score, _paramValue, paramValue) {
+  scorePattern(score, _paramValue, paramValue) {
 
     // Note: variables prefixed with "_" underscore signify config object|key|value
 
@@ -54,7 +54,7 @@ const match = {
     }
   },
 
-  scoreArray: function(score, _paramValue, __paramValue) {
+  scoreArray(score, _paramValue, __paramValue) {
 
     // Note: variables prefixed with "_" underscore signify config object|key|value
 
@@ -70,7 +70,7 @@ const match = {
 
   },
 
-  scoreParams: function(_request, params, method) {
+  scoreParams(_request, params, method) {
 
     const self = this;
 
@@ -108,7 +108,7 @@ const match = {
    * @param {[type]} req http request object
    * @param {[type]} res http response object
    */
-  set: function(req, res) {
+  set(req, res) {
 
     // Note: variables prefixed with "_" underscore signify config object object|key|value
 

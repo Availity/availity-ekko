@@ -5,8 +5,6 @@ const path = require('path');
 const config = {
 
   latency: 250,
-  session: false,
-  token: false,
   user: null,
   cache: 0,
   limit: '50mb',

@@ -1,7 +1,7 @@
 'use strict';
 
 const _ = require('lodash');
-const BPromise = require('bluebird');
+const Promise = require('bluebird');
 
 const logger = require('../logger');
 const match = require('./match');
@@ -9,9 +9,9 @@ const result = require('./result');
 
 const post = {
 
-  multipart: function(req) {
+  multipart(req) {
 
-    return new BPromise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
 
       if (!req.is('multipart')) {
         resolve(true);
@@ -59,7 +59,7 @@ const post = {
 
   },
 
-  send: function(req, res) {
+  send(req, res) {
 
     post.multipart(req).then(() => {
       match.set(req, res);

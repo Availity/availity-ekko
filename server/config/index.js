@@ -5,15 +5,6 @@ const argv = require('minimist');
 
 const logger = require('../logger');
 
-const events = {
-  START: 'av:started',
-  STOPPED: 'av:stopped',
-  REQUEST: 'av:request',
-  RESPONSE: 'av:response',
-  REDIRECT: 'av:redirect',
-  FILE_NOT_FOUND: 'av:fileNotFound'
-};
-
 class Configuration {
 
   constructor() {
@@ -26,7 +17,14 @@ class Configuration {
     this.addressInUse = null;
 
     this.constants = {
-      EVENTS: events
+      EVENTS: {
+        START: 'av:started',
+        STOPPED: 'av:stopped',
+        REQUEST: 'av:request',
+        RESPONSE: 'av:response',
+        REDIRECT: 'av:redirect',
+        FILE_NOT_FOUND: 'av:fileNotFound'
+      }
     };
   }
 

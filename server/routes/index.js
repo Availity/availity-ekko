@@ -13,9 +13,9 @@ const _routes = {
   /**
    * Initialize the Express routes from the endpoints in the configurations file.
    */
-  init: function() {
+  init() {
 
-    var self = this;
+    const self = this;
 
     const router = config.router;
 
@@ -51,7 +51,7 @@ const _routes = {
     });
   },
 
-  processRoutes: function(routePaths, dataPath) {
+  processRoutes(routePaths, dataPath) {
     // convert to array
     routePaths = _.isArray(routePaths) ? routePaths : [routePaths];
 
@@ -71,7 +71,7 @@ const _routes = {
    *
    * @param {Object} route Object representation route in the configuration file.
    */
-  add: function(route) {
+  add(route) {
 
     // cache the route configuration
     config.routes[route.id] = route;

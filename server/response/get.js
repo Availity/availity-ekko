@@ -5,7 +5,7 @@ const result = require('./result');
 
 const get = {
 
-  send: function(req, res) {
+  send(req, res) {
     match.set(req, res);
     result.send(req, res);
   }

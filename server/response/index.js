@@ -13,7 +13,7 @@ const response = {
 
   put: post.send,
 
-  send: function(req, res, next) {
+  send(req, res, next) {
 
     const method = req.method.toLowerCase();
 

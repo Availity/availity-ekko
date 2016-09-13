@@ -1,18 +1,53 @@
+/* eslint no-console:0 */
 'use strict';
 
+const chalk = require('chalk');
 const dateformat = require('dateformat');
-const Logger = require('eazy-logger').Logger;
+const symbols = require('log-symbols');
 
-Logger.prototype.canLog = function(level) {
-  return process.env.NODE_ENV !== 'testing' && this.config.levels[level] >= this.config.levels[this.config.level] && !this._mute;
-};
+class Logger {
 
-const template = '[{grey:%s}]} {yellow:[av-ekko]} ';
+  constructor(options) {
+    this.options = options;
+  }
 
-const logger = new Logger({
-  prefix: template.replace('%s', dateformat(new Date(), 'HH:MM:ss')),
-  useLevelPrefixes: false
-});
+  static warning(entry) {
+    this._log(entry, 'yellow');
+  }
 
-module.exports = logger;
+  static error(entry) {
+    this._log(entry, 'red');
+  }
 
+  static info(entry) {
+    this._log(entry);
+  }
+
+  // graphics
+
+  static failed(entry) {
+    this._log(`${symbols.error} ${entry}`, 'red');
+  }
+
+  static ok(entry) {
+    this._log(`${symbols.success} ${entry}`, 'green');
+  }
+
+  static _log(entry, _color) {
+
+    const now = dateformat(new Date(), 'HH:MM:ss');
+    const defaultColor = entry instanceof Error ? 'red' : 'gray';
+
+    const color = _color || defaultColor;
+
+    console.log(`[${ chalk.cyan(now) }] ${ chalk[color](entry) }` );
+
+  }
+
+  static log(entry) {
+    this._log(entry);
+  }
+
+}
+
+module.exports = Logger;
