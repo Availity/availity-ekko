@@ -12,6 +12,7 @@ const result = {
   cache: {},
 
   file(req, res, response, dataPath) {
+
     BPromise.delay(response.latency || 200).then(() => {
 
       const filePath = path.join(dataPath, response.file);
@@ -32,9 +33,8 @@ const result = {
           res.sendStatus(404);
         } else {
 
-          const fileStatus = chalk.yellow(status);
           const file = chalk.blue(filePath);
-          Logger.info(`${chalk.magenta('FILE')} ${file} ${fileStatus}`);
+          Logger.info(`FILE ${file} ${chalk.dim(status)}`);
 
           config.events.emit(config.constants.EVENTS.RESPONSE, {
             req,

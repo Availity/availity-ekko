@@ -8,10 +8,6 @@ const config = {
   user: null,
   cache: 0,
   limit: '50mb',
-  urls: {
-    prefix: ['/api', '/public/api'],
-    home: '/public/apps/demo'
-  },
   servers: {
     web: {
       host: '0.0.0.0',

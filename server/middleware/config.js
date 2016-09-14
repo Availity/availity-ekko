@@ -24,7 +24,7 @@ expressLogger.token('prefix', () => {
 });
 
 expressLogger.token('avMethod', function getMethodToken(req) {
-  const method = chalk.magenta(req.method);
+  const method = chalk.dim(req.method);
   return method;
 });
 
@@ -33,12 +33,12 @@ expressLogger.token('avStatus', function getStatusToken(req, res) {
     ? String(res.statusCode)
     : '';
 
-  return chalk.yellow(code);
+  return chalk.dim(code);
 });
 
 module.exports = function development() {
 
-  config.app.use(expressLogger(':prefix :avMethod :url :avStatus in :response-time'));
+  config.app.use(expressLogger(':prefix :avMethod :url :avStatus :response-time'));
   config.app.use(requestHandler());
   config.app.use(errorhandler());
   config.app.use(compression());
