@@ -32,15 +32,6 @@ const _routes = {
 
     config.options.endpoints = {};
 
-    // Process external routes
-    const externalMocks = _.get(config, 'options.externalMocks');
-    if (_.isArray(externalMocks)) {
-      _.forEach(externalMocks, (externalMock) => {
-        self.processRoutes(externalMock.routes, externalMock.data);
-      });
-    }
-
-    // Process internal routes
     const routePaths = config.options.routes;
     const dataPath = config.options.data;
     this.processRoutes(routePaths, dataPath);
