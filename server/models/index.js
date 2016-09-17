@@ -2,7 +2,7 @@
 
 const _ = require('lodash');
 
-// -- Request
+// Request
 class Request {
 
   constructor() {
@@ -17,9 +17,9 @@ class Request {
   }
 }
 
-// -- Response
-
+// Response
 class Response {
+
   constructor(response) {
 
     this.headers = null;
@@ -30,13 +30,13 @@ class Response {
     this.repeat = 1;
 
     if (response) {
-      this.changeResponse(response);
+      this.set(response);
     }
 
     this.id = _.uniqueId('response');
   }
 
-  changeResponse(response) {
+  set(response) {
     this.headers = response.headers || this.headers;
     this.file = response.file || this.file;
     this.url = response.url || this.url;
@@ -87,7 +87,7 @@ class Route {
     //   "file": "example2.json"
     // }
     let response = new Response();
-    response.changeResponse(endpoint);
+    response.set(endpoint);
 
     // Handle the syntactic sugar case where you can just define a method
     // and a file response in one line.
@@ -130,7 +130,7 @@ class Route {
 
           // If necessary, override the default response from the routes global response.
           if (this.methods[method][0]) {
-            this.methods[method][0].responses[0].changeResponse(_request);
+            this.methods[method][0].responses[0].set(_request);
             // this.methods[method][0].responses[0].url  = _request.file;
           }
 
@@ -167,9 +167,9 @@ class Route {
         // ]...
         if (_.isArray(_request.response)) {
           _.each(_request.response, (_response) => {
-            const r = new Response(_request);
-            r.changeResponse(_response);
-            request.responses.push(r);
+            const __response = new Response(_request);
+            __response.set(_response);
+            request.responses.push(__response);
           });
         }
 
