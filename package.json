@@ -55,6 +55,7 @@
     "method-override": "2.3.6",
     "minimist": "1.2.0",
     "morgan": "1.7.0",
+    "parent-require": "1.0.0",
     "yargs": "6.0.0"
   },
   "devDependencies": {

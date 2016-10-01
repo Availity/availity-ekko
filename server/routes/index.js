@@ -32,9 +32,13 @@ const _routes = {
 
     config.options.endpoints = {};
 
+    // Load plugins that contain data and routes
+    this.plugins();
+
+    // Load local data and routes.  Local data and routes should override the plugins.
     const routePaths = config.options.routes;
     const dataPath = config.options.data;
-    this.processRoutes(routePaths, dataPath);
+    this.routes(routePaths, dataPath);
 
     _.each(config.options.endpoints, (endpoint, url) => {
       const route = new Route(url, endpoint, endpoint.dataPath);
@@ -42,17 +46,38 @@ const _routes = {
     });
   },
 
-  processRoutes(routePaths, dataPath) {
-    // convert to array
+  routes(routePaths, dataPath) {
+    // support multiple directories for routes
     routePaths = _.isArray(routePaths) ? routePaths : [routePaths];
 
-    _.forEach(routePaths, (routePath) => {
+    _.forEach(routePaths, routePath => {
       const routeConfig = JSON.parse(fs.readFileSync(routePath, 'utf8'));
       _.each(routeConfig, (route) => {
         route.dataPath = dataPath;
       });
       _.merge(config.options.endpoints, routeConfig);
     });
+  },
+
+  plugins() {
+
+    const plugins = config.options.plugins || [];
+
+    _.forEach(plugins, plugin => {
+
+      let pluginConfig = null;
+
+      try {
+        pluginConfig = require(plugin);
+      } catch (err) {
+        // workaround when `npm link`'ed for development
+        const parentRequire = require('parent-require');
+        pluginConfig = parentRequire(plugin);
+      }
+
+      this.routes(pluginConfig.routes, pluginConfig.data);
+    });
+
   },
 
   /**
