@@ -12,6 +12,7 @@ const chalk = require('chalk');
 
 const config = require('../config');
 const routes = require('../routes');
+const Logger = require('../logger');
 const dateformat = require('dateformat');
 const requestHandler = require('./request');
 const notFoundHandler = require('./not.found');
@@ -36,7 +37,10 @@ expressLogger.token('avStatus', function getStatusToken(req, res) {
 
 module.exports = function development() {
 
-  config.app.use(expressLogger(':prefix :avMethod :url :avStatus :response-time'));
+  if (Logger.canLog()) {
+    config.app.use(expressLogger(':prefix :avMethod :url :avStatus :response-time'));
+  }
+
   config.app.use(requestHandler());
   config.app.use(errorhandler());
   config.app.use(compression());

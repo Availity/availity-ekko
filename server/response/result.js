@@ -23,7 +23,9 @@ const result = {
       }
 
       res.status(status).sendFile(filePath, (err) => {
+
         if (err) {
+
           Logger.error(`NOT FOUND ${filePath} `);
 
           config.events.emit(config.constants.EVENTS.FILE_NOT_FOUND, {
@@ -41,6 +43,7 @@ const result = {
             res: response,
             file: filePath
           });
+
         }
       });
     });

@@ -23,8 +23,6 @@ class Logger {
     this._log(entry);
   }
 
-  // graphics
-
   static failed(entry) {
     this._log(`${symbols.error} ${entry}`, 'red');
   }
@@ -33,7 +31,15 @@ class Logger {
     this._log(`${symbols.success} ${entry}`, 'green');
   }
 
+  static canLog() {
+    return process.env.NODE_ENV !== 'testing';
+  }
+
   static _log(entry, _color) {
+
+    if (!this.canLog()) {
+      return;
+    }
 
     const now = dateformat(new Date(), 'HH:MM:ss');
     const defaultColor = entry instanceof Error ? 'red' : 'gray';

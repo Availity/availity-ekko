@@ -1,7 +1,6 @@
 'use strict';
 
 const _ = require('lodash');
-const argv = require('minimist');
 const chalk = require('chalk');
 
 const logger = require('../logger');
@@ -62,11 +61,6 @@ class Configuration {
 
     // Save to `this.options`
     this.options = config;
-
-    // Merge in any command line overrides
-    const args = argv(process.argv.slice(2));
-
-    this.options = _.merge(this.options, args);
 
   }
 
