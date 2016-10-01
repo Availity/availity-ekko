@@ -1,9 +1,0 @@
-{
-  "v1/external/route1": {
-    "file": "external-dummy-response-1.json"
-  },
-
-  "v1/external/route2": {
-    "file": "external-dummy-response-1.json"
-  }
-}

@@ -34,5 +34,6 @@ describe('Headers', () => {
         expect(_.isEqual(res.body, {'b': 2})).to.be.ok;
         done();
       });
+
   });
 });

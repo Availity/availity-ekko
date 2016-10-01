@@ -32,16 +32,16 @@ class Ekko {
       middleware.config();
     }
 
-    const port = config.options.servers.web.port || 0;
+    const port = config.options.port || 0;
     config.app.set('port', port);
     config.server = http.createServer(config.app);
 
     return new Promise((resolve, reject) => {
 
-      config.server.listen(config.options.servers.web.port, () => {
+      config.server.listen(config.options.port, () => {
 
         const url = `http://localhost:${config.server.address().port}`;
-        logger.info(`Started ${chalk.yellow('Ekko')} server on ${chalk.green(url)}`);
+        logger.info(`Started Ekko server on ${chalk.green(url)}`);
 
         config.events.emit(config.constants.EVENTS.START, {
           options: config.options
@@ -54,9 +54,9 @@ class Ekko {
       config.server.on('error', (e) => {
 
         if (e.errno === 'EADDRINUSE') {
-          logger.error(`Cannot start server on PORT ${config.options.servers.web.port}. Check if port is already in use.`);
+          logger.error(`Cannot start server on PORT ${config.options.port}. Check if port is already in use.`);
         } else {
-          logger.error(`Failed to start server on PORT ${config.options.servers.web.port}`);
+          logger.error(`Failed to start server on PORT ${config.options.port}`);
         }
 
         reject(new Error(e));

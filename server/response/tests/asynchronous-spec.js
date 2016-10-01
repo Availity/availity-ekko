@@ -12,6 +12,7 @@ describe('Asynchronous', () => {
   helper.serverSpecHelper();
 
   it('should respond with 202 then 201', (done) => {
+
     request.get(helper.getUrl('/v1/route6'))
       .then((res) => {
         expect(res.status).to.be.equal(202);
@@ -23,9 +24,11 @@ describe('Asynchronous', () => {
         expect(_.isEqual(res.body, {'d': 4})).to.be.ok;
         done();
       });
+
   });
 
   it('should repeat dummy-response1.json x3, dummy-response2.json x1 then followed by a dummy-response2 x1', (done) => {
+
     request.get(helper.getUrl('/v1/route8'))
       .then((res) => {
         expect(res.status).to.equal(202);
@@ -48,5 +51,6 @@ describe('Asynchronous', () => {
         expect(_.isEqual(res.body, {'c': 3})).to.be.ok;
         done();
       });
+
   });
 });

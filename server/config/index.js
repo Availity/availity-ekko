@@ -9,6 +9,7 @@ const logger = require('../logger');
 class Configuration {
 
   constructor() {
+
     this.server = null;
     this.app = null;
     this.router = null;
@@ -27,6 +28,7 @@ class Configuration {
         FILE_NOT_FOUND: 'av:fileNotFound'
       }
     };
+
   }
 
   /**
@@ -68,13 +70,6 @@ class Configuration {
 
   }
 
-  isProxyEnabled() {
-
-    return _.some(this.options.servers, (server) => {
-      return server.proxy;
-    });
-
-  }
 }
 
 

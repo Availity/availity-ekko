@@ -50,24 +50,23 @@
     "dateformat": "1.0.12",
     "errorhandler": "1.4.3",
     "express": "4.14.0",
-    "http-proxy": "1.14.0",
-    "lodash": "4.15.0",
+    "lodash": "4.16.2",
     "log-symbols": "1.0.2",
     "method-override": "2.3.6",
     "minimist": "1.2.0",
     "morgan": "1.7.0",
-    "yargs": "5.0.0"
+    "yargs": "6.0.0"
   },
   "devDependencies": {
-    "babel-eslint": "6.1.2",
+    "babel-eslint": "7.0.0",
     "chai": "3.5.0",
-    "eslint": "3.5.0",
+    "eslint": "3.7.0",
     "eslint-config-availity": "2.0.0-beta.11",
-    "eslint-plugin-react": "6.2.1",
+    "eslint-plugin-react": "6.3.0",
     "istanbul": "0.4.5",
-    "mocha": "3.0.2",
-    "superagent": "2.2.0",
-    "superagent-bluebird-promise": "3.0.2"
+    "mocha": "3.1.0",
+    "superagent": "2.3.0",
+    "superagent-bluebird-promise": "4.0.0"
   },
   "engines": {
     "node": ">=5.0.0"

@@ -11,8 +11,6 @@ const _ = require('lodash');
 const chalk = require('chalk');
 
 const config = require('../config');
-const proxy = require('./proxy');
-const Logger = require('../logger');
 const routes = require('../routes');
 const dateformat = require('dateformat');
 const requestHandler = require('./request');
@@ -46,15 +44,6 @@ module.exports = function development() {
 
   // pretty print json
   config.app.set('json spaces', 2);
-
-  // Proxies must be configured before the mock routes so they can be intercepted
-  // and forwarded to appropriate server
-  if (config.isProxyEnabled()) {
-    Logger.info('Proxy configurations detected');
-    config.app.use(proxy());
-  } else {
-    Logger.info('No proxy configurations detected');
-  }
 
   config.app.use(methodOverride('X-HTTP-Method-Override'));
 

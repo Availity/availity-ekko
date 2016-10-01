@@ -2,11 +2,13 @@
 'use strict';
 
 const chai = require('chai');
+const path = require('path');
 const expect = chai.expect;
 
 const Ekko = require('../index');
 
 describe('Ekko', function() {
+
   it('should be defined', function() {
     expect(Ekko).to.be.defined;
   });
@@ -14,23 +16,28 @@ describe('Ekko', function() {
   describe('Events', function() {
 
     it('should emit started event when started', function(done) {
-      const ekko = new Ekko();
+
+      const ekko = new Ekko(path.join(__dirname, 'test-config.js'));
       ekko.on('av:started', function() {
         ekko.stop().then(function() {
           done();
         });
       });
       ekko.start();
+
     });
 
     it('should emit stopped event when stopped', function(done) {
-      const ekko = new Ekko();
+
+      const ekko = new Ekko(path.join(__dirname, 'test-config.js'));
       ekko.on('av:stopped', function() {
         done();
       });
       ekko.start().then(function() {
         ekko.stop();
       });
+
     });
   });
+
 });

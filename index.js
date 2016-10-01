@@ -5,7 +5,7 @@ const Ekko = require('./server');
 const yargs = require('yargs');
 
 const argv = yargs.argv;
-const configPath = path.join(__dirname, 'config.js') || argv.ekkoConfig;
+const configPath = argv.ekkoConfig || path.join(__dirname, 'config.js');
 
 const ekko = new Ekko(configPath);
 ekko
