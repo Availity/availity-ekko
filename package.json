@@ -4,7 +4,7 @@
   "description": "Mock server simulating Availity API rest services",
   "main": "./server/index.js",
   "scripts": {
-    "test": "NODE_ENV=testing mocha --reporter spec --recursive server",
+    "test": "cross-env NODE_ENV=testing mocha --reporter spec --recursive server",
     "lint": "eslint ./server",
     "coverage": "istanbul --include-all-sources cover ./node_modules/.bin/_mocha -- **/*-spec.js",
     "preversion": "npm run lint && npm run test",
@@ -61,6 +61,7 @@
   "devDependencies": {
     "babel-eslint": "7.0.0",
     "chai": "3.5.0",
+    "cross-env": "3.0.0",
     "eslint": "3.7.0",
     "eslint-config-availity": "2.0.0-beta.11",
     "eslint-plugin-react": "6.3.0",
