@@ -65,6 +65,16 @@ Ekko also supports overriding defaults using command line arguments (useful to s
 }
 ```
 
+## Options
+
+- **latency**: Global delay for all reponses.  The latency can be overridden per route configuration.  Default is `250ms`.
+- **limit**: Upload max size.  Default is `50mb`,
+- **host**: Server binds and listens for connections on the specified host. Default is `0.0.0.0`.
+- **port**: Server binds and listens for connections on the specified port.  Default is `9999`.
+- **data**: Path to folder that contains the json mock responses.
+- **routes**: Path(s) to configuration file that contains a mapping of the request/response routes.  Multiple paths can be passed in with an array of strings.
+- **plugins**: Array of NPM module names that are plugins for Ekko data and route information.  @See [availity-mock-data](https://www.npmjs.com/package/availity-ekko).
+
 ## Route Configuration
 
 The `routes.json` defines the mock responses for rest services. Below are some sample scenarios that should help you understand the configuration options.
