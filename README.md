@@ -26,9 +26,7 @@ Develop web applications without heavy back-end services by running a simple Exp
 
 Responses can be JSON or other formats to simulate REST services. Access-Control HTTP Headers are set by default to allow CORS requests. Mock services are configured in the [routes.json](./routes.json) file.
 
->
 This server can return other file types besides XML or JSON (PDFs, images, etc).  The appropriate response headers will be automatically set for different file types.  For a complete list of file types supported view the [mime types here](https://github.com/jshttp/mime-db/blob/88d8b0424d93aefef4ef300dc35ad2c8d1e1f9d4/db.json).
-
 
 ## Server Configuration
 
@@ -47,7 +45,7 @@ Alternatively, pass options in the start method.
 
 ```javascript
 const ekko = new Ekko();
-test.ekko.start({
+ekko.start({
     data: path.join(__dirname, './data'),
     routes: path.join(__dirname, './routes'),
 }).then(function() {
@@ -61,7 +59,7 @@ Ekko also supports overriding defaults using command line arguments (useful to s
 {
     ...
     host: "0.0.0.0",
-    port: 9999 // --ekko.web.port=8888
+    port: 9999 // --ekko.port=8888
     ...
   }
 }
