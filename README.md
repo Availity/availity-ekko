@@ -13,7 +13,6 @@
   * [Intro](#intro)
   * [Server Configuration](#server-configuration)
   * [Route Configuration](#route-configuration)
-  * [Proxy Configuration](#proxy-configuration)
   * [Events](#events)
   * [Contributing](#contributing)
   * [Authors](#authors)
@@ -36,26 +35,33 @@ This server can return other file types besides XML or JSON (PDFs, images, etc).
 The default server configuration can be found in [config.js](./config.js).  Pass a different configuration file to the Ekko server to override the defaults.
 
 ```javascript
-var path = require('path');
-var Ekko = require('availity-ekko');
+const path = require('path');
+const Ekko = require('availity-ekko');
 
-var configPath = path.join(__dirname, 'path/to/config.js');
-var ekko = new Ekko(configPath);
+const configPath = path.join(__dirname, 'path/to/config.js');
+const ekko = new Ekko(configPath);
 ekko.start();
 ```
 
-Ekko also supports overriding defaults using command line arguments (useful to setup different configurations in WebStorm).  The CLI commands are equivalent to the `config.js` object using dot notation.  Using example configuration below, run `node index.js --severs.web.port=8888` to override the web server port for `development` mode.
+Alternatively, pass options in the start method.
+
+```javascript
+const ekko = new Ekko();
+test.ekko.start({
+    data: path.join(__dirname, './data'),
+    routes: path.join(__dirname, './routes'),
+}).then(function() {
+    // server started
+});
+```
+
+Ekko also supports overriding defaults using command line arguments (useful to setup different configurations in WebStorm).  The CLI commands are equivalent to the `config.js` object using dot notation.  Using example configuration below, run `node index.js --ekko.port=8888` to override the web server port for `development` mode.
 
 ```javascript
 {
-  development: {
     ...
-    servers: {
-      web: {
-        host: "0.0.0.0",
-        port: 9999 // --severs.web.port=8888
-      }
-    }
+    host: "0.0.0.0",
+    port: 9999 // --ekko.web.port=8888
     ...
   }
 }
@@ -71,7 +77,7 @@ The mock configuration supports deep nested introspection of JSON and multi-part
 
 ```javascript
 "v1/route1": {
-  "file": "example1.json" // match for GET|PUT|POST|DELETE
+  "file": "example1.json" // response for GET|PUT|POST|DELETE
 }
 ```
 
@@ -79,7 +85,7 @@ The mock configuration supports deep nested introspection of JSON and multi-part
 ```javascript
 "v1/route2": {
   "latency": 250, // latency in (ms)
-  "file": "example2.json", // match for all GET|PUT|POST|DELETE requests
+  "file": "example2.json", // all GET|PUT|POST|DELETE requests
   "status": 201 // return status code 201
 }
 ```
@@ -88,8 +94,8 @@ The mock configuration supports deep nested introspection of JSON and multi-part
 
 ```javascript
 "v1/route3": {
-  "file": "example3.json", // match for GET|PUT|DELETE requests
-  "post": "example1.json" // match for POST requests
+  "file": "example3.json", // GET|PUT|DELETE requests
+  "post": "example1.json" // POST requests
 }
 ```
 
@@ -97,10 +103,10 @@ The mock configuration supports deep nested introspection of JSON and multi-part
 
 ```javascript
 "v1/route4": {
-  "get": "example1.json", // match for all GET requests
-  "put": "example2.json", // match for all PUT requests
-  "post": "example3.json", // match for all POST requests
-  "delete": "example4.json" // match for all DELETE requests
+  "get": "example1.json", // all GET requests
+  "put": "example2.json", // all PUT requests
+  "post": "example3.json", // all POST requests
+  "delete": "example4.json" // all DELETE requests
 }
 ```
 
@@ -108,12 +114,12 @@ The mock configuration supports deep nested introspection of JSON and multi-part
 
 ```javascript
 "v1/route5": {
-  "file": "example1.json", // match for all POST|PUT|DELETE requests
+  "file": "example1.json", // all POST|PUT|DELETE requests
   "get": [
     {
       "file": "example2.json",
       "status": 200, // default status code is 200
-      "params": { // match for GET /v1/router?a=1&b=2&c=3
+      "params": { // GET /v1/router?a=1&b=2&c=3
         "a": "1",
         "b": "2",
         "c": "3"
@@ -121,14 +127,14 @@ The mock configuration supports deep nested introspection of JSON and multi-part
     },
     {
       "file": "example3.json",
-      "params": { // match for GET /v1/router?a=1&a=2&a=3&a=4
+      "params": { // GET /v1/router?a=1&a=2&a=3&a=4
         "a": [1, 2, 3, 4]
       }
     },
     {
       "file": "example4.json",
       "params": { // Regular expression configruation for matching params
-        "a": { // match for GET /v1/router?a=1 OR /v1/router?a=2 OR /v1/router?a=3
+        "a": { // GET /v1/router?a=1 OR /v1/router?a=2 OR /v1/router?a=3
             pattern: "1|2|3",
             flags: "i" // Javascript regex flags to ignore case
         }
@@ -142,24 +148,24 @@ The mock configuration supports deep nested introspection of JSON and multi-part
 
 ```javascript
 "v1/route6": {
-  "file": "example1.json", // match for all GET|PUT|DELETE requests
+  "file": "example1.json", // all GET|PUT|DELETE requests
   "post": [
     {
       "file": "example2.json",
-      "params": { // match for POST with JSON payload {"a": 1}
+      "params": { // POST with JSON payload {"a": 1}
         "a": 1
       }
     },
     {
       "file": "example3.json",
-      "params": { // match for POST with JSON payload {a: {b: {c: "1"} } }
-        "a.b.c": 1 // config allows for nested attributes
+      "params": { // POST with JSON payload {a: {b: {c: "1"} } }
+        "a.b.c": 1 // nested attributes supported
       }
     },
     {
       "file": "example4.json",
-      "params": { // match for POST with JSON payload {a : {b: [0,1,2] } }
-        "a.b[2]": 2 // config allows for nested array attributes
+      "params": { // POST with JSON payload {a : {b: [0,1,2] } }
+        "a.b[2]": 2 // nested array attributes supported
       }
     }
   ]
@@ -178,21 +184,21 @@ The mock configuration supports deep nested introspection of JSON and multi-part
 
 ```javascript
 "v1/route7": {
-  "file": "example1.json", // match for all GET|PUT|DELETE requests
+  "file": "example1.json", // all GET|PUT|DELETE requests
   "post": [
     {
       "file": "example2.json" // default response if none match below
     },
     {
       "file": "example3.json",
-      "params": { // match for form submit where form fields a=1 and b="sample.pdf"
+      "params": { // form submit where form fields a=1 and b="sample.pdf"
         "a": 1,
         "b": "sample.pdf"
       }
     },
     {
       "file": "example4.json",
-      "params": { // match for form submit where form fields a=2 and b="another.name.jpg"
+      "params": { // form submit where form fields a=2 and b="another.name.jpg"
         "a": 2,
         "b": "another.name.jpg"
       }
@@ -211,12 +217,12 @@ The mock configuration supports deep nested introspection of JSON and multi-part
       "file": "example1.json",
       "response": [
         {
-          // match for first GET request to /v1/route8
+          // first GET request to /v1/route8
           "status": 202,
           "file": "example1.json"
         },
         {
-          // match for second GET request to /v1/route8
+          // second GET request to /v1/route8
           "status": 201,
           "file": "example2.json"
         }
@@ -266,13 +272,13 @@ The mock configuration supports deep nested introspection of JSON and multi-part
   "get": [
     {
       "file": "example2.json",
-      "headers": { // match for GET with header pair b:2
+      "headers": { // GET with header key-value pair b:2
         "b": "2"
       }
     },
     {
       "file": "example3.json",
-      "headers": { // match for GET with header pair b:3
+      "headers": { // GET with header key-value pair b:3
         "c": "3"
       }
     }
@@ -287,142 +293,15 @@ The mock configuration supports deep nested introspection of JSON and multi-part
 }
 ```
 
-
-## Proxy Configuration
-
-You define Ekko server configurations in `config.json`.  Each configuration requires a `host`.  Other configuration options are outlined below.  You must have a configuration called `web` that is used to serve static files and the proxy server.  An example configuration looks like this:
-
-###### Example 1
-
-```javascript
-{
-    user: 'johndoe', // global set `RemoteUser` header across all proxy requests
-    servers: {
-        web: { // (required) server used for static resources
-            host: "0.0.0.0",
-            port: 9999
-        }
-    }
-}
-```
-
 If you omit the port, or set it to `0`, Ekko will let the OS assign a random open port.
 This allows you to run multiple servers without keeping track of all ports being used. (see Example 2)
 
 ###### Example 2 Dynamic Port (Ekko only)
 
 ```javascript
-servers: {
-    web: {
-        host: "0.0.0.0",
-        port: 0 // dynamic port
-    }
-}
-```
-
-###### Example 3 Proxy
-
-```javascript
-servers: {
-    web: {
-        host: "127.0.0.1",
-        port: 9999
-    },
-    api: {
-        host: "127.0.0.1",
-        port: 7777, // port number to proxied server
-        proxy: true, // defaults to false.  when true the proxy is enabled
-        headers: {
-            "userid": "johndoe" // set custom header for proxy requests to this server
-        },
-        proxies:
-        [
-            {
-                context: "/api", // if url context matches the proxy is triggered for all routes
-                rewrite: { // (optional) allows url to be rewritten before forwarding request to a proxied server
-                    from: "^/api", // convert /api/v1/ping
-                    to: "" // to /v1/ping
-                }
-            }
-        ]
-    }
-}
-```
-
-###### Example 4 Multiple contexts
-
-```javascript
-servers: {
-    web: {
-        host: "127.0.0.1",
-        port: 9999
-    },
-    api: {
-        host: "127.0.0.1",
-        port: 7777,
-        proxy: true,
-        proxies:
-        [
-            {
-                context: "/api",
-                rewrite: {
-                    from: "^/api",
-                    to: ""
-                },
-                headers: {
-                    "userid": "johndoe" // set custom header for proxy requests this context for this server
-                }
-            },
-            {
-                context: "/api2", // you can define multiple context's for a proxied server
-                rewrite: {
-                    from: "^/api2",
-                    to: "/v1"
-                }
-            }
-        ]
-    }
-}
-```
-
-###### Example 5 Multiple Proxied Servers
-
-```javascript
-servers: {
-    web: {
-        host: "127.0.0.1",
-        port: 9999
-    },
-    api: {
-        host: "127.0.0.1",
-        port: 7777,
-        proxy: true,
-        proxies:
-        [
-            {
-                context: "/api",
-                rewrite: {
-                    from: "^/api",
-                    to: ""
-                }
-            }
-        ]
-    },
-    other: { // define more servers to proxy
-        host: "127.0.0.1",
-        port: 8888,
-        proxy: true,
-        proxies:
-        [
-            {
-                context: "/test",
-                rewrite: {
-                    from: "^/test",
-                    to: ""
-                }
-            }
-        ]
-    }
+{
+    host: "0.0.0.0",
+    port: 0 // dynamic port
 }
 ```
 
@@ -440,9 +319,9 @@ Ekko emits events to allow implementations to handle when specific events occur.
 To add event handlers, register the events before starting the Ekko server.
 ```javascript
 
-var ekko = new Ekko(configPath);
+const ekko = new Ekko(configPath);
 
-ekko.on('av:request', function(req) {
+ekko.on('av:request', req => {
     /* your logic here */
 });
 
@@ -473,4 +352,4 @@ Open source software components distributed or made available in the Availity Ma
 
 
 ## License
-Copyright (c) Availity, LLC
+Copyright (c) 2016 Availity, LLC
