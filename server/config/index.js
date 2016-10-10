@@ -52,7 +52,7 @@ class Configuration {
 
     // Get the config object by path or from root
     if (this.path) {
-      logger.info(`Using configuration file ${chalk.blue(this.path)}`);
+      logger.info(`Using ${chalk.blue(this.path)}`);
     }
     let config = this.path ? require(this.path) : this.defaultConfig();
 

@@ -26,11 +26,7 @@ class Ekko {
     config.router = new express.Router();
 
     middleware.headers();
-    if (config.middleware) {
-      config.middleware();
-    } else {
-      middleware.config();
-    }
+    middleware.config();
 
     const port = config.options.port || 0;
     config.app.set('port', port);
@@ -41,7 +37,7 @@ class Ekko {
       config.server.listen(config.options.port, () => {
 
         const url = `http://localhost:${config.server.address().port}`;
-        logger.info(`Started Ekko server on ${chalk.green(url)}`);
+        logger.info(`Ekko server started on ${chalk.green(url)}`);
 
         config.events.emit(config.constants.EVENTS.START, {
           options: config.options
@@ -54,9 +50,9 @@ class Ekko {
       config.server.on('error', (e) => {
 
         if (e.errno === 'EADDRINUSE') {
-          logger.error(`Cannot start server on PORT ${config.options.port}. Check if port is already in use.`);
+          logger.error(`Cannot start Ekko server on PORT ${config.options.port}. Check if port is already in use.`);
         } else {
-          logger.error(`Failed to start server on PORT ${config.options.port}`);
+          logger.error(`Failed to start Ekko server on PORT ${config.options.port}`);
         }
 
         reject(new Error(e));

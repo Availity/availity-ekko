@@ -2,10 +2,12 @@
 
 const _ = require('lodash');
 const fs = require('fs');
+const chalk = require('chalk');
 
 const config = require('../config');
 const response = require('../response');
 const models = require('../models');
+const logger = require('../logger');
 const Route = models.Route;
 
 const _routes = {
@@ -69,6 +71,7 @@ const _routes = {
 
       try {
         pluginConfig = require(plugin);
+        logger.info(`Loading plugin ${chalk.blue(plugin)}`);
       } catch (err) {
         // workaround when `npm link`'ed for development
         const parentRequire = require('parent-require');
