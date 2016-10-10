@@ -53,12 +53,16 @@ const _routes = {
     routePaths = _.isArray(routePaths) ? routePaths : [routePaths];
 
     _.forEach(routePaths, routePath => {
-      const routeConfig = JSON.parse(fs.readFileSync(routePath, 'utf8'));
+
+      const contents = fs.readFileSync(routePath, 'utf8');
+      const routeConfig = JSON.parse(contents);
+
       _.each(routeConfig, (route) => {
         route.dataPath = dataPath;
       });
       _.merge(config.options.endpoints, routeConfig);
     });
+
   },
 
   plugins() {

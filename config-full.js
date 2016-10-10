@@ -13,7 +13,8 @@ const config = {
   routes: path.join(__dirname, '/routes.json'),
   plugins: [
     'availity-mock-data'
-  ]
+  ],
+  pluginContext: 'http://localhost:3000'
 
 };
 

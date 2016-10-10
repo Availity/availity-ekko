@@ -1,7 +1,8 @@
 'use strict';
 
 const path = require('path');
-const BPromise = require('bluebird');
+const fs = require('fs');
+const Promise = require('bluebird');
 const chalk = require('chalk');
 
 const config = require('../config');
@@ -11,9 +12,68 @@ const result = {
 
   cache: {},
 
+  sendFile(req, res, status, response, filePath) {
+
+    res.status(status).sendFile(filePath, (err) => {
+
+      if (err) {
+
+        Logger.error(`NOT FOUND ${filePath} `);
+
+        config.events.emit(config.constants.EVENTS.FILE_NOT_FOUND, {
+          req
+        });
+
+        res.sendStatus(404);
+
+      } else {
+
+        const file = chalk.blue(filePath);
+        Logger.info(`FILE ${file} ${chalk.dim(status)}`);
+
+        config.events.emit(config.constants.EVENTS.RESPONSE, {
+          req,
+          res: response,
+          file: filePath
+        });
+
+      }
+    });
+
+  },
+
+  sendJson(req, res, status, response, filePath) {
+
+    try {
+
+      const contents = fs.readFileSync(filePath, 'utf8');
+      const replacedContents = contents.replace('${context}', config.options.pluginContext);
+      const json = JSON.parse(replacedContents);
+      res.status(status).send(json);
+
+      config.events.emit(config.constants.EVENTS.RESPONSE, {
+        req,
+        res: response,
+        file: filePath
+      });
+
+    } catch (err) {
+
+      Logger.error(`NOT FOUND ${filePath} `);
+
+      config.events.emit(config.constants.EVENTS.FILE_NOT_FOUND, {
+        req
+      });
+
+      res.sendStatus(404);
+
+    }
+
+  },
+
   file(req, res, response, dataPath) {
 
-    BPromise.delay(response.latency || 200).then(() => {
+    Promise.delay(response.latency || 200).then(() => {
 
       const filePath = path.join(dataPath, response.file);
       const status = response.status || 200;
@@ -22,43 +82,29 @@ const result = {
         res.set(response.headers);
       }
 
-      res.status(status).sendFile(filePath, (err) => {
+      if (path.extname(filePath) === '.json') {
+        this.sendJson(req, res, status, response, filePath);
+      } else {
+        this.sendFile(req, res, status, response, filePath);
+      }
 
-        if (err) {
-
-          Logger.error(`NOT FOUND ${filePath} `);
-
-          config.events.emit(config.constants.EVENTS.FILE_NOT_FOUND, {
-            req
-          });
-
-          res.sendStatus(404);
-        } else {
-
-          const file = chalk.blue(filePath);
-          Logger.info(`FILE ${file} ${chalk.dim(status)}`);
-
-          config.events.emit(config.constants.EVENTS.RESPONSE, {
-            req,
-            res: response,
-            file: filePath
-          });
-
-        }
-      });
     });
+
   },
 
   url(req, res, response) {
+
     config.events.emit(config.constants.EVENTS.REDIRECT, {
       req,
       res: response
     });
 
     res.redirect(response.url);
+
   },
 
   send(req, res) {
+
     const route = res.locals.route;
     const request = res.locals.request;
 
