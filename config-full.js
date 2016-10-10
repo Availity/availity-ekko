@@ -10,7 +10,10 @@ const config = {
   host: '0.0.0.0',
   port: 9999,
   data: path.join(__dirname, '/data'),
-  routes: path.join(__dirname, '/routes.json')
+  routes: path.join(__dirname, '/routes.json'),
+  plugins: [
+    'availity-mock-data'
+  ]
 
 };
 
