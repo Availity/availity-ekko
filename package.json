@@ -50,7 +50,7 @@
     "dateformat": "1.0.12",
     "errorhandler": "1.4.3",
     "express": "4.14.0",
-    "lodash": "4.16.2",
+    "lodash": "4.16.4",
     "log-symbols": "1.0.2",
     "method-override": "2.3.6",
     "minimist": "1.2.0",
@@ -61,14 +61,14 @@
   "devDependencies": {
     "babel-eslint": "7.0.0",
     "chai": "3.5.0",
-    "cross-env": "3.0.0",
-    "eslint": "3.7.0",
+    "cross-env": "3.1.2",
+    "eslint": "3.7.1",
     "eslint-config-availity": "2.0.0-beta.11",
-    "eslint-plugin-react": "6.3.0",
+    "eslint-plugin-react": "6.4.0",
     "istanbul": "0.4.5",
-    "mocha": "3.1.0",
+    "mocha": "3.1.1",
     "superagent": "2.3.0",
-    "superagent-bluebird-promise": "4.0.0"
+    "superagent-bluebird-promise": "4.1.0"
   },
   "engines": {
     "node": ">=5.0.0"
