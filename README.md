@@ -53,7 +53,7 @@ ekko.start({
 });
 ```
 
-Ekko also supports overriding defaults using command line arguments (useful to setup different configurations in WebStorm).  The CLI commands are equivalent to the `config.js` object using dot notation.  Using example configuration below, run `node index.js --ekko.port=8888` to override the web server port for `development` mode.
+Ekko also supports overriding defaults using command line arguments (useful to setup different configurations in WebStorm).  The CLI commands are equivalent to the `config.js` object using dot notation and prefixed with `ekko`.  Using example configuration below, run `node index.js --ekko.port=8888` to override the web server port.  One can also pass the entire configuration file through a CLI arguement like `node index.js --ekkoConfig=/path/to/fileconfig-full.js`.
 
 ```javascript
 {
@@ -73,7 +73,7 @@ Ekko also supports overriding defaults using command line arguments (useful to s
 - **port**: Server binds and listens for connections on the specified port.  Default is `9999`.
 - **data**: Path to folder that contains the json mock responses.
 - **routes**: Path(s) to configuration file that contains a mapping of the request/response routes.  Multiple paths can be passed in with an array of strings.
-- **plugins**: Array of NPM module names that are plugins for Ekko data and route information.  @See [availity-mock-data](https://www.npmjs.com/package/availity-ekko).
+- **plugins**: Array of NPM module names that enhance Ekko with addtional data and routes.  @See [availity-mock-data](https://www.npmjs.com/package/availity-ekko).
 
 ## Route Configuration
 
@@ -345,6 +345,10 @@ ekko.start();
 1. Open a [pull request](https://help.github.com/articles/using-pull-requests/) against the develop branch
 1. Wait for a commiter to merge and release
 
+## Acknowledgements
+
+- [apimocker](https://github.com/gstroup/apimocker)
+- [json-server](https://github.com/typicode/json-server)
 
 ## Authors
 
