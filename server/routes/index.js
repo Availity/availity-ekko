@@ -40,7 +40,11 @@ const _routes = {
     // Load local data and routes.  Local data and routes should override the plugins.
     const routePaths = config.options.routes;
     const dataPath = config.options.data;
-    this.routes(routePaths, dataPath);
+
+    // Local data can be missing if only plugins are use for route + data
+    if (routePaths && dataPath) {
+      this.routes(routePaths, dataPath);
+    }
 
     _.each(config.options.endpoints, (endpoint, url) => {
       const route = new Route(url, endpoint, endpoint.dataPath);

@@ -22,7 +22,7 @@
 
 ## Intro
 
-Develop web applications without heavy back-end services by running a simple Express http server which can deliver mock responses.
+Develop web applications without heavy back-end services by running a simple Express http server which can deliver mock responses.  
 
 Responses can be JSON or other formats to simulate REST services. Access-Control HTTP Headers are set by default to allow CORS requests. Mock services are configured in the [routes.json](./routes.json) file.
 
@@ -53,7 +53,7 @@ ekko.start({
 });
 ```
 
-Ekko also supports overriding defaults using command line arguments (useful to setup different configurations in WebStorm).  The CLI commands are equivalent to the `config.js` object using dot notation and prefixed with `ekko`.  Using example configuration below, run `node index.js --ekko.port=8888` to override the web server port.  One can also pass the entire configuration file through a CLI arguement like `node index.js --ekkoConfig=/path/to/fileconfig-full.js`.
+Ekko also supports overriding defaults using command line arguments (useful to setup different configurations in WebStorm).  The CLI commands are equivalent to the `config.js` object using dot notation and prefixed with `ekko`.  Using example configuration below, run `node index.js --ekko.port=8888` to override the web server port.  One can also pass the entire configuration file through a CLI arguement like `node index.js --ekkoConfig=/full/path/to/config.js`.
 
 ```javascript
 {

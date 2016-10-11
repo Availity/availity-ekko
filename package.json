@@ -59,6 +59,7 @@
     "yargs": "6.0.0"
   },
   "devDependencies": {
+    "availity-mock-data": "1.0.0-beta.0",
     "babel-eslint": "7.0.0",
     "chai": "3.5.0",
     "cross-env": "3.1.2",
