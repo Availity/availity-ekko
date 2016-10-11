@@ -47,7 +47,8 @@ const result = {
     try {
 
       const contents = fs.readFileSync(filePath, 'utf8');
-      const replacedContents = contents.replace('${context}', config.options.pluginContext);
+      const regex = /\${context}/g;
+      const replacedContents = contents.replace(regex, config.options.pluginContext);
       const json = JSON.parse(replacedContents);
       res.status(status).send(json);
 
