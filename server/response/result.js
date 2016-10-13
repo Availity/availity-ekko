@@ -42,6 +42,17 @@ const result = {
 
   },
 
+  parseJSON(contents) {
+    let replacedContents;
+    try {
+      replacedContents = JSON.parse(contents);
+    } catch (err) {
+      replacedContents = contents;
+    }
+
+    return replacedContents;
+  },
+
   sendJson(req, res, status, response, filePath) {
 
     try {
@@ -49,8 +60,11 @@ const result = {
       const contents = fs.readFileSync(filePath, 'utf8');
       const regex = /\${context}/g;
       const replacedContents = contents.replace(regex, config.options.pluginContext);
-      const json = JSON.parse(replacedContents);
-      res.status(status).send(json);
+      const json = this.parseJSON(replacedContents);
+
+      Logger.info(`FILE ${filePath} ${chalk.dim(status)}`);
+
+      res.status(status).json(json);
 
       config.events.emit(config.constants.EVENTS.RESPONSE, {
         req,
