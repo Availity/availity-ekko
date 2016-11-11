@@ -1,7 +1,5 @@
 'use strict';
 
-const path = require('path');
-
 const config = {
 
   latency: 250,
@@ -9,8 +7,10 @@ const config = {
   limit: '50mb',
   host: '0.0.0.0',
   port: 9999,
-  data: path.join(__dirname, '/data'),
-  routes: path.join(__dirname, '/routes.json')
+  plugins: [
+    'availity-mock-data'
+  ],
+  pluginContext: 'http://localhost:3000'
 
 };
 

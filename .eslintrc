@@ -1,7 +1,3 @@
 ---
 extends: eslint-config-availity
-rules:
-  strict: 0
-  no-var: 0
-  object-shorthand: 0
 

@@ -1,16 +1,17 @@
-var _ = require('lodash');
-var utils = require('../utils');
+'use strict';
 
-var match = {
+const _ = require('lodash');
 
-  scoreHeaders: function(score, _request, headers) {
+const match = {
+
+  scoreHeaders(score, _request, headers) {
 
     // Note: variables prefixed with "_" underscore signify config object|key|value
 
-    var _headers = _request.headers;
+    const _headers = _request.headers;
 
-    _.each(_headers, function(_headerValue, _headerKey) {
-      var headerValue = _.get(headers, _headerKey);
+    _.each(_headers, (_headerValue, _headerKey) => {
+      const headerValue = _.get(headers, _headerKey);
 
       if (_headerValue === headerValue) {
         score.hits++;  // values are equal
@@ -25,7 +26,7 @@ var match = {
     return score;
   },
 
-  scoreParam: function(score, _paramValue, paramValue) {
+  scoreParam(score, _paramValue, paramValue) {
 
     // Note: variables prefixed with "_" underscore signify config object|key|value
 
@@ -38,11 +39,11 @@ var match = {
     }
   },
 
-  scorePattern: function(score, _paramValue, paramValue) {
+  scorePattern(score, _paramValue, paramValue) {
 
     // Note: variables prefixed with "_" underscore signify config object|key|value
 
-    var regex = new RegExp(_paramValue.pattern, _paramValue.flags || 'i');
+    const regex = new RegExp(_paramValue.pattern, _paramValue.flags || 'i');
 
     if (regex.test(paramValue)) {
       score.hits++; // perfect match
@@ -53,39 +54,39 @@ var match = {
     }
   },
 
-  scoreArray: function(score, _paramValue, __paramValue) {
+  scoreArray(score, _paramValue, __paramValue) {
 
     // Note: variables prefixed with "_" underscore signify config object|key|value
 
-    var paramValue = _.toArray(__paramValue);
+    const paramValue = _.toArray(__paramValue);
 
-    var hits = _.intersection(_paramValue, paramValue);
+    const hits = _.intersection(_paramValue, paramValue);
     score.hits += hits.length;
 
-    var misses = _.difference(_paramValue, paramValue);
+    const misses = _.difference(_paramValue, paramValue);
     score.misses += misses.length;
 
     return score;
 
   },
 
-  scoreParams: function(_request, params, method) {
+  scoreParams(_request, params, method) {
 
-    var self = this;
+    const self = this;
 
     // Note: variables prefixed with "_" underscore signify config object|key|value
 
-    var score = {
+    const score = {
       hits: 0, // Matching parameters
       misses: 0, // Parameters specified in route, but not present in query
       valid: true // False if a parameter is specified in route and query, but they are not equal and therefore should never match
     };
 
-    var _params = _request.params;
+    const _params = _request.params;
 
-    _.each(_params, function(_paramValue, _paramKey) {
+    _.each(_params, (_paramValue, _paramKey) => {
 
-      var paramValue = (method === 'get') ? params[_paramKey] : utils.object.deep(params, _paramKey);
+      const paramValue = (method === 'get') ? params[_paramKey] : _.get(params, _paramKey);
 
       if (_.isArray(_paramValue)) {
         self.scoreArray(score, _paramValue, paramValue);
@@ -107,20 +108,20 @@ var match = {
    * @param {[type]} req http request object
    * @param {[type]} res http response object
    */
-  set: function(req, res) {
+  set(req, res) {
 
     // Note: variables prefixed with "_" underscore signify config object object|key|value
 
-    var self = this;
+    const self = this;
 
-    var _route = res.locals.route;
-    var method = req.method.toLowerCase();
-    var _requests = _route.methods[method];
+    const _route = res.locals.route;
+    const method = req.method.toLowerCase();
+    const _requests = _route.methods[method];
 
-    var params = _.isEmpty(req.query) ? req.body : req.query;
-    // var headers = req.headers;
+    const params = _.isEmpty(req.query) ? req.body : req.query;
+    // const headers = req.headers;
 
-    var topScore = {
+    const topScore = {
       hits: 0,
       misses: 0
     };
@@ -128,9 +129,9 @@ var match = {
     // set the default request
     res.locals.request = _requests[0];
 
-    _.each(_requests, function(_request) {
+    _.each(_requests, (_request) => {
 
-      var score = self.scoreParams(_request, params, method);
+      const score = self.scoreParams(_request, params, method);
       self.scoreHeaders(score, _request, req.headers);
 
       if (!score.valid) {

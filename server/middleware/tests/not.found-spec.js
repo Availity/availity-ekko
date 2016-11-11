@@ -1,13 +1,15 @@
 /* globals describe, it*/
-var request = require('superagent');
-var helper = require('../../tests/helpers');
+'use strict';
 
-describe('Events', function() {
+const request = require('superagent');
+const helper = require('../../tests/helpers');
+
+describe('Events', () => {
 
   helper.serverSpecHelper();
 
-  it('should emit an event when a route is undefined', function(done) {
-    helper.ekko.on('av:fileNotFound', function() {
+  it('should emit an event when a route is undefined', (done) => {
+    helper.ekko.on('av:fileNotFound', () => {
       done();
     });
 

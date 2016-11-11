@@ -1,9 +1,13 @@
-var path = require('path');
-var Ekko = require('./server');
+'use strict';
 
-var configPath = path.join(__dirname, 'config.js');
+const path = require('path');
+const Ekko = require('./server');
+const yargs = require('yargs');
 
-var ekko = new Ekko(configPath);
+const argv = yargs.argv;
+const configPath = argv.ekkoConfig || path.join(__dirname, 'config.js');
+
+const ekko = new Ekko(configPath);
 ekko
   .start()
   .catch(function() {/* no op */});

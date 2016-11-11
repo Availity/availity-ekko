@@ -1,7 +1,9 @@
-var get = require('./get');
-var post = require('./post');
+'use strict';
 
-var response = {
+const get = require('./get');
+const post = require('./post');
+
+const response = {
 
   get: get.send,
 
@@ -11,9 +13,9 @@ var response = {
 
   put: post.send,
 
-  send: function(req, res, next) {
+  send(req, res, next) {
 
-    var method = req.method.toLowerCase();
+    const method = req.method.toLowerCase();
 
     if (this[method]) {
       this[method](req, res, next);

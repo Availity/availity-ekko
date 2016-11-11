@@ -1,33 +1,39 @@
 /* globals describe, it */
-var request = require('superagent');
-var chai = require('chai');
-var helper = require('../../tests/helpers');
-var expect = chai.expect;
+'use strict';
 
-describe('Behavior', function() {
+const request = require('superagent');
+const chai = require('chai');
+const helper = require('../../tests/helpers');
+const expect = chai.expect;
+
+describe('Behavior', () => {
 
   helper.serverSpecHelper();
 
-  it('should respond with 404 for undefined route', function(done) {
+  it('should respond with 404 for undefined route', (done) => {
+
     request.get(helper.getUrl('/dummy/route'))
-      .end(function(err, res) {
+      .end((err, res) => {
         expect(res.status).to.equal(404);
         done();
       });
+
   });
 
-  it('should respond with 404 when file does not exist', function(done) {
+  it('should respond with 404 when file does not exist', (done) => {
+
     request.get(helper.getUrl('/bad/file'))
-      .end(function(err, res) {
+      .end((err, res) => {
         expect(res.status).to.equal(404);
         done();
       });
+
   });
 
-  describe('Events', function() {
+  describe('Events', () => {
 
-    it('should emit file not found event when file does not exist', function(done) {
-      helper.ekko.on('av:fileNotFound', function() {
+    it('should emit file not found event when file does not exist', (done) => {
+      helper.ekko.on('av:fileNotFound', () => {
         done();
       });
 
@@ -35,8 +41,8 @@ describe('Behavior', function() {
       .end();
     });
 
-    it('should emit response event when file exists', function(done) {
-      helper.ekko.on('av:response', function() {
+    it('should emit response event when file exists', (done) => {
+      helper.ekko.on('av:response', () => {
         done();
       });
 

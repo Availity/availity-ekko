@@ -1,4 +1,6 @@
-var config = require('../config');
+'use strict';
+
+const config = require('../config');
 
 module.exports = function notfound() {
 
@@ -7,10 +9,10 @@ module.exports = function notfound() {
     res.status(404);
 
     config.events.emit(config.constants.EVENTS.FILE_NOT_FOUND, {
-      req: req
+      req
     });
 
-    var message = 'Not Found';
+    const message = 'Not Found';
 
     if (req.accepts('html')) {
       res.type('html').status(404).end('<!DOCTYPE html> <html> <head> <title>Dummy Mock Server Response</title> </head> <body> <h1>Not Found<h1> </body> </html>');
@@ -25,7 +27,7 @@ module.exports = function notfound() {
 
     // respond with json
     if (req.accepts('xml')) {
-      res.type('xml').send('<error><message>' + message + '</message></error>');
+      res.type('xml').send('<error><message>${message}</message></error>');
       return;
     }
 

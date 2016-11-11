@@ -1,27 +1,29 @@
-var _ = require('lodash');
-var BPromise = require('bluebird');
+'use strict';
 
-var logger = require('../logger');
-var match = require('./match');
-var result = require('./result');
+const _ = require('lodash');
+const Promise = require('bluebird');
 
-var post = {
+const logger = require('../logger');
+const match = require('./match');
+const result = require('./result');
 
-  multipart: function(req) {
+const post = {
 
-    return new BPromise(function(resolve, reject) {
+  multipart(req) {
+
+    return new Promise((resolve, reject) => {
 
       if (!req.is('multipart')) {
         resolve(true);
         return;
       }
 
-      req.busboy.on('file', function(fieldname, file, filename) {
+      req.busboy.on('file', (fieldname, file, filename) => {
 
-        file.on('error', function(error) {
+        file.on('error', (error) => {
           logger.error('{red:Something went wrong uploading the file', error);
         });
-        file.on('end', function() {
+        file.on('end', () => {
           // Treat the file name as a field so we can match and score
           logger.info('File finished %s:', filename);
           req.body[fieldname] = filename;
@@ -31,7 +33,7 @@ var post = {
         file.resume();
       });
 
-      req.busboy.on('field', function(key, value) {
+      req.busboy.on('field', (key, value) => {
         if (_.isEmpty(value)) {
           return;
         }
@@ -41,12 +43,12 @@ var post = {
         req.body[key] = value;
       });
 
-      req.busboy.on('error', function(err) {
+      req.busboy.on('error', (err) => {
         logger.error(err);
         reject(err);
       });
 
-      req.busboy.on('finish', function() {
+      req.busboy.on('finish', () => {
         logger.info('finished request');
         resolve(true);
       });
@@ -57,13 +59,13 @@ var post = {
 
   },
 
-  send: function(req, res) {
+  send(req, res) {
 
-    post.multipart(req).then(function() {
+    post.multipart(req).then(() => {
       match.set(req, res);
       result.send(req, res);
       return null;
-    }, function() {
+    }, () => {
       res.status(500).send({ error: 'mock server error' });
     });
 

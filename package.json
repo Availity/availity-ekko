@@ -1,10 +1,10 @@
 {
   "name": "availity-ekko",
-  "version": "1.3.0",
+  "version": "2.0.0-beta.3",
   "description": "Mock server simulating Availity API rest services",
   "main": "./server/index.js",
   "scripts": {
-    "test": "mocha --reporter spec --recursive server",
+    "test": "cross-env NODE_ENV=testing mocha --reporter spec --recursive server",
     "lint": "eslint ./server",
     "coverage": "istanbul --include-all-sources cover ./node_modules/.bin/_mocha -- **/*-spec.js",
     "preversion": "npm run lint && npm run test",
@@ -33,37 +33,45 @@
     {
       "name": "Kasey Powers",
       "email": "kasey.powers@availity.com"
+    },
+    {
+      "name": "Danny Noler",
+      "email": "danny.noler@availity.com"
     }
   ],
   "license": "MIT",
   "dependencies": {
-    "bluebird": "3.3.5",
-    "body-parser": "1.15.0",
-    "compression": "1.6.1",
+    "bluebird": "3.4.6",
+    "body-parser": "1.15.2",
+    "chalk": "1.1.3",
+    "compression": "1.6.2",
     "connect-busboy": "0.0.2",
-    "cors": "^2.7.1",
+    "cors": "2.8.1",
     "dateformat": "1.0.12",
-    "eazy-logger": "2.1.3",
     "errorhandler": "1.4.3",
-    "express": "4.13.4",
-    "http-proxy": "1.13.2",
-    "lodash": "4.11.1",
-    "method-override": "2.3.5",
+    "express": "4.14.0",
+    "lodash": "4.16.6",
+    "log-symbols": "1.0.2",
+    "method-override": "2.3.6",
     "minimist": "1.2.0",
     "morgan": "1.7.0",
-    "tfunk": "3.0.2"
+    "parent-require": "1.0.0",
+    "yargs": "6.3.0"
   },
   "devDependencies": {
-    "babel-eslint": "6.0.2",
+    "availity-mock-data": "1.0.0-beta.0",
+    "babel-eslint": "7.1.0",
     "chai": "3.5.0",
-    "eslint": "2.8.0",
-    "eslint-config-availity": "2.0.0-beta.9",
-    "istanbul": "0.4.3",
-    "mocha": "2.4.5",
-    "superagent": "1.8.3",
-    "superagent-bluebird-promise": "3.0.0"
+    "cross-env": "3.1.3",
+    "eslint": "3.9.1",
+    "eslint-config-availity": "2.0.0-beta.11",
+    "eslint-plugin-react": "6.6.0",
+    "istanbul": "0.4.5",
+    "mocha": "3.1.2",
+    "superagent": "2.3.0",
+    "superagent-bluebird-promise": "4.1.0"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=5.0.0"
   }
 }

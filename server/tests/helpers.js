@@ -1,39 +1,39 @@
 /* globals beforeEach, afterEach */
+'use strict';
 
 process.env.NODE_ENV = 'testing';
 
-var path = require('path');
-var config = require('../config');
-var Ekko = require('../index');
+const path = require('path');
+const config = require('../config');
+const Ekko = require('../index');
 
-
-var test = {
+const test = {
 
   ekko: null,
 
-  serverSpecHelper: function() {
+  serverSpecHelper() {
 
     beforeEach(function(done) {
-      test.ekko = new Ekko();
+      test.ekko = new Ekko(path.join(__dirname, 'test-config.js'));
       test.ekko.start().then(function() {
         done();
       });
     });
 
-    afterEach(function(done) {
-      test.ekko.stop().then(function() {
+    afterEach(done => {
+      test.ekko.stop().then(() => {
         done();
       });
     });
   },
 
-  getUrl: function(endpoint) {
-    var url = [':', config.server.address().port, endpoint].join('');
+  getUrl(endpoint) {
+    const url = [':', config.server.address().port, endpoint].join('');
     return url;
   },
 
-  getFile: function(name) {
-    var filePath = path.join(__dirname, 'data', name);
+  getFile(name) {
+    const filePath = path.join(__dirname, 'data', name);
     return filePath;
   }
 };

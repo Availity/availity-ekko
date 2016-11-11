@@ -1,91 +1,70 @@
-var _ = require('lodash');
-var argv = require('minimist');
+'use strict';
 
-var logger = require('../logger');
+const _ = require('lodash');
+const chalk = require('chalk');
 
-var events = {
-  START: 'av:started',
-  STOPPED: 'av:stopped',
-  REQUEST: 'av:request',
-  RESPONSE: 'av:response',
-  REDIRECT: 'av:redirect',
-  FILE_NOT_FOUND: 'av:fileNotFound'
-};
+const logger = require('../logger');
 
-var Configuration = function() {
-  this.server = null;
-  this.app = null;
-  this.router = null;
-  this.routes = [];
-  this.events = null;
-  this.path = null;
-  this.addressInUse = null;
+class Configuration {
 
-  this.constants = {
-    EVENTS: events
-  };
-};
+  constructor() {
 
-var proto = Configuration.prototype;
+    this.server = null;
+    this.app = null;
+    this.router = null;
+    this.routes = [];
+    this.events = null;
+    this.path = null;
+    this.addressInUse = null;
 
-/**
- * Set the path of the configuration object
- *
- * @param  {Sring} path full path to configuration. Ex: path.join(__dirname, 'config.js')
+    this.constants = {
+      EVENTS: {
+        START: 'av:started',
+        STOPPED: 'av:stopped',
+        REQUEST: 'av:request',
+        RESPONSE: 'av:response',
+        REDIRECT: 'av:redirect',
+        FILE_NOT_FOUND: 'av:fileNotFound'
+      }
+    };
 
- */
-
-proto.isProduction = function() {
-  return process.env.NODE_ENV === 'production';
-};
-
-proto.isDevelopment = function() {
-  return process.env.NODE_ENV === 'development';
-};
-
-proto.isTesting = function() {
-  return process.env.NODE_ENV === 'testing';
-};
-
-proto.defaultConfig = function(path) {
-  return this.path ? require(path) : require('../../config');
-};
-
-/**
- * Sets the configuration object from the configuration file and command line overrides.
- *
- * @param {Object} options configuration object with production|development|testing settings.
- */
-proto.set = function(_options) {
-
-  var options = _options || {};
-
-  // Get the config object by path or from root
-  if (this.path) {
-    logger.info('Loading configuration file {cyan:%s}', this.path);
   }
-  var config = this.path ? require(this.path) : this.defaultConfig();
 
-  // Allow programmatic overrides for environment
-  config = _.merge(config, options);
+  /**
+   * Set the path of the configuration object
+   *
+   * @param  {Sring} path full path to configuration. Ex: path.join(__dirname, 'config.js')
 
-  // Pluck out environment specific config and save to `this.options`
-  this.environment = process.env.NODE_ENV || 'development';
-  this.options = config[this.environment];
+   */
 
-  // Merge in any command line overrides
-  var args = argv(process.argv.slice(2));
+  defaultConfig(path) {
+    return this.path ? require(path) : require('../../config');
+  }
 
-  this.options = _.merge(this.options, args);
+  /**
+   * Sets the configuration object from the configuration file and command line overrides.
+   *
+   * @param {Object} options configuration object with production|development|testing settings.
+   */
+  set(_options) {
 
-};
+    const options = _options || {};
 
-proto.isProxyEnabled = function() {
+    // Get the config object by path or from root
+    if (this.path) {
+      logger.info(`Using ${chalk.blue(this.path)}`);
+    }
+    let config = this.path ? require(this.path) : this.defaultConfig();
 
-  return _.some(this.options.servers, function(server) {
-    return server.proxy;
-  });
+    // Allow programmatic overrides for environment
+    config = _.merge(config, options);
 
-};
+    // Save to `this.options`
+    this.options = config;
+
+  }
+
+}
+
 
 module.exports = new Configuration();
