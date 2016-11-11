@@ -53,18 +53,6 @@ ekko.start({
 });
 ```
 
-Ekko also supports overriding defaults using command line arguments (useful to setup different configurations in WebStorm).  The CLI commands are equivalent to the `config.js` object using dot notation and prefixed with `ekko`.  Using example configuration below, run `node index.js --ekko.port=8888` to override the web server port.  One can also pass the entire configuration file through a CLI arguement like `node index.js --ekkoConfig=/full/path/to/config.js`.
-
-```javascript
-{
-    ...
-    host: "0.0.0.0",
-    port: 9999 // --ekko.port=8888
-    ...
-  }
-}
-```
-
 ## Options
 
 - **latency**: Global delay for all reponses.  The latency can be overridden per route configuration.  Default is `250ms`.
@@ -81,7 +69,7 @@ The `routes.json` defines the mock responses for rest services. Below are some s
 
 The mock configuration supports deep nested introspection of JSON and multi-part form data when matching routes. See [Example 6](#example-6-post-with-params-with-deep-introspection) below.
 
-###### Example 1
+###### Simple
 
 ```javascript
 "v1/route1": {
@@ -89,7 +77,8 @@ The mock configuration supports deep nested introspection of JSON and multi-part
 }
 ```
 
-###### Example 2
+###### Status Code
+
 ```javascript
 "v1/route2": {
   "latency": 250, // latency in (ms)
@@ -98,7 +87,7 @@ The mock configuration supports deep nested introspection of JSON and multi-part
 }
 ```
 
-###### Example 3
+###### POST with default response
 
 ```javascript
 "v1/route3": {
@@ -107,7 +96,7 @@ The mock configuration supports deep nested introspection of JSON and multi-part
 }
 ```
 
-###### Example 4
+###### CRUD
 
 ```javascript
 "v1/route4": {
@@ -118,7 +107,7 @@ The mock configuration supports deep nested introspection of JSON and multi-part
 }
 ```
 
-###### Example 5 Query Params
+###### Query Params with Arrays and Regexes
 
 ```javascript
 "v1/route5": {
@@ -152,7 +141,7 @@ The mock configuration supports deep nested introspection of JSON and multi-part
 }
 ```
 
-###### Example 6 POST Params
+###### POST Params
 
 ```javascript
 "v1/route6": {
@@ -180,14 +169,14 @@ The mock configuration supports deep nested introspection of JSON and multi-part
 },
 ```
 
-###### Example 7 Multipart
+###### Multipart
 
 ```html
 <form action="/api/v1/users" method="post" enctype="multipart/form-data">
   <p><input type="text" name="a" value="example">
   <p><input type="file" name="b"> <!--the name of the file is used below to match and score the proper response -->
   <p><button type="submit">Submit</button>
-</for
+</form>
 ```
 
 ```javascript
@@ -215,7 +204,7 @@ The mock configuration supports deep nested introspection of JSON and multi-part
 }
 ```
 
-###### Example 8 Async Responses
+###### Async Responses
 
 ```javascript
 "v1/route8": {
@@ -240,7 +229,7 @@ The mock configuration supports deep nested introspection of JSON and multi-part
 }
 ```
 
-###### Example 9 Async with repeat option
+###### Async Responses with Repeat Option
 
 ```javascript
 "v1/route10": {
@@ -272,7 +261,7 @@ The mock configuration supports deep nested introspection of JSON and multi-part
   }
 ```
 
-###### Example 10 Header Matching
+###### Match Headers
 
 ```javascript
 "v1/route11": {
@@ -294,7 +283,8 @@ The mock configuration supports deep nested introspection of JSON and multi-part
 }
 ```
 
-###### Example 11 Url Redirect
+###### Url Redirect
+
 ```javascript
 "v1/route9": {
   "url": "http://www.google.com"
@@ -303,15 +293,6 @@ The mock configuration supports deep nested introspection of JSON and multi-part
 
 If you omit the port, or set it to `0`, Ekko will let the OS assign a random open port.
 This allows you to run multiple servers without keeping track of all ports being used. (see Example 2)
-
-###### Example 2 Dynamic Port (Ekko only)
-
-```javascript
-{
-    host: "0.0.0.0",
-    port: 0 // dynamic port
-}
-```
 
 ## Events
 
@@ -335,15 +316,6 @@ ekko.on('av:request', req => {
 
 ekko.start();
 ```
-
-## Contributing
-1. `git clone https://github.com/Availity/availity-ekko`
-1. `git checkout develop`
-1. `git pull upstream develop`
-1. `git checkout -b feature/branch-name`
-1. Create some awesome code or fabulous bug fixes
-1. Open a [pull request](https://help.github.com/articles/using-pull-requests/) against the develop branch
-1. Wait for a commiter to merge and release
 
 ## Acknowledgements
 
