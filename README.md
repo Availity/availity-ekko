@@ -30,7 +30,7 @@ This server can return other file types besides XML or JSON (PDFs, images, etc).
 
 ## Route Matching
 
-Ekko is designed to try match the route the most closely matches the incoming request. The route that matches the most parameters (header, form or request body) wins.
+Ekko is designed to try use response of the route definition that most closely matches the incoming request.  Ekko introspects the request body and headers to determine which route configuration is used to return a file response.
 
 ## Server Configuration
 
@@ -52,7 +52,7 @@ const ekko = new Ekko();
 ekko.start({
     data: path.join(__dirname, './data'),
     routes: path.join(__dirname, './routes'),
-    plugins: ['availity-mock-data'],
+    plugins: ['availity-mock-data']
 }).then(function() {
     // server started
 });
@@ -92,7 +92,7 @@ The mock configuration supports deep nested introspection of JSON and multi-part
 }
 ```
 
-###### POST with default response
+###### POST with Default Response
 
 ```javascript
 "v1/route3": {
