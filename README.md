@@ -66,7 +66,7 @@ ekko.start({
 - **port**: Server binds and listens for connections on the specified port.  Default is `9999`.
 - **data**: Path to folder that contains the json mock responses.
 - **routes**: Path(s) to configuration file that contains a mapping of the request/response routes.  Multiple paths can be passed in with an array of strings.
-- **plugins**: Array of NPM module names that enhance Ekko with additional data and routes.  @See [availity-mock-data](https://www.npmjs.com/package/availity-ekko).
+- **plugins**: Array of NPM module names that enhance Ekko with additional data and routes.  @See [availity-mock-data](https://github.com/Availity/availity-mock-data)
 
 ## Route Configuration
 
