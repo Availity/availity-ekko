@@ -22,6 +22,9 @@ describe('Routes', () => {
       const routeConfigs = ekko.config().router.stack;
 
       const _verbs = _.chain(routeConfigs)
+        .filter((routeConfig) => {
+          return routeConfig.route !== undefined;
+        })
         .map((routeConfig) => {
           if (routeConfig.route.path === path) {
             return _.keys(routeConfig.route.methods)[0];

@@ -17,8 +17,7 @@ class Ekko {
     config.events = new events.EventEmitter();
   }
 
-  start(options) {
-
+  middleware(options) {
     config.path = this._configPath;
     config.set(options);
 
@@ -27,6 +26,13 @@ class Ekko {
 
     middleware.headers();
     middleware.config();
+
+    return config.router;
+  }
+
+  start(options) {
+
+    this.middleware(options);
 
     const port = config.options.port || 0;
     config.app.set('port', port);

@@ -38,29 +38,29 @@ expressLogger.token('avStatus', function getStatusToken(req, res) {
 module.exports = function development() {
 
   if (Logger.canLog()) {
-    config.app.use(expressLogger(':prefix :avMethod :url :avStatus :response-time'));
+    config.router.use(expressLogger(':prefix :avMethod :url :avStatus :response-time'));
   }
 
-  config.app.use(requestHandler());
-  config.app.use(errorhandler());
-  config.app.use(compression());
-  config.app.use(cors());
+  config.router.use(requestHandler());
+  config.router.use(errorhandler());
+  config.router.use(compression());
+  config.router.use(cors());
 
   // pretty print json
   config.app.set('json spaces', 2);
 
-  config.app.use(methodOverride('X-HTTP-Method-Override'));
+  config.router.use(methodOverride('X-HTTP-Method-Override'));
 
-  config.app.use(bodyParser.json({
+  config.router.use(bodyParser.json({
     limit: _.get(config, 'options.limit', '50mb')
   })); // parse application/json
 
-  config.app.use(bodyParser.urlencoded({
+  config.router.use(bodyParser.urlencoded({
     extended: true,
     limit: config.options.limit
   })); // // parse application/x-www-form-urlencoded
 
-  config.app.use(busboy({ immediate: false }));
+  config.router.use(busboy({ immediate: false }));
 
   config.app.use('/', config.router);
   config.app.use('/api', config.router);
