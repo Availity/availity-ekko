@@ -22,7 +22,7 @@
 
 ## Intro
 
-Develop web applications without heavy back-end services by running a simple Express http server which can deliver mock responses.  
+Develop web applications without heavy back-end services by running a simple Express http server which can deliver mock responses.
 
 Responses can be JSON or other formats to simulate REST services. Access-Control HTTP Headers are set by default to allow CORS requests. Mock services are configured in the [routes.json](./routes.json) file.
 
@@ -32,7 +32,9 @@ This server can return other file types besides XML or JSON (PDFs, images, etc).
 
 Ekko is designed to try use response of the route definition that most closely matches the incoming request.  Ekko introspects the request body and headers to determine which route configuration is used to return a file response.
 
-## Server Configuration
+## Configuration
+
+### Standalone Server
 
 The default server configuration can be found in [config.js](./config.js).  Pass a different configuration file to the Ekko server to override the defaults.
 
@@ -43,6 +45,20 @@ const Ekko = require('availity-ekko');
 const configPath = path.join(__dirname, 'path/to/config.js');
 const ekko = new Ekko(configPath);
 ekko.start();
+```
+
+### Express Middleware
+```js
+const express = require('express');
+const app = express();
+
+// This is the same as the stand-alone server use.
+const Ekko = require('availity-ekko');
+const ekko = new Ekko({/* options */});
+
+app.use(ekko.middleware(/* options, same as `start` */);
+
+app.listen(3001);
 ```
 
 Alternatively, pass options in the start method.
