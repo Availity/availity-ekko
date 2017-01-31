@@ -22,7 +22,7 @@
 
 ## Intro
 
-Develop web applications without heavy back-end services by running a simple Express http server which can deliver mock responses.
+Develop web applications without heavy back-end services by running Express middleware or http server which can deliver mock responses.
 
 Responses can be JSON or other formats to simulate REST services. Access-Control HTTP Headers are set by default to allow CORS requests. Mock services are configured in the [routes.json](./routes.json) file.
 
@@ -30,7 +30,7 @@ This server can return other file types besides XML or JSON (PDFs, images, etc).
 
 ## Route Matching
 
-Ekko is designed to try use response of the route definition that most closely matches the incoming request.  Ekko introspects the request body and headers to determine which route configuration is used to return a file response.
+Ekko is designed to respond with the route definition that most closely matches the incoming request by introspecting the request body, parameters and headers. Ekko calculates which route scores the highest for each request and returns the appropriate mock response.
 
 ## Configuration
 
@@ -47,6 +47,19 @@ const ekko = new Ekko(configPath);
 ekko.start();
 ```
 
+Alternatively, pass options in the start method.
+
+```javascript
+const ekko = new Ekko();
+ekko.start({
+    data: path.join(__dirname, './data'),
+    routes: path.join(__dirname, './routes'),
+    plugins: ['availity-mock-data']
+}).then(function() {
+    // server started
+});
+```
+
 ### Express Middleware
 ```js
 const express = require('express');
@@ -59,19 +72,6 @@ const ekko = new Ekko({/* options */});
 app.use(ekko.middleware(/* options, same as `start` */);
 
 app.listen(3001);
-```
-
-Alternatively, pass options in the start method.
-
-```javascript
-const ekko = new Ekko();
-ekko.start({
-    data: path.join(__dirname, './data'),
-    routes: path.join(__dirname, './routes'),
-    plugins: ['availity-mock-data']
-}).then(function() {
-    // server started
-});
 ```
 
 ## Options
