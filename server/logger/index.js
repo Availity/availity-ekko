@@ -2,58 +2,107 @@
 'use strict';
 
 const chalk = require('chalk');
-const dateformat = require('dateformat');
-const symbols = require('log-symbols');
 
-class Logger {
+let loggerInstance;
+
+class DefaultLogger {
 
   constructor(options) {
     this.options = options;
   }
 
-  static warning(entry) {
-    this._log(entry, 'yellow');
+  warn(entry) {
+    this.record(entry, 'yellow');
   }
 
-  static error(entry) {
-    this._log(entry, 'red');
+  error(entry) {
+    this.record(entry, 'red');
   }
 
-  static info(entry) {
-    this._log(entry);
+  info(entry) {
+    this.record(entry);
   }
 
-  static failed(entry) {
-    this._log(`${symbols.error} ${entry}`, 'red');
+  debug(entry) {
+    this.record(entry);
   }
 
-  static ok(entry) {
-    this._log(`${symbols.success} ${entry}`, 'green');
+  log(entry) {
+    this.record(entry);
   }
 
-  static canLog() {
-    return process.env.NODE_ENV !== 'testing';
-  }
+  // › Starting server
+  record(entry, color) {
 
-  static _log(entry, _color) {
-
-    if (!this.canLog()) {
-      return;
-    }
-
-    const now = dateformat(new Date(), 'HH:MM:ss');
     const defaultColor = entry instanceof Error ? 'red' : 'gray';
+    const crayoloa = color || defaultColor;
 
-    const color = _color || defaultColor;
+    console.log(`${chalk[crayoloa](entry)}` );
 
-    console.log(`[${ chalk.cyan(now) }] ${ chalk[color](entry) }` );
-
-  }
-
-  static log(entry) {
-    this._log(entry);
   }
 
 }
 
-module.exports = Logger;
+class Logger {
+
+  constructor() {
+    this.provider = null;
+    this.setProvider(() => new DefaultLogger());
+  }
+
+  canLog() {
+    return process.env.NODE_ENV !== 'testing';
+  }
+
+  setProvider(fn) {
+
+    if (fn) {
+      this.provider = fn();
+    }
+
+  }
+
+  warn(entry) {
+    if (this.canLog()) {
+      this.provider.warn(entry);
+    }
+  }
+
+  error(entry) {
+    if (this.canLog()) {
+      this.provider.error(entry);
+    }
+  }
+
+  info(entry) {
+    if (this.canLog()) {
+      this.provider.info(entry);
+    }
+  }
+
+  debug(entry) {
+    if (this.canLog()) {
+      this.provider.debug(entry);
+    }
+  }
+
+  log(entry) {
+    if (this.canLog()) {
+      this.provider.log(entry);
+    }
+  }
+}
+
+module.exports = {
+  // singleton
+  getInstance() {
+
+    if (!loggerInstance) {
+      loggerInstance = new Logger();
+    }
+
+    return loggerInstance;
+
+  }
+
+};

@@ -1,44 +1,49 @@
 'use strict';
 
-const expressLogger = require('morgan');
 const errorhandler = require('errorhandler');
 const compression = require('compression');
 const methodOverride = require('method-override');
 const cors = require('cors');
+const path = require('path');
 const bodyParser = require('body-parser');
 const busboy = require('connect-busboy');
 const _ = require('lodash');
+const onFinished = require('on-finished');
 const chalk = require('chalk');
 
 const config = require('../config');
 const routes = require('../routes');
-const Logger = require('../logger');
-const dateformat = require('dateformat');
+const logger = require('../logger').getInstance();
+
 const requestHandler = require('./request');
 const notFoundHandler = require('./not.found');
 
-expressLogger.token('prefix', () => {
-  const timestamp = `[${chalk.cyan(dateformat(new Date(), 'HH:MM:ss'))}]`;
-  return timestamp;
-});
-
-expressLogger.token('avMethod', function getMethodToken(req) {
-  const method = chalk.dim(req.method);
-  return method;
-});
-
-expressLogger.token('avStatus', function getStatusToken(req, res) {
-  const code = res._header
-    ? String(res.statusCode)
-    : '';
-
-  return chalk.dim(code);
-});
-
+// Custom request logger
 module.exports = function development() {
 
-  if (Logger.canLog()) {
-    config.router.use(expressLogger(':prefix :avMethod :url :avStatus :response-time'));
+  if (logger.canLog()) {
+
+    config.router.use((req, res, next) => {
+
+      function logRequest() {
+
+        const method = `${chalk.white(req.method)}`;
+        const url = `${chalk.dim(req.originalUrl || req.url)}`;
+        const code = res._header ? String(res.statusCode) : '';
+        const file = chalk.dim(res.avFile || '');
+
+
+        logger.log(`${method} ${url} ${chalk.white(code)} ${chalk.blue(path.basename(file))}`);
+
+      }
+
+      // Callback is called at the end of request cycle after headers are set
+      onFinished(res, logRequest);
+
+      next();
+
+    });
+
   }
 
   config.router.use(requestHandler());
@@ -63,7 +68,6 @@ module.exports = function development() {
   config.router.use(busboy({ immediate: false }));
 
   config.app.use('/', config.router);
-  config.app.use('/api', config.router);
   routes.init();
 
   config.app.use(notFoundHandler());

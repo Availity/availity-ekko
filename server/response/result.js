@@ -6,7 +6,7 @@ const Promise = require('bluebird');
 const chalk = require('chalk');
 
 const config = require('../config');
-const Logger = require('../logger');
+const logger = require('../logger').getInstance();
 
 const result = {
 
@@ -18,7 +18,7 @@ const result = {
 
       if (err) {
 
-        Logger.error(`NOT FOUND ${filePath} `);
+        logger.error(`NOT FOUND ${filePath} `);
 
         config.events.emit(config.constants.EVENTS.FILE_NOT_FOUND, {
           req
@@ -29,7 +29,10 @@ const result = {
       } else {
 
         const file = chalk.blue(filePath);
-        Logger.info(`FILE ${file} ${chalk.dim(status)}`);
+        const relativeFile = path.relative(process.cwd(), file);
+
+        // Attach file path to response object for logging at the end of request cycle
+        res.avFile = relativeFile;
 
         config.events.emit(config.constants.EVENTS.RESPONSE, {
           req,
@@ -62,7 +65,9 @@ const result = {
       const replacedContents = contents.replace(regex, config.options.pluginContext);
       const json = this.parseJSON(replacedContents);
 
-      Logger.info(`FILE ${filePath} ${chalk.dim(status)}`);
+      const relativeFile = path.relative(process.cwd(), filePath);
+      // Attach file path to response object for logging at the end of request cycle
+      res.avFile = relativeFile;
 
       res.status(status).json(json);
 
@@ -74,7 +79,7 @@ const result = {
 
     } catch (err) {
 
-      Logger.error(`NOT FOUND ${filePath} `);
+      logger.error(`NOT FOUND ${filePath} `);
 
       config.events.emit(config.constants.EVENTS.FILE_NOT_FOUND, {
         req

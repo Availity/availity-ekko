@@ -7,7 +7,7 @@ const chalk = require('chalk');
 const config = require('../config');
 const response = require('../response');
 const models = require('../models');
-const logger = require('../logger');
+const logger = require('../logger').getInstance();
 const Route = models.Route;
 
 const _routes = {

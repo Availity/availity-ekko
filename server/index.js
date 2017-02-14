@@ -5,15 +5,30 @@ const events = require('events');
 const http = require('http');
 const Promise = require('bluebird');
 const chalk = require('chalk');
-
 const logger = require('./logger');
 const config = require('./config');
 const middleware = require('./middleware');
 
+Promise.config({
+  longStackTraces: true
+});
+
 class Ekko {
 
-  constructor(configPath) {
-    this._configPath = configPath;
+  constructor(ekkoConfig) {
+
+    if (ekkoConfig) {
+
+      const isString = (typeof ekkoConfig === 'string');
+
+      if (isString) {
+        this._configPath = ekkoConfig;
+      } else {
+        this.middleware(ekkoConfig);
+      }
+
+    }
+
     config.events = new events.EventEmitter();
   }
 
@@ -28,6 +43,7 @@ class Ekko {
     middleware.config();
 
     return config.router;
+
   }
 
   start(options) {
@@ -43,7 +59,7 @@ class Ekko {
       config.server.listen(config.options.port, () => {
 
         const url = `http://localhost:${config.server.address().port}`;
-        logger.info(`Ekko server started on ${chalk.green(url)}`);
+        logger.getInstance().info(`Ekko server started at ${chalk.green(url)}`);
 
         config.events.emit(config.constants.EVENTS.START, {
           options: config.options
@@ -56,9 +72,9 @@ class Ekko {
       config.server.on('error', (e) => {
 
         if (e.errno === 'EADDRINUSE') {
-          logger.error(`Cannot start Ekko server on PORT ${config.options.port}. Check if port is already in use.`);
+          logger.getInstance().error(`Cannot start Ekko server on PORT ${config.options.port}. Check if port is already in use.`);
         } else {
-          logger.error(`Failed to start Ekko server on PORT ${config.options.port}`);
+          logger.getInstance().error(`Failed to start Ekko server on PORT ${config.options.port}`);
         }
 
         reject(new Error(e));

@@ -2,8 +2,7 @@
 
 const _ = require('lodash');
 const chalk = require('chalk');
-
-const logger = require('../logger');
+const logger = require('../logger').getInstance();
 
 class Configuration {
 
@@ -49,6 +48,8 @@ class Configuration {
   set(_options) {
 
     const options = _options || {};
+
+    logger.setProvider(options.logProvider);
 
     // Get the config object by path or from root
     if (this.path) {

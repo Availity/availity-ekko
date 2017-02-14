@@ -3,7 +3,7 @@
 const _ = require('lodash');
 const Promise = require('bluebird');
 
-const logger = require('../logger');
+const logger = require('../logger').getInstance();
 const match = require('./match');
 const result = require('./result');
 

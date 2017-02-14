@@ -83,6 +83,33 @@ app.listen(3001);
 - **data**: Path to folder that contains the json mock responses.
 - **routes**: Path(s) to configuration file that contains a mapping of the request/response routes.  Multiple paths can be passed in with an array of strings.
 - **plugins**: Array of NPM module names that enhance Ekko with additional data and routes.  @See [availity-mock-data](https://github.com/Availity/availity-mock-data)
+- **logProvider**: Function that returns a logger that is used in place of the default logger.  Inspired by the log provider in [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware)
+
+**Simple**
+```js
+
+function logProvider(provider) {
+    return require('winston');
+}
+```
+
+**Advanced**
+```js
+
+function logProvider(provider) {
+
+    var logger = new (require('winston').Logger)();
+
+    var myCustomProvider = {
+        log: logger.log,
+        debug: logger.debug,
+        info: logger.info,
+        warn: logger.warn,
+        error: logger.error
+    }
+    return myCustomProvider;
+}
+```
 
 ## Route Configuration
 
