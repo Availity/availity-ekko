@@ -1,6 +1,6 @@
 # availity-ekko
 
-> Mock server simulating Availity API rest services
+> Mock simulating Availity API rest services
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square&label=license)](http://opensource.org/licenses/MIT)
 [![NPM](http://img.shields.io/npm/v/availity-ekko.svg?style=flat-square&label=npm)](https://npmjs.org/package/availity-ekko)
