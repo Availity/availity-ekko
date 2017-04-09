@@ -30,7 +30,7 @@ This server can return other file types besides XML or JSON (PDFs, images, etc).
 
 ## Route Matching
 
-Ekko is designed to respond with the route definition that most closely matches the incoming request by introspecting the request body, parameters and headers. Ekko calculates which route scores the highest for each request and returns the appropriate mock response.
+Ekko is designed to respond with the route configuration that matches the incoming request the closest by introspecting the request body, parameters and headers. Ekko calculates which route scores the highest for each request and returns the appropriate mock response. 
 
 ## Configuration
 
