@@ -10,7 +10,7 @@ const Ekko = require('../index');
 describe('Ekko', function() {
 
   it('should be defined', function() {
-    expect(Ekko).to.be.defined;
+    expect(Ekko).to.be.exist;
   });
 
   describe('Events', function() {
