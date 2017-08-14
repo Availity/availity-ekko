@@ -62,6 +62,8 @@
     "cross-env": "^5.0.5",
     "eslint": "^4.4.1",
     "eslint-config-availity": "^2.2.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.2.1",
     "istanbul": "0.4.5",
     "mocha": "^3.5.0",

@@ -38,7 +38,7 @@ describe('Behavior', () => {
       });
 
       request.get(helper.getUrl('/bad/file'))
-      .end();
+        .end();
     });
 
     it('should emit response event when file exists', (done) => {
@@ -47,7 +47,7 @@ describe('Behavior', () => {
       });
 
       request.get(helper.getUrl('/v1/route1'))
-      .end();
+        .end();
     });
 
   });

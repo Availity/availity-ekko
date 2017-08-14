@@ -15,7 +15,7 @@ describe('Events', () => {
     });
 
     request.post(helper.getUrl('/v1/route9'))
-    .end();
+      .end();
 
   });
 });

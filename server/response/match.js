@@ -14,7 +14,7 @@ const match = {
       const headerValue = _.get(headers, _headerKey);
 
       if (_headerValue === headerValue) {
-        score.hits++;  // values are equal
+        score.hits++; // values are equal
       } else if (!headerValue) {
         score.misses--;
       } else {

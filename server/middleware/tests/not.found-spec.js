@@ -14,6 +14,6 @@ describe('Events', () => {
     });
 
     request.get(helper.getUrl('/dummy/file'))
-    .end();
+      .end();
   });
 });
