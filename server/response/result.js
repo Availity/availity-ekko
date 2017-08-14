@@ -167,7 +167,12 @@ const result = {
       return;
     }
 
-    this.url(req, res, response);
+    if (response.url) {
+      this.url(req, res, response);
+      return;
+    }
+
+    res.sendStatus(404);
 
   }
 };
