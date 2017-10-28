@@ -5,9 +5,7 @@ const chalk = require('chalk');
 const logger = require('../logger').getInstance();
 
 class Configuration {
-
   constructor() {
-
     this.server = null;
     this.app = null;
     this.router = null;
@@ -23,10 +21,9 @@ class Configuration {
         REQUEST: 'av:request',
         RESPONSE: 'av:response',
         REDIRECT: 'av:redirect',
-        FILE_NOT_FOUND: 'av:fileNotFound'
-      }
+        FILE_NOT_FOUND: 'av:fileNotFound',
+      },
     };
-
   }
 
   /**
@@ -46,7 +43,6 @@ class Configuration {
    * @param {Object} options configuration object with production|development|testing settings.
    */
   set(_options) {
-
     const options = _options || {};
 
     logger.setProvider(options.logProvider);
@@ -62,9 +58,7 @@ class Configuration {
 
     // Save to `this.options`
     this.options = config;
-
   }
-
 }
 
 

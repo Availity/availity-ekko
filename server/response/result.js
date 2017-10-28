@@ -13,21 +13,16 @@ const result = {
   cache: {},
 
   sendFile(req, res, status, response, filePath) {
-
-    res.status(status).sendFile(filePath, (err) => {
-
+    res.status(status).sendFile(filePath, err => {
       if (err) {
-
         logger.error(`NOT FOUND ${filePath} `);
 
         config.events.emit(config.constants.EVENTS.FILE_NOT_FOUND, {
-          req
+          req,
         });
 
         res.sendStatus(404);
-
       } else {
-
         const file = chalk.blue(filePath);
         const relativeFile = path.relative(process.cwd(), file);
 
@@ -37,12 +32,10 @@ const result = {
         config.events.emit(config.constants.EVENTS.RESPONSE, {
           req,
           res: response,
-          file: filePath
+          file: filePath,
         });
-
       }
     });
-
   },
 
   parseJSON(contents) {
@@ -57,9 +50,7 @@ const result = {
   },
 
   sendJson(req, res, status, response, filePath) {
-
     try {
-
       const contents = fs.readFileSync(filePath, 'utf8');
       const regex = /\${context}/g;
       const replacedContents = contents.replace(regex, config.options.pluginContext);
@@ -74,27 +65,21 @@ const result = {
       config.events.emit(config.constants.EVENTS.RESPONSE, {
         req,
         res: response,
-        file: filePath
+        file: filePath,
       });
-
     } catch (err) {
-
       logger.error(`NOT FOUND ${filePath} `);
 
       config.events.emit(config.constants.EVENTS.FILE_NOT_FOUND, {
-        req
+        req,
       });
 
       res.sendStatus(404);
-
     }
-
   },
 
   file(req, res, response, dataPath) {
-
     Promise.delay(response.latency || 200).then(() => {
-
       const filePath = path.join(dataPath, response.file);
       const status = response.status || 200;
 
@@ -107,24 +92,19 @@ const result = {
       } else {
         this.sendFile(req, res, status, response, filePath);
       }
-
     });
-
   },
 
   url(req, res, response) {
-
     config.events.emit(config.constants.EVENTS.REDIRECT, {
       req,
-      res: response
+      res: response,
     });
 
     res.redirect(response.url);
-
   },
 
   send(req, res) {
-
     const route = res.locals.route;
     const request = res.locals.request;
 
@@ -134,7 +114,7 @@ const result = {
     // cache: {
     //  'route1_request2': [0,0] //  position 0 === response index; position 1 === repeat index
     // }
-    const cacheKey = routeId + '_' + requestId;
+    const cacheKey = `${routeId}_${requestId}`;
 
     let indexes = result.cache[cacheKey];
 
@@ -173,8 +153,7 @@ const result = {
     }
 
     res.sendStatus(404);
-
-  }
+  },
 };
 
 module.exports = result;

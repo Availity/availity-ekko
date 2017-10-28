@@ -8,6 +8,7 @@ const config = require('../config');
 const response = require('../response');
 const models = require('../models');
 const logger = require('../logger').getInstance();
+
 const Route = models.Route;
 
 const _routes = {
@@ -16,19 +17,17 @@ const _routes = {
    * Initialize the Express routes from the endpoints in the configurations file.
    */
   init() {
-
     const self = this;
 
     const router = config.router;
 
     // Add default route.  Configurations should be allowed to override this if needed.
     router.get('/', (req, res) => {
-
       const pkg = require('../../package.json');
       res.send({
         name: pkg.name,
         description: pkg.description,
-        version: pkg.version
+        version: pkg.version,
       });
     });
 
@@ -57,24 +56,20 @@ const _routes = {
     routePaths = _.isArray(routePaths) ? routePaths : [routePaths];
 
     _.forEach(routePaths, routePath => {
-
       const contents = fs.readFileSync(routePath, 'utf8');
       const routeConfig = JSON.parse(contents);
 
-      _.each(routeConfig, (route) => {
+      _.each(routeConfig, route => {
         route.dataPath = dataPath;
       });
       _.merge(config.options.endpoints, routeConfig);
     });
-
   },
 
   plugins() {
-
     const plugins = config.options.plugins || [];
 
     _.forEach(plugins, plugin => {
-
       let pluginConfig = null;
 
       try {
@@ -88,7 +83,6 @@ const _routes = {
 
       this.routes(pluginConfig.routes, pluginConfig.data);
     });
-
   },
 
   /**
@@ -99,14 +93,13 @@ const _routes = {
    * @param {Object} route Object representation route in the configuration file.
    */
   add(route) {
-
     // cache the route configuration
     config.routes[route.id] = route;
 
     const methods = _.keys(route.methods);
     const router = config.router;
 
-    _.each(methods, (method) => {
+    _.each(methods, method => {
       // builds get|post|put|delete routes like /v1/payers
       router[method](route.url, (req, res, next) => {
         // get from cache and attach to request local
@@ -114,7 +107,7 @@ const _routes = {
         response.send(req, res, next);
       });
     });
-  }
+  },
 };
 
 module.exports = _routes;

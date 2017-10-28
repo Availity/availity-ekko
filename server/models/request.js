@@ -3,7 +3,6 @@
 const _ = require('lodash');
 
 class Request {
-
   constructor() {
     this.params = null;
     this.headers = null;

@@ -10,17 +10,14 @@ const result = require('./result');
 const post = {
 
   multipart(req) {
-
     return new Promise((resolve, reject) => {
-
       if (!req.is('multipart')) {
         resolve(true);
         return;
       }
 
       req.busboy.on('file', (fieldname, file, filename) => {
-
-        file.on('error', (error) => {
+        file.on('error', error => {
           logger.error('{red:Something went wrong uploading the file', error);
         });
         file.on('end', () => {
@@ -38,12 +35,12 @@ const post = {
           return;
         }
 
-        logger.info(key + ', ' + value);
+        logger.info(`${key}, ${value}`);
 
         req.body[key] = value;
       });
 
-      req.busboy.on('error', (err) => {
+      req.busboy.on('error', err => {
         logger.error(err);
         reject(err);
       });
@@ -54,13 +51,10 @@ const post = {
       });
 
       req.pipe(req.busboy);
-
     });
-
   },
 
   send(req, res) {
-
     post.multipart(req).then(() => {
       match.set(req, res);
       result.send(req, res);
@@ -68,8 +62,7 @@ const post = {
     }, () => {
       res.status(500).send({ error: 'mock server error' });
     });
-
-  }
+  },
 };
 
 module.exports = post;

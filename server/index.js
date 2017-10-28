@@ -1,5 +1,3 @@
-'use strict';
-
 const express = require('express');
 const events = require('events');
 const http = require('http');
@@ -10,30 +8,26 @@ const config = require('./config');
 const middleware = require('./middleware');
 
 Promise.config({
-  longStackTraces: true
+  longStackTraces: true,
 });
 
 class Ekko {
-
   constructor(ekkoConfig) {
-
     if (ekkoConfig) {
-
       const isString = (typeof ekkoConfig === 'string');
 
       if (isString) {
-        this._configPath = ekkoConfig;
+        this.configPath = ekkoConfig;
       } else {
         this.middleware(ekkoConfig);
       }
-
     }
 
     config.events = new events.EventEmitter();
   }
 
   middleware(options) {
-    config.path = this._configPath;
+    config.path = this.configPath;
     config.set(options);
 
     config.app = express();
@@ -43,11 +37,9 @@ class Ekko {
     middleware.config();
 
     return config.router;
-
   }
 
-  start(options) {
-
+  async start(options) {
     this.middleware(options);
 
     const port = config.options.port || 0;
@@ -55,22 +47,18 @@ class Ekko {
     config.server = http.createServer(config.app);
 
     return new Promise((resolve, reject) => {
-
       config.server.listen(config.options.port, () => {
-
         const url = `http://localhost:${config.server.address().port}`;
         logger.getInstance().info(`Ekko server started at ${chalk.green(url)}`);
 
         config.events.emit(config.constants.EVENTS.START, {
-          options: config.options
+          options: config.options,
         });
 
         resolve(true);
-
       });
 
-      config.server.on('error', (e) => {
-
+      config.server.on('error', e => {
         if (e.errno === 'EADDRINUSE') {
           logger.getInstance().error(`Cannot start Ekko server on PORT ${config.options.port}. Check if port is already in use.`);
         } else {
@@ -78,17 +66,12 @@ class Ekko {
         }
 
         reject(new Error(e));
-
       });
-
     });
-
   }
 
   stop() {
-
-    return new Promise((resolve) => {
-
+    return new Promise(resolve => {
       if (config.server && config.server.close) {
         config.server.close(() => {
           config.events.emit(config.constants.EVENTS.STOPPED);
@@ -98,9 +81,7 @@ class Ekko {
         config.events.emit(config.constants.EVENTS.STOPPED);
         resolve(true);
       }
-
     });
-
   }
 
   on(event, callback) {

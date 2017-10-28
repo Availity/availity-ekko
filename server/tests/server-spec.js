@@ -1,43 +1,34 @@
-/* globals describe, it */
-'use strict';
-
 const chai = require('chai');
 const path = require('path');
-const expect = chai.expect;
+
+const { expect }  = chai.expect;
 
 const Ekko = require('../index');
 
-describe('Ekko', function() {
-
-  it('should be defined', function() {
+describe('Ekko', () => {
+  it('should be defined', () => {
     expect(Ekko).to.be.exist;
   });
 
-  describe('Events', function() {
-
-    it('should emit started event when started', function(done) {
-
+  describe('Events', () => {
+    it('should emit started event when started', done => {
       const ekko = new Ekko(path.join(__dirname, 'test-config.js'));
-      ekko.on('av:started', function() {
-        ekko.stop().then(function() {
+      ekko.on('av:started', () => {
+        ekko.stop().then(() => {
           done();
         });
       });
       ekko.start();
-
     });
 
-    it('should emit stopped event when stopped', function(done) {
-
+    it('should emit stopped event when stopped', done => {
       const ekko = new Ekko(path.join(__dirname, 'test-config.js'));
-      ekko.on('av:stopped', function() {
+      ekko.on('av:stopped', () => {
         done();
       });
-      ekko.start().then(function() {
+      ekko.start().then(() => {
         ekko.stop();
       });
-
     });
   });
-
 });

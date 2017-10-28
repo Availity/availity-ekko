@@ -5,5 +5,5 @@ const config = require('./config');
 
 module.exports = {
   headers,
-  config
+  config,
 };

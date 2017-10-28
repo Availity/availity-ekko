@@ -1,6 +1,3 @@
-/* globals beforeEach, afterEach */
-'use strict';
-
 process.env.NODE_ENV = 'testing';
 
 const path = require('path');
@@ -12,10 +9,9 @@ const test = {
   ekko: null,
 
   serverSpecHelper() {
-
-    beforeEach(function(done) {
+    beforeEach(done => {
       test.ekko = new Ekko(path.join(__dirname, 'test-config.js'));
-      test.ekko.start().then(function() {
+      test.ekko.start().then(() => {
         done();
       });
     });
@@ -35,7 +31,7 @@ const test = {
   getFile(name) {
     const filePath = path.join(__dirname, 'data', name);
     return filePath;
-  }
+  },
 };
 
 module.exports = test;

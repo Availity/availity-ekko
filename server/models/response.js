@@ -3,9 +3,7 @@
 const _ = require('lodash');
 
 class Response {
-
   constructor(response) {
-
     this.headers = null;
     this.file = null;
     this.url = null;

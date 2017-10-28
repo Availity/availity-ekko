@@ -12,7 +12,7 @@ const config = {
   host: '127.0.0.1', // 0.0.0.0 or localhost causes windows tests to fail?
 
   data: path.join(__dirname, '/data'),
-  routes: path.join(__dirname, '/dummy.routes.config.json')
+  routes: path.join(__dirname, '/dummy.routes.config.json'),
 
 };
 

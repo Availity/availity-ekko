@@ -1,12 +1,9 @@
 /* eslint no-console:0 */
-'use strict';
-
 const chalk = require('chalk');
 
 let loggerInstance;
 
 class DefaultLogger {
-
   constructor(options) {
     this.options = options;
   }
@@ -33,18 +30,14 @@ class DefaultLogger {
 
   // › Starting server
   record(entry, color) {
-
     const defaultColor = entry instanceof Error ? 'red' : 'gray';
     const crayoloa = color || defaultColor;
 
-    console.log(`${chalk[crayoloa](entry)}` );
-
+    console.log(`${chalk[crayoloa](entry)}`);
   }
-
 }
 
 class Logger {
-
   constructor() {
     this.provider = null;
     this.setProvider(() => new DefaultLogger());
@@ -55,11 +48,9 @@ class Logger {
   }
 
   setProvider(fn) {
-
     if (fn) {
       this.provider = fn();
     }
-
   }
 
   warn(entry) {
@@ -96,13 +87,11 @@ class Logger {
 module.exports = {
   // singleton
   getInstance() {
-
     if (!loggerInstance) {
       loggerInstance = new Logger();
     }
 
     return loggerInstance;
-
-  }
+  },
 
 };

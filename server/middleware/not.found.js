@@ -3,13 +3,11 @@
 const config = require('../config');
 
 module.exports = function notfound() {
-
-  return function(req, res) {
-
+  return function (req, res) {
     res.status(404);
 
     config.events.emit(config.constants.EVENTS.FILE_NOT_FOUND, {
-      req
+      req,
     });
 
     const message = 'Not Found';

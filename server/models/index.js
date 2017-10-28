@@ -7,6 +7,6 @@ const Route = require('./route');
 module.exports = {
   Request,
   Response,
-  Route
+  Route,
 };
 

@@ -5,7 +5,6 @@ const _ = require('lodash');
 const match = {
 
   scoreHeaders(score, _request, headers) {
-
     // Note: variables prefixed with "_" underscore signify config object|key|value
 
     const _headers = _request.headers;
@@ -20,14 +19,12 @@ const match = {
       } else {
         score.valid = false;
       }
-
     });
 
     return score;
   },
 
   scoreParam(score, _paramValue, paramValue) {
-
     // Note: variables prefixed with "_" underscore signify config object|key|value
 
     if (_paramValue === paramValue) {
@@ -40,7 +37,6 @@ const match = {
   },
 
   scorePattern(score, _paramValue, paramValue) {
-
     // Note: variables prefixed with "_" underscore signify config object|key|value
 
     const regex = new RegExp(_paramValue.pattern, _paramValue.flags || 'i');
@@ -55,7 +51,6 @@ const match = {
   },
 
   scoreArray(score, _paramValue, __paramValue) {
-
     // Note: variables prefixed with "_" underscore signify config object|key|value
 
     const paramValue = _.toArray(__paramValue);
@@ -67,11 +62,9 @@ const match = {
     score.misses += misses.length;
 
     return score;
-
   },
 
   scoreParams(_request, params, method) {
-
     const self = this;
 
     // Note: variables prefixed with "_" underscore signify config object|key|value
@@ -79,13 +72,12 @@ const match = {
     const score = {
       hits: 0, // Matching parameters
       misses: 0, // Parameters specified in route, but not present in query
-      valid: true // False if a parameter is specified in route and query, but they are not equal and therefore should never match
+      valid: true, // False if a parameter is specified in route and query, but they are not equal and therefore should never match
     };
 
     const _params = _request.params;
 
     _.each(_params, (_paramValue, _paramKey) => {
-
       const paramValue = (method === 'get') ? params[_paramKey] : _.get(params, _paramKey);
 
       if (_.isArray(_paramValue)) {
@@ -95,11 +87,9 @@ const match = {
       } else {
         self.scoreParam(score, _paramValue, paramValue);
       }
-
     });
 
     return score;
-
   },
 
   /**
@@ -109,7 +99,6 @@ const match = {
    * @param {[type]} res http response object
    */
   set(req, res) {
-
     // Note: variables prefixed with "_" underscore signify config object object|key|value
 
     const self = this;
@@ -123,14 +112,13 @@ const match = {
 
     const topScore = {
       hits: 0,
-      misses: 0
+      misses: 0,
     };
 
     // set the default request
     res.locals.request = _requests[0];
 
-    _.each(_requests, (_request) => {
-
+    _.each(_requests, _request => {
       const score = self.scoreParams(_request, params, method);
       self.scoreHeaders(score, _request, req.headers);
 
@@ -149,8 +137,7 @@ const match = {
         res.locals.request = _request;
       }
     });
-
-  }
+  },
 
 };
 

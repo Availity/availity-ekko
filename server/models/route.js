@@ -6,9 +6,7 @@ const Request = require('./request');
 const Response = require('./response');
 
 class Route {
-
   constructor(url, endpoint, dataPath) {
-
     this.url = url;
     this.methods = {};
     this.id = _.uniqueId('route');
@@ -18,20 +16,17 @@ class Route {
   }
 
   init(endpoint) {
-
     // Allow for mime type extension in the url like /v1/users/me.json
-    this.url = this.url + '.:format?';
-    this.url = this.url.charAt(0) !== '/' ? '/' + this.url : this.url;
+    this.url = `${this.url}.:format?`;
+    this.url = this.url.charAt(0) !== '/' ? `/${this.url}` : this.url;
 
     // Attach default file response for each http method
-    _.each(['get', 'post', 'put', 'delete', 'head', 'patch'], (method) => {
+    _.each(['get', 'post', 'put', 'delete', 'head', 'patch'], method => {
       this.addMethod(method, endpoint);
     });
-
   }
 
   addMethod(method, endpoint) {
-
     if (!this.methods[method]) {
       // creates property get|post|put|delete... on route object
       this.methods[method] = [];
@@ -73,9 +68,7 @@ class Route {
     //     ...
     //   }...
     if (_.isArray(endpoint[method])) {
-
-      _.each(endpoint[method], (_request) => {
-
+      _.each(endpoint[method], _request => {
         // Handle default response.
         //
         // EX:
@@ -86,7 +79,6 @@ class Route {
         //   }
         // ]
         if (!_request.params && !_request.headers && !_.isArray(_request.response)) {
-
           // If necessary, override the default response from the routes global response.
           if (this.methods[method][0]) {
             this.methods[method][0].responses[0].set(_request);
@@ -125,7 +117,7 @@ class Route {
         //   }
         // ]...
         if (_.isArray(_request.response)) {
-          _.each(_request.response, (_response) => {
+          _.each(_request.response, _response => {
             const __response = new Response(_request);
             __response.set(_response);
             request.responses.push(__response);
@@ -133,7 +125,6 @@ class Route {
         }
 
         this.methods[method].push(request);
-
       });
     }
   }
